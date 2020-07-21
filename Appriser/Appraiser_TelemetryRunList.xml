@@ -1,0 +1,963 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WicaRun xmlns="urn:schemas.microsoft.com/appcompat/appraiser/runInfo/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:schemas.microsoft.com/appcompat/appraiser/runInfo/v1 ..\schema\TelemetryRunSchema.xsd">
+	<RunInfos>
+		<RunInfo Name="CoreAppraiserComponents" UseAcmEngine="TRUE" SdbPath="%WINDIR%\AppCompat\Appraiser\AltData\appraiser.sdb" Context="Telemetry" Subcontext="N/A">
+			<Component TypeIdentifier="Metadata" Type="Metadata">
+				<Property Name="Category" Value="Application"/>
+				<Property Name="Category" Value="Device"/>
+				<Property Name="Category" Value="System"/>
+				<Property Name="Architecture" Value="[Architecture]"/>
+				<Property Name="AppraiserVersion" Value="[AppraiserVersion]"/>
+				<Property Name="InboxDataVersion" Value="[InboxDataVersion]"/>
+				<Property Name="CurrentDataVersion" Value="[CurrentDataVersion]"/>
+				<Property Name="OemPref" Value="[TEL_OEMPREF]"/>
+				<Property Name="OneBSecFixNeeded" Value="[MT_OneBSecFixNeeded]"/>
+				<Property Name="ProductType" Value="[MT_ProductType]"/>
+				<Property Name="WindowsInsiderProgram" Value="[MT_IsInWip]"/>
+				<Property Name="19H1DataExpDateExtension" Value="[MT_19H1DataExpDateExtension]"/>
+			</Component>
+			<Component Type="Inventory" SpecificIdentifier="GeneralTel Inventory" TypeIdentifier="InventoryGeneralTel">
+				<Property Name="GeneralTelInventoryRunCitTel" Value="[MT_GeneralTelInventoryRunCitTel]"/>
+				<Property Name="GeneralTelInventoryRunGeneralTel" Value="[MT_GeneralTelInventoryRunGeneralTel]"/>
+				<Property Name="GeneralTelInventorySendUtc" Value="[MT_GeneralTelInventorySendUtc]"/>
+				<Property Name="GeneralTelInventoryFullSync" Value="[MT_GeneralTelInventoryFullSync]"/>
+				<Property Name="OptimizeForMarkers" Value="[MT_GeneralTelInventoryOptimizeForIndicators]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget20H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget19H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS5]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS4]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS3]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH1]"/>
+			</Component>
+			<Component Type="Inventory" TypeIdentifier="InventoryDevice">
+				<Property Name="DeviceInventoryRunFlag" Value="NightlyDevice"/>
+				<Property Name="DeviceInventoryRequireFullScan" Value="FALSE"/>
+				<Property Name="DeviceInventorySendFullSync" Value="[MT_DevInventorySendFullSync]"/>
+				<Property Name="DeviceInventoryDumpXmlPath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_DeviceInventory.xml"/>
+				<Property Name="AtLeastOneTables" Value="LT_AtLeastOneTables_Telemetry_DeviceInventory"/>
+			</Component>
+			<Component Type="Inventory" TypeIdentifier="InventoryApplication">
+				<Property Name="ApplicationInventoryDoFullAppInventoryScan" Value="[MT_AppInventoryRunFullScan]"/>
+				<Property Name="ApplicationInventorySendFullAppInventorySync" Value="[MT_AppInventorySendFullSync]"/>
+				<Property Name="AddAntimalware" Value="TRUE"/>
+				<Property Name="ApplicationInventoryDumpXmlPath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_ApplicationInventory.xml"/>
+			</Component>
+			<Component Type="Inventory" TypeIdentifier="InventorySystem">
+				<Property Name="NxWorkingDirectory" Value="%WINDIR%\system32\appraiser\"/>
+			</Component>
+			<Component Type="Inventory" TypeIdentifier="InventoryMatchingInfo"/>
+			<Component Type="Inventory" TypeIdentifier="InventoryInbox" NonFatalInit="TRUE">
+				<Property Name="ExcludeAssetTypeList" Value="LT_AssetTypesForGatedState"/>
+			</Component>
+			<Component Type="Inventory" TypeIdentifier="InventorySummary" NonFatalInit="TRUE"/>
+			<Component Type="DataSource" TypeIdentifier="DatasourceCit"/>
+			<Component Type="DataSource" TypeIdentifier="DatasourceSdbBios">
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget20H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget19H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS5]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS4]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS3]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH1]"/>
+			</Component>
+			<Component Type="DataSource" TypeIdentifier="DatasourceSdbDevice">
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget20H1_SkipDeviceSdb]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget19H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS5]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS4]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS3]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH1]"/>
+			</Component>
+			<Component Type="DataSource" TypeIdentifier="DatasourceSdbDriver">
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget20H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget19H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS5]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS4]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS3]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH1]"/>
+			</Component>
+			<Component Type="DataSource" TypeIdentifier="DatasourceSdbExe">
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget20H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget19H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS5]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS4]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS3]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH1]"/>
+			</Component>
+			<Component Type="DataSource" TypeIdentifier="DatasourceSdbMachine">
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget20H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget19H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS5]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS4]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS3]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH1]"/>
+			</Component>
+			<Component Type="DataSource" TypeIdentifier="DatasourceSdbOsUpgrade">
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget20H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget19H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS5]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS4]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS3]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH1]"/>
+			</Component>
+			<Component Type="DataSource" TypeIdentifier="DatasourceSdbMatchingInfo">
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget20H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTarget19H1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS5]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS4]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS3]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetRS1]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH2]"/>
+				<Property Name="TargetVersion" Value="[MT_AppraiserOptionalTargetTH1]"/>
+			</Component>
+			<Component Type="DataSource" TypeIdentifier="DatasourceBootCritical" NonFatalInit="TRUE"/>
+			<Component Type="DataSource" TypeIdentifier="DatasourceActiveNetwork" NonFatalInit="TRUE"/>
+			<Component Type="DataSource" TypeIdentifier="DatasourceAntiMalware" NonFatalInit="TRUE"/>
+			<Component Type="DataSource" TypeIdentifier="DatasourceSdbExeInbox"/>
+			<Component Type="DecisionMakerComponent" SpecificIdentifier="Decision Maker ALL" TypeIdentifier="DecisionTables">
+				<Property Name="TargetVersion" Value="ALL"/>
+				<Property Name="IncludeList" Value="LT_VersionAgnosticDecisionTables"/>
+			</Component>
+			<Component Type="DecisionAggregator" TypeIdentifier="AggregatorFileInfo" NonFatalInit="TRUE"/>
+			<Component Type="Outputter" TypeIdentifier="OutputRegistrySdb" NonFatalInit="TRUE">
+				<Property Name="SdbRegistryOutputKeyName" Value="Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\GWX"/>
+				<Property Name="SdbRegistryOutputValueName" Value="SdbEntries"/>
+				<Property Name="SdbRegistryOutputIncludedAppraiserData" Value="GatedBlock"/>
+				<Property Name="SdbRegistryOutputIncludedAppraiserData" Value="GatedWarn"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Registry Marker Outputter UNV" TypeIdentifier="OutputRegistryMarker">
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMustBeNew" Value="FALSE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersChecksumValidityRequired" Value="FALSE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerSendFullSync" Value="[MT_RegistryMarkerOutputterSendFullSync]"/>
+				<Property Name="TargetVersion" Value="UNV"/>
+			</Component>
+			<Component Type="Outputter" TypeIdentifier="OutputRegistrySummary" NonFatalInit="TRUE"/>
+			<Component Type="Outputter" SpecificIdentifier="Unversioned Telemetry Outputter" TypeIdentifier="OutputTelemetry" NonFatalInit="TRUE">
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupApplicationScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupDeviceScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupSystemScan"/>
+				<Property Name="TelemetryOutputDumpPath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_UtcOutput_UNV.xml"/>
+				<Property Name="TelemetryOutputSendOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TelemetryOutputSendFullSync" Value="[MT_TelemetryOutputterSendFullSync]"/>
+				<Property Name="TelemetryOutputPreviousBinaryPath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_UNV.bin"/>
+				<Property Name="TargetVersion" Value="ALL"/>
+				<Property Name="TelemetryOutputFilterTableName" Value="FT_ANY_IncludeInTelemetry"/></Component>
+			<Component Type="Outputter" SpecificIdentifier="Unversioned Binary Outputter" TypeIdentifier="OutputBinary" NonFatalInit="TRUE">
+				<Property Name="OutputBinTier" Value="Inventory"/>
+				<Property Name="OutputBinTier" Value="DataSource"/>
+				<Property Name="OutputBinTier" Value="DecisionMaker"/>
+				<Property Name="OutputBinTier" Value="DecisionAggregator"/>
+				<Property Name="OutputBinFilePath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_UNV.bin"/>
+				<Property Name="OutputBinFilterName" Value="FT_ANY_IncludeInTelemetry"/><Property Name="OutputBinAllowRunOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TargetVersion" Value="ALL"/>
+			</Component>
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_TelemetryVariableComponents"/></Component>
+		</RunInfo>
+		<RunInfo Name="AuxOutputters" ReferenceOnly="TRUE">
+			<Component Type="Outputter" TypeIdentifier="OutputIcon">
+				<Property Name="IconOutputPath" Value="%WINDIR%\AppCompat\UA"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="EverythingOutputter" ReferenceOnly="TRUE">
+			<Component Type="Outputter" TypeIdentifier="OutputEverything">
+				<Property Name="OutputFilePath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_EverythingOutput.xml"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="TargetedComponents20H1" ReferenceOnly="TRUE">
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_WuDriverCacheInventory20H1VariableComponents"/></Component>
+			<Component Type="DataSource" SpecificIdentifier="WU Driver Data Source 20H1" TypeIdentifier="DatasourceWuDriver" NonFatalInit="TRUE" ReplacementRunInfo="[MT_WuDriverReplacementBackup]">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_20H1"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="TRUE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+			<Component Type="DecisionMakerComponent" SpecificIdentifier="Decision Maker 20H1" TypeIdentifier="DecisionTables">
+				<Property Name="TargetVersion" Value="20H1"/>
+				<Property Name="ExcludeList" Value="LT_VersionAgnosticDecisionTables"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Device Driver Aggregator 20H1" TypeIdentifier="AggregatorDeviceDriver" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="20H1"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="App File Aggregator 20H1" TypeIdentifier="AggregatorAppFile" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="20H1"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Summary Aggregator 20H1" TypeIdentifier="AggregatorSummary" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="20H1"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Telemetry Outputter 20H1" TypeIdentifier="OutputTelemetry" NonFatalInit="TRUE">
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupApplicationScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupDeviceScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupSystemScan"/>
+				<Property Name="TelemetryOutputDumpPath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_UtcOutput_20H1.xml"/>
+				<Property Name="TelemetryOutputSendOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TelemetryOutputSendFullSync" Value="[MT_TelemetryOutputterSendFullSync]"/>
+				<Property Name="TelemetryOutputPreviousBinaryPath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_20H1.bin"/>
+				<Property Name="TargetVersion" Value="20H1"/>
+				<Property Name="TelemetryOutputFilterTableName" Value="FT_ANY_IncludeInTelemetry"/></Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Binary Outputter 20H1" TypeIdentifier="OutputBinary" NonFatalInit="TRUE">
+				<Property Name="OutputBinTier" Value="Inventory"/>
+				<Property Name="OutputBinTier" Value="DataSource"/>
+				<Property Name="OutputBinTier" Value="DecisionMaker"/>
+				<Property Name="OutputBinTier" Value="DecisionAggregator"/>
+				<Property Name="OutputBinFilePath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_20H1.bin"/>
+				<Property Name="OutputBinFilterName" Value="FT_ANY_IncludeInTelemetry"/><Property Name="OutputBinAllowRunOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TargetVersion" Value="20H1"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Registry Marker Outputter 20H1" TypeIdentifier="OutputRegistryMarker">
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMustBeNew" Value="FALSE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerNewAppraiserMarkersRequiredComponentSuccess" Value="LT_OnlineRunSupportedByWu"/>
+				<Property Name="OutputRegistryMarkerRecommendedDataVersion" Value="[TEL_RecommendedDataVersionForIndicators_20H1]"/>
+				<Property Name="OutputRegistryMarkerSendFullSync" Value="[MT_RegistryMarkerOutputterSendFullSync]"/>
+				<Property Name="TargetVersion" Value="20H1"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Aux Json Outputter 20H1" TypeIdentifier="OutputAuxJson">
+				<Property Name="OutputAuxJsonFilePath" Value="%WINDIR%\AppCompat\UA\Appraiser_20H1.JSON"/>
+				<Property Name="OutputAuxJsonImagePath" Value="%WINDIR%\AppCompat\UA"/>
+				<Property Name="TargetVersion" Value="20H1"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="WuDriverCacheInventory20H1" ReferenceOnly="TRUE">
+			<Component Type="Inventory" SpecificIdentifier="WU Driver Cache Inventory 20H1" TypeIdentifier="InventoryWuDriverCache">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_20H1"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="FALSE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="TargetedComponents19H1" ReferenceOnly="TRUE">
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_WuDriverCacheInventory19H1VariableComponents"/></Component>
+			<Component Type="DataSource" SpecificIdentifier="WU Driver Data Source 19H1" TypeIdentifier="DatasourceWuDriver" NonFatalInit="TRUE" ReplacementRunInfo="[MT_WuDriverReplacementBackup]">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_19H1"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="TRUE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+			<Component Type="DecisionMakerComponent" SpecificIdentifier="Decision Maker 19H1" TypeIdentifier="DecisionTables">
+				<Property Name="TargetVersion" Value="19H1"/>
+				<Property Name="ExcludeList" Value="LT_VersionAgnosticDecisionTables"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Device Driver Aggregator 19H1" TypeIdentifier="AggregatorDeviceDriver" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="19H1"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="App File Aggregator 19H1" TypeIdentifier="AggregatorAppFile" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="19H1"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Summary Aggregator 19H1" TypeIdentifier="AggregatorSummary" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="19H1"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Telemetry Outputter 19H1" TypeIdentifier="OutputTelemetry" NonFatalInit="TRUE">
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupApplicationScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupDeviceScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupSystemScan"/>
+				<Property Name="TelemetryOutputDumpPath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_UtcOutput_19H1.xml"/>
+				<Property Name="TelemetryOutputSendOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TelemetryOutputSendFullSync" Value="[MT_TelemetryOutputterSendFullSync]"/>
+				<Property Name="TelemetryOutputPreviousBinaryPath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_19H1.bin"/>
+				<Property Name="TargetVersion" Value="19H1"/>
+				<Property Name="TelemetryOutputFilterTableName" Value="FT_ANY_IncludeInTelemetry"/></Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Binary Outputter 19H1" TypeIdentifier="OutputBinary" NonFatalInit="TRUE">
+				<Property Name="OutputBinTier" Value="Inventory"/>
+				<Property Name="OutputBinTier" Value="DataSource"/>
+				<Property Name="OutputBinTier" Value="DecisionMaker"/>
+				<Property Name="OutputBinTier" Value="DecisionAggregator"/>
+				<Property Name="OutputBinFilePath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_19H1.bin"/>
+				<Property Name="OutputBinFilterName" Value="FT_ANY_IncludeInTelemetry"/><Property Name="OutputBinAllowRunOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TargetVersion" Value="19H1"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Registry Marker Outputter 19H1" TypeIdentifier="OutputRegistryMarker">
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMustBeNew" Value="FALSE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerNewAppraiserMarkersRequiredComponentSuccess" Value="LT_OnlineRunSupportedByWu"/>
+				<Property Name="OutputRegistryMarkerRecommendedDataVersion" Value="[TEL_RecommendedDataVersionForIndicators_19H1]"/>
+				<Property Name="OutputRegistryMarkerSendFullSync" Value="[MT_RegistryMarkerOutputterSendFullSync]"/>
+				<Property Name="TargetVersion" Value="19H1"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Aux Json Outputter 19H1" TypeIdentifier="OutputAuxJson">
+				<Property Name="OutputAuxJsonFilePath" Value="%WINDIR%\AppCompat\UA\Appraiser_19H1.JSON"/>
+				<Property Name="OutputAuxJsonImagePath" Value="%WINDIR%\AppCompat\UA"/>
+				<Property Name="TargetVersion" Value="19H1"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="WuDriverCacheInventory19H1" ReferenceOnly="TRUE">
+			<Component Type="Inventory" SpecificIdentifier="WU Driver Cache Inventory 19H1" TypeIdentifier="InventoryWuDriverCache">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_19H1"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="FALSE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="TargetedComponentsRS5" ReferenceOnly="TRUE">
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_WuDriverCacheInventoryRS5VariableComponents"/></Component>
+			<Component Type="DataSource" SpecificIdentifier="WU Driver Data Source RS5" TypeIdentifier="DatasourceWuDriver" NonFatalInit="TRUE" ReplacementRunInfo="[MT_WuDriverReplacementBackup]">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_RS5"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="TRUE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+			<Component Type="DecisionMakerComponent" SpecificIdentifier="Decision Maker RS5" TypeIdentifier="DecisionTables">
+				<Property Name="TargetVersion" Value="RS5"/>
+				<Property Name="ExcludeList" Value="LT_VersionAgnosticDecisionTables"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Device Driver Aggregator RS5" TypeIdentifier="AggregatorDeviceDriver" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS5"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="App File Aggregator RS5" TypeIdentifier="AggregatorAppFile" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS5"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Summary Aggregator RS5" TypeIdentifier="AggregatorSummary" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS5"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Telemetry Outputter RS5" TypeIdentifier="OutputTelemetry" NonFatalInit="TRUE">
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupApplicationScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupDeviceScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupSystemScan"/>
+				<Property Name="TelemetryOutputDumpPath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_UtcOutput_RS5.xml"/>
+				<Property Name="TelemetryOutputSendOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TelemetryOutputSendFullSync" Value="[MT_TelemetryOutputterSendFullSync]"/>
+				<Property Name="TelemetryOutputPreviousBinaryPath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_RS5.bin"/>
+				<Property Name="TargetVersion" Value="RS5"/>
+				<Property Name="TelemetryOutputFilterTableName" Value="FT_ANY_IncludeInTelemetry"/></Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Binary Outputter RS5" TypeIdentifier="OutputBinary" NonFatalInit="TRUE">
+				<Property Name="OutputBinTier" Value="Inventory"/>
+				<Property Name="OutputBinTier" Value="DataSource"/>
+				<Property Name="OutputBinTier" Value="DecisionMaker"/>
+				<Property Name="OutputBinTier" Value="DecisionAggregator"/>
+				<Property Name="OutputBinFilePath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_RS5.bin"/>
+				<Property Name="OutputBinFilterName" Value="FT_ANY_IncludeInTelemetry"/><Property Name="OutputBinAllowRunOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TargetVersion" Value="RS5"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Registry Marker Outputter RS5" TypeIdentifier="OutputRegistryMarker">
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMustBeNew" Value="FALSE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerNewAppraiserMarkersRequiredComponentSuccess" Value="LT_OnlineRunSupportedByWu"/>
+				<Property Name="OutputRegistryMarkerRecommendedDataVersion" Value="[TEL_RecommendedDataVersionForIndicators_RS5]"/>
+				<Property Name="OutputRegistryMarkerSendFullSync" Value="[MT_RegistryMarkerOutputterSendFullSync]"/>
+				<Property Name="TargetVersion" Value="RS5"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Aux Json Outputter RS5" TypeIdentifier="OutputAuxJson">
+				<Property Name="OutputAuxJsonFilePath" Value="%WINDIR%\AppCompat\UA\Appraiser_RS5.JSON"/>
+				<Property Name="OutputAuxJsonImagePath" Value="%WINDIR%\AppCompat\UA"/>
+				<Property Name="TargetVersion" Value="RS5"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="WuDriverCacheInventoryRS5" ReferenceOnly="TRUE">
+			<Component Type="Inventory" SpecificIdentifier="WU Driver Cache Inventory RS5" TypeIdentifier="InventoryWuDriverCache">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_RS5"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="FALSE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="TargetedComponentsRS4" ReferenceOnly="TRUE">
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_WuDriverCacheInventoryRS4VariableComponents"/></Component>
+			<Component Type="DataSource" SpecificIdentifier="WU Driver Data Source RS4" TypeIdentifier="DatasourceWuDriver" NonFatalInit="TRUE" ReplacementRunInfo="[MT_WuDriverReplacementBackup]">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_RS4"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="TRUE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+			<Component Type="DecisionMakerComponent" SpecificIdentifier="Decision Maker RS4" TypeIdentifier="DecisionTables">
+				<Property Name="TargetVersion" Value="RS4"/>
+				<Property Name="ExcludeList" Value="LT_VersionAgnosticDecisionTables"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Device Driver Aggregator RS4" TypeIdentifier="AggregatorDeviceDriver" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS4"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="App File Aggregator RS4" TypeIdentifier="AggregatorAppFile" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS4"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Summary Aggregator RS4" TypeIdentifier="AggregatorSummary" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS4"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Telemetry Outputter RS4" TypeIdentifier="OutputTelemetry" NonFatalInit="TRUE">
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupApplicationScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupDeviceScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupSystemScan"/>
+				<Property Name="TelemetryOutputDumpPath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_UtcOutput_RS4.xml"/>
+				<Property Name="TelemetryOutputSendOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TelemetryOutputSendFullSync" Value="[MT_TelemetryOutputterSendFullSync]"/>
+				<Property Name="TelemetryOutputPreviousBinaryPath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_RS4.bin"/>
+				<Property Name="TargetVersion" Value="RS4"/>
+				<Property Name="TelemetryOutputFilterTableName" Value="FT_ANY_IncludeInTelemetry"/></Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Binary Outputter RS4" TypeIdentifier="OutputBinary" NonFatalInit="TRUE">
+				<Property Name="OutputBinTier" Value="Inventory"/>
+				<Property Name="OutputBinTier" Value="DataSource"/>
+				<Property Name="OutputBinTier" Value="DecisionMaker"/>
+				<Property Name="OutputBinTier" Value="DecisionAggregator"/>
+				<Property Name="OutputBinFilePath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_RS4.bin"/>
+				<Property Name="OutputBinFilterName" Value="FT_ANY_IncludeInTelemetry"/><Property Name="OutputBinAllowRunOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TargetVersion" Value="RS4"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Registry Marker Outputter RS4" TypeIdentifier="OutputRegistryMarker">
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMustBeNew" Value="FALSE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerNewAppraiserMarkersRequiredComponentSuccess" Value="LT_OnlineRunSupportedByWu"/>
+				<Property Name="OutputRegistryMarkerRecommendedDataVersion" Value="[TEL_RecommendedDataVersionForIndicators_RS4]"/>
+				<Property Name="OutputRegistryMarkerSendFullSync" Value="[MT_RegistryMarkerOutputterSendFullSync]"/>
+				<Property Name="TargetVersion" Value="RS4"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Aux Json Outputter RS4" TypeIdentifier="OutputAuxJson">
+				<Property Name="OutputAuxJsonFilePath" Value="%WINDIR%\AppCompat\UA\Appraiser_RS4.JSON"/>
+				<Property Name="OutputAuxJsonImagePath" Value="%WINDIR%\AppCompat\UA"/>
+				<Property Name="TargetVersion" Value="RS4"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="WuDriverCacheInventoryRS4" ReferenceOnly="TRUE">
+			<Component Type="Inventory" SpecificIdentifier="WU Driver Cache Inventory RS4" TypeIdentifier="InventoryWuDriverCache">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_RS4"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="FALSE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="TargetedComponentsRS3" ReferenceOnly="TRUE">
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_WuDriverCacheInventoryRS3VariableComponents"/></Component>
+			<Component Type="DataSource" SpecificIdentifier="WU Driver Data Source RS3" TypeIdentifier="DatasourceWuDriver" NonFatalInit="TRUE" ReplacementRunInfo="[MT_WuDriverReplacementBackup]">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_RS3"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="TRUE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+			<Component Type="DecisionMakerComponent" SpecificIdentifier="Decision Maker RS3" TypeIdentifier="DecisionTables">
+				<Property Name="TargetVersion" Value="RS3"/>
+				<Property Name="ExcludeList" Value="LT_VersionAgnosticDecisionTables"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Device Driver Aggregator RS3" TypeIdentifier="AggregatorDeviceDriver" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS3"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="App File Aggregator RS3" TypeIdentifier="AggregatorAppFile" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS3"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Summary Aggregator RS3" TypeIdentifier="AggregatorSummary" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS3"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Telemetry Outputter RS3" TypeIdentifier="OutputTelemetry" NonFatalInit="TRUE">
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupApplicationScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupDeviceScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupSystemScan"/>
+				<Property Name="TelemetryOutputDumpPath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_UtcOutput_RS3.xml"/>
+				<Property Name="TelemetryOutputSendOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TelemetryOutputSendFullSync" Value="[MT_TelemetryOutputterSendFullSync]"/>
+				<Property Name="TelemetryOutputPreviousBinaryPath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_RS3.bin"/>
+				<Property Name="TargetVersion" Value="RS3"/>
+				<Property Name="TelemetryOutputFilterTableName" Value="FT_ANY_IncludeInTelemetry"/></Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Binary Outputter RS3" TypeIdentifier="OutputBinary" NonFatalInit="TRUE">
+				<Property Name="OutputBinTier" Value="Inventory"/>
+				<Property Name="OutputBinTier" Value="DataSource"/>
+				<Property Name="OutputBinTier" Value="DecisionMaker"/>
+				<Property Name="OutputBinTier" Value="DecisionAggregator"/>
+				<Property Name="OutputBinFilePath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_RS3.bin"/>
+				<Property Name="OutputBinFilterName" Value="FT_ANY_IncludeInTelemetry"/><Property Name="OutputBinAllowRunOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TargetVersion" Value="RS3"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Registry Marker Outputter RS3" TypeIdentifier="OutputRegistryMarker">
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMustBeNew" Value="FALSE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerNewAppraiserMarkersRequiredComponentSuccess" Value="LT_OnlineRunSupportedByWu"/>
+				<Property Name="OutputRegistryMarkerRecommendedDataVersion" Value="[TEL_RecommendedDataVersionForIndicators_RS3]"/>
+				<Property Name="OutputRegistryMarkerSendFullSync" Value="[MT_RegistryMarkerOutputterSendFullSync]"/>
+				<Property Name="TargetVersion" Value="RS3"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Aux Json Outputter RS3" TypeIdentifier="OutputAuxJson">
+				<Property Name="OutputAuxJsonFilePath" Value="%WINDIR%\AppCompat\UA\Appraiser_RS3.JSON"/>
+				<Property Name="OutputAuxJsonImagePath" Value="%WINDIR%\AppCompat\UA"/>
+				<Property Name="TargetVersion" Value="RS3"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="WuDriverCacheInventoryRS3" ReferenceOnly="TRUE">
+			<Component Type="Inventory" SpecificIdentifier="WU Driver Cache Inventory RS3" TypeIdentifier="InventoryWuDriverCache">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_RS3"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="FALSE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="TargetedComponentsRS2" ReferenceOnly="TRUE">
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_WuDriverCacheInventoryRS2VariableComponents"/></Component>
+			<Component Type="DataSource" SpecificIdentifier="WU Driver Data Source RS2" TypeIdentifier="DatasourceWuDriver" NonFatalInit="TRUE" ReplacementRunInfo="[MT_WuDriverReplacementBackup]">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_RS2"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="TRUE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+			<Component Type="DecisionMakerComponent" SpecificIdentifier="Decision Maker RS2" TypeIdentifier="DecisionTables">
+				<Property Name="TargetVersion" Value="RS2"/>
+				<Property Name="ExcludeList" Value="LT_VersionAgnosticDecisionTables"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Device Driver Aggregator RS2" TypeIdentifier="AggregatorDeviceDriver" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS2"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="App File Aggregator RS2" TypeIdentifier="AggregatorAppFile" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS2"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Summary Aggregator RS2" TypeIdentifier="AggregatorSummary" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS2"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Telemetry Outputter RS2" TypeIdentifier="OutputTelemetry" NonFatalInit="TRUE">
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupApplicationScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupDeviceScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupSystemScan"/>
+				<Property Name="TelemetryOutputDumpPath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_UtcOutput_RS2.xml"/>
+				<Property Name="TelemetryOutputSendOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TelemetryOutputSendFullSync" Value="[MT_TelemetryOutputterSendFullSync]"/>
+				<Property Name="TelemetryOutputPreviousBinaryPath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_RS2.bin"/>
+				<Property Name="TargetVersion" Value="RS2"/>
+				<Property Name="TelemetryOutputFilterTableName" Value="FT_ANY_IncludeInTelemetry"/></Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Binary Outputter RS2" TypeIdentifier="OutputBinary" NonFatalInit="TRUE">
+				<Property Name="OutputBinTier" Value="Inventory"/>
+				<Property Name="OutputBinTier" Value="DataSource"/>
+				<Property Name="OutputBinTier" Value="DecisionMaker"/>
+				<Property Name="OutputBinTier" Value="DecisionAggregator"/>
+				<Property Name="OutputBinFilePath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_RS2.bin"/>
+				<Property Name="OutputBinFilterName" Value="FT_ANY_IncludeInTelemetry"/><Property Name="OutputBinAllowRunOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TargetVersion" Value="RS2"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Registry Marker Outputter RS2" TypeIdentifier="OutputRegistryMarker">
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMustBeNew" Value="FALSE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerNewAppraiserMarkersRequiredComponentSuccess" Value="LT_OnlineRunSupportedByWu"/>
+				<Property Name="OutputRegistryMarkerRecommendedDataVersion" Value="[TEL_RecommendedDataVersionForIndicators_RS2]"/>
+				<Property Name="OutputRegistryMarkerSendFullSync" Value="[MT_RegistryMarkerOutputterSendFullSync]"/>
+				<Property Name="TargetVersion" Value="RS2"/>
+			</Component>
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_AuxLimitedBufferRS2VariableComponents"/></Component>
+		</RunInfo>
+		<RunInfo Name="AuxJsonComponentRS2" ReferenceOnly="TRUE">
+			<Component Type="Outputter" SpecificIdentifier="Aux Json Outputter RS2" TypeIdentifier="OutputAuxJson">
+				<Property Name="OutputAuxJsonFilePath" Value="%WINDIR%\AppCompat\UA\Appraiser_RS2.JSON"/>
+				<Property Name="OutputAuxJsonImagePath" Value="%WINDIR%\AppCompat\UA"/>
+				<Property Name="TargetVersion" Value="RS2"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="WuDriverCacheInventoryRS2" ReferenceOnly="TRUE">
+			<Component Type="Inventory" SpecificIdentifier="WU Driver Cache Inventory RS2" TypeIdentifier="InventoryWuDriverCache">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_RS2"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="FALSE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="TargetedComponentsRS1" ReferenceOnly="TRUE">
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_WuDriverCacheInventoryRS1VariableComponents"/></Component>
+			<Component Type="DataSource" SpecificIdentifier="WU Driver Data Source RS1" TypeIdentifier="DatasourceWuDriver" NonFatalInit="TRUE" ReplacementRunInfo="[MT_WuDriverReplacementBackup]">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_RS1"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="TRUE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+			<Component Type="DecisionMakerComponent" SpecificIdentifier="Decision Maker RS1" TypeIdentifier="DecisionTables">
+				<Property Name="TargetVersion" Value="RS1"/>
+				<Property Name="ExcludeList" Value="LT_VersionAgnosticDecisionTables"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Device Driver Aggregator RS1" TypeIdentifier="AggregatorDeviceDriver" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS1"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="App File Aggregator RS1" TypeIdentifier="AggregatorAppFile" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS1"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Summary Aggregator RS1" TypeIdentifier="AggregatorSummary" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="RS1"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Telemetry Outputter RS1" TypeIdentifier="OutputTelemetry" NonFatalInit="TRUE">
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupApplicationScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupDeviceScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupSystemScan"/>
+				<Property Name="TelemetryOutputDumpPath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_UtcOutput_RS1.xml"/>
+				<Property Name="TelemetryOutputSendOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TelemetryOutputSendFullSync" Value="[MT_TelemetryOutputterSendFullSync]"/>
+				<Property Name="TelemetryOutputPreviousBinaryPath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_RS1.bin"/>
+				<Property Name="TargetVersion" Value="RS1"/>
+				<Property Name="TelemetryOutputFilterTableName" Value="FT_ANY_IncludeInTelemetry"/></Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Binary Outputter RS1" TypeIdentifier="OutputBinary" NonFatalInit="TRUE">
+				<Property Name="OutputBinTier" Value="Inventory"/>
+				<Property Name="OutputBinTier" Value="DataSource"/>
+				<Property Name="OutputBinTier" Value="DecisionMaker"/>
+				<Property Name="OutputBinTier" Value="DecisionAggregator"/>
+				<Property Name="OutputBinFilePath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_RS1.bin"/>
+				<Property Name="OutputBinFilterName" Value="FT_ANY_IncludeInTelemetry"/><Property Name="OutputBinAllowRunOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TargetVersion" Value="RS1"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Registry Marker Outputter RS1" TypeIdentifier="OutputRegistryMarker">
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMustBeNew" Value="FALSE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerNewAppraiserMarkersRequiredComponentSuccess" Value="LT_OnlineRunSupportedByWu"/>
+				<Property Name="OutputRegistryMarkerRecommendedDataVersion" Value="[TEL_RecommendedDataVersionForIndicators_RS1]"/>
+				<Property Name="OutputRegistryMarkerSendFullSync" Value="[MT_RegistryMarkerOutputterSendFullSync]"/>
+				<Property Name="TargetVersion" Value="RS1"/>
+			</Component>
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_AuxLimitedBufferRS1VariableComponents"/></Component>
+		</RunInfo>
+		<RunInfo Name="AuxJsonComponentRS1" ReferenceOnly="TRUE">
+			<Component Type="Outputter" SpecificIdentifier="Aux Json Outputter RS1" TypeIdentifier="OutputAuxJson">
+				<Property Name="OutputAuxJsonFilePath" Value="%WINDIR%\AppCompat\UA\Appraiser_RS1.JSON"/>
+				<Property Name="OutputAuxJsonImagePath" Value="%WINDIR%\AppCompat\UA"/>
+				<Property Name="TargetVersion" Value="RS1"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="WuDriverCacheInventoryRS1" ReferenceOnly="TRUE">
+			<Component Type="Inventory" SpecificIdentifier="WU Driver Cache Inventory RS1" TypeIdentifier="InventoryWuDriverCache">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_RS1"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="FALSE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="TargetedComponentsTH2" ReferenceOnly="TRUE">
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_WuDriverCacheInventoryTH2VariableComponents"/></Component>
+			<Component Type="DataSource" SpecificIdentifier="WU Driver Data Source TH2" TypeIdentifier="DatasourceWuDriver" NonFatalInit="TRUE" ReplacementRunInfo="[MT_WuDriverReplacementBackup]">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_TH2"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="TRUE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+			<Component Type="DecisionMakerComponent" SpecificIdentifier="Decision Maker TH2" TypeIdentifier="DecisionTables">
+				<Property Name="TargetVersion" Value="TH2"/>
+				<Property Name="ExcludeList" Value="LT_VersionAgnosticDecisionTables"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Device Driver Aggregator TH2" TypeIdentifier="AggregatorDeviceDriver" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="TH2"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="App File Aggregator TH2" TypeIdentifier="AggregatorAppFile" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="TH2"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Summary Aggregator TH2" TypeIdentifier="AggregatorSummary" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="TH2"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Telemetry Outputter TH2" TypeIdentifier="OutputTelemetry" NonFatalInit="TRUE">
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupApplicationScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupDeviceScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupSystemScan"/>
+				<Property Name="TelemetryOutputDumpPath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_UtcOutput_TH2.xml"/>
+				<Property Name="TelemetryOutputSendOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TelemetryOutputSendFullSync" Value="[MT_TelemetryOutputterSendFullSync]"/>
+				<Property Name="TelemetryOutputPreviousBinaryPath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_TH2.bin"/>
+				<Property Name="TargetVersion" Value="TH2"/>
+				<Property Name="TelemetryOutputFilterTableName" Value="FT_ANY_IncludeInTelemetry"/></Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Binary Outputter TH2" TypeIdentifier="OutputBinary" NonFatalInit="TRUE">
+				<Property Name="OutputBinTier" Value="Inventory"/>
+				<Property Name="OutputBinTier" Value="DataSource"/>
+				<Property Name="OutputBinTier" Value="DecisionMaker"/>
+				<Property Name="OutputBinTier" Value="DecisionAggregator"/>
+				<Property Name="OutputBinFilePath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_TH2.bin"/>
+				<Property Name="OutputBinFilterName" Value="FT_ANY_IncludeInTelemetry"/><Property Name="OutputBinAllowRunOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TargetVersion" Value="TH2"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Registry Marker Outputter TH2" TypeIdentifier="OutputRegistryMarker">
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMustBeNew" Value="FALSE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerNewAppraiserMarkersRequiredComponentSuccess" Value="LT_OnlineRunSupportedByWu"/>
+				<Property Name="OutputRegistryMarkerRecommendedDataVersion" Value="[TEL_RecommendedDataVersionForIndicators_TH2]"/>
+				<Property Name="OutputRegistryMarkerSendFullSync" Value="[MT_RegistryMarkerOutputterSendFullSync]"/>
+				<Property Name="TargetVersion" Value="TH2"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Aux Json Outputter TH2" TypeIdentifier="OutputAuxJson">
+				<Property Name="OutputAuxJsonFilePath" Value="%WINDIR%\AppCompat\UA\Appraiser_TH2.JSON"/>
+				<Property Name="OutputAuxJsonImagePath" Value="%WINDIR%\AppCompat\UA"/>
+				<Property Name="TargetVersion" Value="TH2"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="WuDriverCacheInventoryTH2" ReferenceOnly="TRUE">
+			<Component Type="Inventory" SpecificIdentifier="WU Driver Cache Inventory TH2" TypeIdentifier="InventoryWuDriverCache">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_TH2"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="FALSE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="TargetedComponentsTH1" ReferenceOnly="TRUE">
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_WuDriverCacheInventoryTH1VariableComponents"/></Component>
+			<Component Type="DataSource" SpecificIdentifier="WU Driver Data Source TH1" TypeIdentifier="DatasourceWuDriver" NonFatalInit="TRUE" ReplacementRunInfo="[MT_WuDriverReplacementBackup]">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_TH1"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="TRUE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+			<Component Type="DecisionMakerComponent" SpecificIdentifier="Decision Maker TH1" TypeIdentifier="DecisionTables">
+				<Property Name="TargetVersion" Value="TH1"/>
+				<Property Name="ExcludeList" Value="LT_VersionAgnosticDecisionTables"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Device Driver Aggregator TH1" TypeIdentifier="AggregatorDeviceDriver" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="TH1"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="App File Aggregator TH1" TypeIdentifier="AggregatorAppFile" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="TH1"/>
+			</Component>
+			<Component Type="DecisionAggregator" SpecificIdentifier="Summary Aggregator TH1" TypeIdentifier="AggregatorSummary" NonFatalInit="TRUE">
+				<Property Name="TargetVersion" Value="TH1"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Telemetry Outputter TH1" TypeIdentifier="OutputTelemetry" NonFatalInit="TRUE">
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupApplicationScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupDeviceScan"/>
+				<Property Name="TelemetryOutputAssetTypeTable" Value="LT_AssetTypesForSetupSystemScan"/>
+				<Property Name="TelemetryOutputDumpPath" Value="%WINDIR%\AppCompat\Appraiser\Telemetry\APPRAISER_UtcOutput_TH1.xml"/>
+				<Property Name="TelemetryOutputSendOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TelemetryOutputSendFullSync" Value="[MT_TelemetryOutputterSendFullSync]"/>
+				<Property Name="TelemetryOutputPreviousBinaryPath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_TH1.bin"/>
+				<Property Name="TargetVersion" Value="TH1"/>
+				<Property Name="TelemetryOutputFilterTableName" Value="FT_ANY_IncludeInTelemetry"/></Component>
+			<Component Type="Outputter" SpecificIdentifier="Versioned Binary Outputter TH1" TypeIdentifier="OutputBinary" NonFatalInit="TRUE">
+				<Property Name="OutputBinTier" Value="Inventory"/>
+				<Property Name="OutputBinTier" Value="DataSource"/>
+				<Property Name="OutputBinTier" Value="DecisionMaker"/>
+				<Property Name="OutputBinTier" Value="DecisionAggregator"/>
+				<Property Name="OutputBinFilePath" Value="%WINDIR%\AppCompat\Appraiser\APPRAISER_TelemetryBaseline_TH1.bin"/>
+				<Property Name="OutputBinFilterName" Value="FT_ANY_IncludeInTelemetry"/><Property Name="OutputBinAllowRunOffline" Value="[MT_TelemetryOutputterSendOffline]"/>
+				<Property Name="TargetVersion" Value="TH1"/>
+			</Component>
+			<Component Type="Outputter" SpecificIdentifier="Registry Marker Outputter TH1" TypeIdentifier="OutputRegistryMarker">
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerGeneralTelMarkersMustBeNew" Value="FALSE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersChecksumValidityRequired" Value="TRUE"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMaxAgeDays" Value="45"/>
+				<Property Name="OutputRegistryMarkerOldAppraiserMarkersMinVersion" Value="1"/>
+				<Property Name="OutputRegistryMarkerNewAppraiserMarkersRequiredComponentSuccess" Value="LT_OnlineRunSupportedByWu"/>
+				<Property Name="OutputRegistryMarkerRecommendedDataVersion" Value="[TEL_RecommendedDataVersionForIndicators_TH1]"/>
+				<Property Name="OutputRegistryMarkerSendFullSync" Value="[MT_RegistryMarkerOutputterSendFullSync]"/>
+				<Property Name="TargetVersion" Value="TH1"/>
+			</Component>
+			<Component Type="Custom" TypeIdentifier="TelemetryComponent">
+				<Property Name="RunInfoToTableMapping" Value="MT_AuxLimitedBufferTH1VariableComponents"/></Component>
+		</RunInfo>
+		<RunInfo Name="AuxJsonComponentTH1" ReferenceOnly="TRUE">
+			<Component Type="Outputter" SpecificIdentifier="Aux Json Outputter TH1" TypeIdentifier="OutputAuxJson">
+				<Property Name="OutputAuxJsonFilePath" Value="%WINDIR%\AppCompat\UA\Appraiser_TH1.JSON"/>
+				<Property Name="OutputAuxJsonImagePath" Value="%WINDIR%\AppCompat\UA"/>
+				<Property Name="TargetVersion" Value="TH1"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="WuDriverCacheInventoryTH1" ReferenceOnly="TRUE">
+			<Component Type="Inventory" SpecificIdentifier="WU Driver Cache Inventory TH1" TypeIdentifier="InventoryWuDriverCache">
+				<Property Name="ApplicableTargetTableName" Value="MT_AppraiserTarget_TH1"/><Property Name="DiceSize" Value="[MT_WuQueryDiceSize]"/>
+				<Property Name="IgnoreDiceQueryAlreadyCached" Value="FALSE"/>
+				<Property Name="MaxCallAgeDays" Value="[MT_WuQueryMaxCallAgeDays]"/>
+				<Property Name="MaxCacheAgeDays" Value="[MT_WuQueryMaxCacheAgeDays]"/>
+				<Property Name="ClientCategoryIdsOverride" Value="[MT_ClientCategoryIdsOverride]"/>
+				<Property Name="ServerCategoryIdsOverride" Value="[MT_ServerCategoryIdsOverride]"/>
+				<Property Name="WsusAssumeEmptyQuery" Value="[MT_WuQueryWsusAssumeEmptyQuery]"/>
+				<Property Name="WsusAssumeCacheStillAccurate" Value="[MT_WuQueryWsusAssumeCacheStillAccurate]"/>
+				<Property Name="EmptyCacheAssumeEmptyQuery" Value="FALSE"/>
+				<Property Name="WsusAndEmptyCacheAssumeEmptyQuery" Value="[MT_WuQueryWsusAndEmptyCacheAssumeEmptyQuery]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndInvalidCache" Value="[MT_WuFailureNoCacheShouldAddNetworkTriggerToTask]"/>
+				<Property Name="AddNetworkTriggerToTaskIfDownloadFailedAndValidCache" Value="[MT_WuFailureWithCacheShouldAddNetworkTriggerToTask]"/>
+			</Component>
+		</RunInfo>
+		<RunInfo Name="BlankRunInfo" ReferenceOnly="TRUE"/>
+	</RunInfos>
+</WicaRun>
