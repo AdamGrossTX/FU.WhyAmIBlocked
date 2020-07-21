@@ -1,7 +1,7 @@
 
-    $Public = @(Get-ChildItem -Path $($PSScriptRoot)\Public\*.ps1 -ErrorAction SilentlyContinue)
-    $Private = @(Get-ChildItem -Path $($PSScriptRoot)\Private\*.ps1 -ErrorAction SilentlyContinue)
-    $Prefix = "fu"
+    $Public = @(Get-ChildItem -Path "$($PSScriptRoot)\Public\*.ps1" -ErrorAction SilentlyContinue)
+    $Private = @(Get-ChildItem -Path "$($PSScriptRoot)\Private\*.ps1" -ErrorAction SilentlyContinue)
+    $script:Prefix = "fu"
     $cfg = Get-Content "$($env:USERPROFILE)\.fucfgpath" -ErrorAction SilentlyContinue
     $script:tick = [char]0x221a
 

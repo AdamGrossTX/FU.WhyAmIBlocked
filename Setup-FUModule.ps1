@@ -106,9 +106,9 @@ $Manifest = @{
 New-ModuleManifest @Manifest
 
 $ModuleFunctionScript = "
-    `$Public = @(Get-ChildItem -Path `$(`$PSScriptRoot)\Public\*.ps1 -ErrorAction SilentlyContinue)
-    `$Private = @(Get-ChildItem -Path `$(`$PSScriptRoot)\Private\*.ps1 -ErrorAction SilentlyContinue)
-    `$Prefix = `"$($Prefix)`"
+    `$Public = @(Get-ChildItem -Path `"`$(`$PSScriptRoot)\Public\*.ps1`" -ErrorAction SilentlyContinue)
+    `$Private = @(Get-ChildItem -Path `"`$(`$PSScriptRoot)\Private\*.ps1`" -ErrorAction SilentlyContinue)
+    `$script:Prefix = `"$($Prefix)`"
     `$cfg = Get-Content `"`$(`$env:USERPROFILE)\.$($Prefix)cfgpath`" -ErrorAction SilentlyContinue
     `$script:tick = [char]0x221a
 
