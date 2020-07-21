@@ -1,7 +1,8 @@
-Import-Module ".\FU.WhyAmIBlocked.psd1" -Force
+Import-Module ".\FU.WhyAmIBlocked\FU.WhyAmIBlocked.psd1" -Force
 
-Write-Host $cfg
-Write-Host $prefix
+Write-Host $PSScriptRoot
+Write-Host $script:fuConfig
+Write-Host $script:prefix
 
 $initCfg = @{
     #Path = "C:\FeatureUpdateBlocks"
