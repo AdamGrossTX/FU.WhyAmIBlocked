@@ -1,25 +1,12 @@
-Import-Module ".\FU.WhyAmIBlocked\FU.WhyAmIBlocked.psd1" -Force
-
-Write-Host $PSScriptRoot
-Write-Host $script:fuConfig
-Write-Host $script:prefix
-
-$initCfg = @{
-    #Path = "C:\FeatureUpdateBlocks"
-    #ConfigPath = "C:\FeatureUpdateBlocks\config.json"
-    #PythonPath = "C:\Program Files\Python38\python.exe"
-    #SDBCab = "Appraiser_AlternateData.cab"
-}
-
+Import-Module ".\FU.WhyAmIBlocked" -Force
 Initialize-FUModule
-#-initCfg $initCfg -Reset
+Get-FUBlocks
 
-$GetFUBlocksSplat = @{
-    DeviceName = $DeviceName
-    #BinFilePath = $null
-    #ProcessPantherLogs = $True
-    #$RunCompatAppraiser, #Only runs on local device. Need to add logic to run on remote device.
-    LookupSDBInfo = $true
-}
-
-#Get-FUBlocks @GetFUBlocksSplat
+#ToDo Usage Examples
+#Get-FUBlocks -DeviceName "MyDevice"
+#Get-FUBlocks -AlternateSourcePath "C:\FeatureUpdateBlocks\Alt"
+#Get-FUBlocksFromXML -FileList ("C:\FeatureUpdateBlocks\Alt\APPRAISER_TelemetryBaseline_20H1.bin_HUMANREADABLE.XML","C:\FeatureUpdateBlocks\Alt\APPRAISER_TelemetryBaseline_UNV.bin_HUMANREADABLE.XML")
+#ConvertFrom-FUBinToXML -FileList "C:\FeatureUpdateBlocks\Alt\APPRAISER_TelemetryBaseline_20H1.bin" -OutputPath "C:\FeatureUpdateBlocks\Output"
+#Extract-FUXMLFromSDB -path C:\FeatureUpdateBlocks\HQ-R90XC6KX
+#Get-FUBlocksFromXML -FileList (Get-Item -Path "C:\FeatureUpdateBlocks\HQ-R90XC6KX\*human*.xml").FullName -ResultFile C:\FeatureUpdateBlocks\HQ-R90XC6KX\result.txt
+#Export-FUBypassBlock

@@ -7,37 +7,87 @@ Function Extract-XMLFromSDB {
 
         [parameter(Position = 2, Mandatory = $false)]
         [string]
-        $PythonPath = $Script:Config.PythonPath,
+        $SDBFileInput,
         
         [parameter(Position = 3, Mandatory = $false)]
         [string]
-        $SDBFileInput,
-        
-        [parameter(Position = 4, Mandatory = $false)]
+        $SDBCab = $script:Config.SDBCab,
+
+        [parameter(Position = 5, Mandatory = $false)]
         [string]
-        $SDBCab = $Script:Config.SDBCab
+        $AlternateSourcePath
     )
 
-    $WorkingPath = Join-Path -Path $Path -ChildPath "$($DeviceName)"
-    $CABPath = "$($WorkingPath)\$($SDBCab)"
-    $SDBUnPackerFile = Join-Path -Path $PSScriptRoot -ChildPath "SDBUnpacker.py"
-    $AppraiserPath = Join-Path -Path $WorkingPath -ChildPath "Appriser"
-    $sdb2xmlPath = Join-Path -Path $PSScriptRoot -ChildPath "sdb2xml.exe"
+    Try {
+        If($script:PythonInstalled) {
+            If(!(Test-Path $script:Config.sdb2xmlPath)) {
+                Write-Warning "Cannot extract SDB files. sdb2XML not found at path: $($script:Config.sdb2xmlPath)"
+            }
+            Else {
 
-    New-Item -Path $AppraiserPath -ItemType Directory -Force
-    If(Test-Path -Path $CABPath) {
-        & expand $CABPath -F:* $AppraiserPath
-    }
-    Else {
-        Copy-Item -Path $SDBFileInput -Destination $AppraiserPath
-    }
+                If(!($AlternateSourcePath)) {
+                    $WorkingPath = $Path
+                }
+                Else {
+                    $WorkingPath = $AlternateSourcePath
+                }
 
-    $SDBFiles = Get-Item -Path $AppraiserPath\*.sdb -ErrorAction SilentlyContinue
-    ForEach ($File in $SDBFiles) {
-        $ExpandedFileName = "$($WorkingPath)\$($File.Name)_Expanded.sdb"
-        $XMLFileName = "$($WorkingPath)\$($File.Name).XML"
-        & $PythonPath $SDBUnPackerFile -i $File.FullName -o $ExpandedFileName
-        & $sdb2xmlPath $ExpandedFileName -out $XMLFileName
-    }
+                $CABPath = "$($WorkingPath)\$($SDBCab)"
+                $AppraiserPath = Join-Path -Path $WorkingPath -ChildPath "Appraiser"
 
+                If($AlternateSourcePath) {
+                    Write-Host " + Copying files from $($AlternateSourcePath).. " -ForegroundColor Cyan
+                    If(Test-Path "$($AlternateSourcePath)" -ErrorAction SilentlyContinue) {
+                        Copy-Item -Path "$($AlternateSourcePath)\*.sdb" -Destination $AppraiserPath -ErrorAction Stop
+                        Copy-Item -Path "$($AlternateSourcePath)\$($SDBCab)" -Destination $WorkingPath -ErrorAction Stop
+                        Write-Host $Script:tick -ForegroundColor green
+                    }
+                    Else {
+                        Write-Warning "AlternateSourcePath $($AlternateSourcePath) Not Found."
+                    }
+                }
+
+                If(Test-Path -Path $CABPath) {
+                    Write-Host " + Extracting $($CABPath).. " -ForegroundColor Cyan -NoNewline
+                    New-Item -Path $AppraiserPath -ItemType Directory -Force | Out-Null
+                    & expand $CABPath -F:* $AppraiserPath | Out-Null
+                    $SDBFiles = Get-Item -Path $AppraiserPath\*.sdb -ErrorAction SilentlyContinue
+                    If(!($SDBFiles)) {
+                        Write-Warning "No .sdb files found in $($AppraiserPath)"
+                    }
+                    Else {
+                        Write-Host $Script:tick -ForegroundColor green
+                    }                    
+                }
+
+                Write-Host " + Finding .sdb files.. " -ForegroundColor Cyan -NoNewline
+                $SDBFiles = Get-Item -Path $AppraiserPath\*.sdb -ErrorAction SilentlyContinue
+                If($SDBFiles) {
+                    ForEach ($File in $SDBFiles) {
+                        $ExpandedFileName = "$($WorkingPath)\$($File.Name)_Expanded.sdb"
+                        $XMLFileName = "$($WorkingPath)\$($File.Name).XML"
+
+                        Write-Host $Script:tick -ForegroundColor green
+
+                        Write-Host " + Unpacking $($File.FullName).. " -ForegroundColor Cyan -NoNewline
+                        & python.exe "$($script:Config.SDBUnPackerFile)" -i $File.FullName -o $ExpandedFileName | Out-Null
+                        Write-Host $Script:tick -ForegroundColor green
+
+                        Write-Host " + Converting sdb to xml.. " -ForegroundColor Cyan -NoNewline
+                        & "$($script:Config.sdb2xmlPath)" $ExpandedFileName -out $XMLFileName | Out-Null
+                        Write-Host $Script:tick -ForegroundColor green
+                    }
+                }
+                Else {
+                    Write-Warning "No SDB Files found at path: $($AppraiserPath)."
+                }
+            }
+        }
+        Else {
+            Write-Warning "Cannot extract SDB files. Python is not installed."
+        }
+    }
+    Catch {
+        Write-Warning $_
+    }
 }

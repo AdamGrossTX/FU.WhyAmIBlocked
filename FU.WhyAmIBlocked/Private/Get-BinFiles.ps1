@@ -7,22 +7,21 @@ Function Get-BinFiles {
     
         [parameter(Position = 2, Mandatory = $false)]
         [string]
-        $Path
+        $Path,
+
+        [parameter(Position = 3, Mandatory = $false)]
+        [string]
+        $DestinationPath
     )
         Try {
-            If(!($Path)) {
-                If($DeviceName) {
-                    $Path = "\\$($DeviceName)\c`$\Windows\appcompat\appraiser\*.bin"
-                }
-                Else {
-                    $Path = "C:\Windows\appcompat\appraiser\*.bin"
-                }
-            }
-            $BinFiles = Get-Item -Path $Path -ErrorAction SilentlyContinue
+            Write-Host " + Getting .bin files.. " -ForegroundColor Cyan -NoNewline
+            Copy-Item -Path "$($Path)\*.bin" -Destination $DestinationPath\ -Container -Force -ErrorAction SilentlyContinue
+            $BinFiles = (Get-Item -Path "$($DestinationPath)\*.bin" -ErrorAction SilentlyContinue).FullName
+            Write-Host $script:tick -ForegroundColor Green
     
             Return $BinFiles
         }
         Catch {
-            $Error[0]
+            Write-Warning $_
         }
 }

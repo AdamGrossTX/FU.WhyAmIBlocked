@@ -81,7 +81,7 @@ $RootFiles = (Get-ChildItem -Path ("$ModulePath\*.*") -File)
 $AllItems = $AllPS1Files + $RootFiles
 $BuildDate = Get-Date
 $Prefix = "fu"
-
+$Path = "C:\FeatureUpdateBlocks"
 
 ForEach ($item in $AllItems) {
     $item.LastWriteTime = $BuildDate;
@@ -95,11 +95,11 @@ $Manifest = @{
     ModuleVersion = $ModuleVersion
     Description = $Description
     FunctionsToExport = $PrivatePS1Files.BaseName + $PublicPS1Files.BaseName
+    DefaultCommandPrefix = $Prefix.ToUpper()
     CmdletsToExport = @()
-    VariablesToExport = @()
+    VariablesToExport = '*'
     AliasesToExport = @()
     DscResourcesToExport = @()
-    DefaultCommandPrefix = $Prefix.ToUpper()
 }
 
 #https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/new-modulemanifest?view=powershell-7
@@ -109,17 +109,30 @@ $ModuleFunctionScript = "
     `$Public = @(Get-ChildItem -Path `"`$(`$PSScriptRoot)\Public\*.ps1`" -ErrorAction SilentlyContinue)
     `$Private = @(Get-ChildItem -Path `"`$(`$PSScriptRoot)\Private\*.ps1`" -ErrorAction SilentlyContinue)
     `$script:Prefix = `"$($Prefix)`"
-    `$cfg = Get-Content `"`$(`$env:USERPROFILE)\.$($Prefix)cfgpath`" -ErrorAction SilentlyContinue
+    `$script:Path = `"$($Path)`"
+    `$initCfg = @{
+        Path = `"`$(`$script:Path)`"
+        ConfigFile = `"`$(`$script:Path)\Config.json`"
+        SDBCab = `"Appraiser_AlternateData.cab`"
+        SDBUnPackerFile = Join-Path -Path `$PSScriptRoot -ChildPath `"SDBUnpacker.py`"
+        sdb2xmlPath = Join-Path -Path `$PSScriptRoot -ChildPath `"sdb2xml.exe`"
+        UserConfigFile = `"`$(`$env:USERPROFILE)\.`$(`$script:Prefix)cfgpath`"
+    }
+    `$cfg = Get-Content `$initCfg[`"UserConfigFile`"] -ErrorAction SilentlyContinue
     `$script:tick = [char]0x221a
 
     if (`$cfg) {
-        `$script:$($Prefix)Config = if (Get-Content -Path `$cfg -raw -ErrorAction SilentlyContinue) {
-            Get-Content -Path `$cfg -raw -ErrorAction SilentlyContinue | ConvertFrom-Json
+        if (Get-Content -Path `$cfg -raw -ErrorAction SilentlyContinue) {
+            `$script:Config = Get-Content -Path `$cfg -raw -ErrorAction SilentlyContinue | ConvertFrom-Json
         }
         else {
-            `$script:$($Prefix)Config = `$null
+            `$script:Config = `$initCfg
         }
     }
+    else {
+        `$script:Config = `$initCfg
+    }
+
     #endregion
     #region Dot source the files
     foreach (`$import in @(`$Public + `$Private)) {
@@ -131,6 +144,17 @@ $ModuleFunctionScript = "
         }
     }
     #endregion
+
+    Try {
+        `$pythonVersion = & python --version
+    }
+    Catch {
+        Write-Host `"Python is not installed. Install Pyton before proceeding.`" -foregroundColor Red
+    }
+    If(`$pythonVersion) {
+        `[switch]`$script:PythonInstalled = `$true
+    }
+
 "
 
 $ModuleFunctionScript | Out-File -FilePath "$($ModulePath)\$($ModuleName).psm1" -Encoding utf8 -Force

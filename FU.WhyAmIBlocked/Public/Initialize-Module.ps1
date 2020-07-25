@@ -2,7 +2,7 @@ function Initialize-Module {
     [cmdletbinding()]
     param (
         [parameter(Position = 1, Mandatory = $false)]
-        $initCfg,
+        $initCfg = $script:Config,
 
         [parameter(Position = 2, Mandatory = $false)]
         [switch]
@@ -10,26 +10,32 @@ function Initialize-Module {
     )
     try {
 
-        $ConfigPath = If($($initCfg["ConfigPath"])) {
-            "$($initCfg["ConfigPath"])\Config.json"
-        }
-        Else {
-            "$($initCfg["Path"])\Config.json"
+        #Create output folder
+        $Path = $initCfg.Path
+        If(!(Test-Path -Path $Path)) {
+            New-Item -Path $Path -ItemType Directory | Out-Null
         }
 
-        Write-Host " + Creating $($ConfigPath).. " -ForegroundColor Cyan -NoNewline
-        if ((Test-Path $ConfigPath -ErrorAction SilentlyContinue) -and ($Reset -eq $false)) {
-            Write-Host "$script:tick (Already created - no need to run this again..)" -ForegroundColor Green
+        $ConfigFile = 
+            If($initCfg.ConfigFile) {
+                $initCfg.ConfigFile
+            }
+            Else {
+                "$($Path)\Config.json"
+            }
+
+            Write-Host " + Creating $($ConfigFile).. " -ForegroundColor Cyan -NoNewline
+        if ((Test-Path $ConfigFile -ErrorAction SilentlyContinue) -and (!($Reset.IsPresent))) {
+            Write-Warning "Already created - no need to run this again.."
         }
         else {
             $initCfgJSON = $initCfg | ConvertTo-Json -Depth 20
-            $initCfgJSON | Out-File $ConfigPath -Encoding ascii -Force
-            $ConfigPath | Out-File "$env:USERPROFILE\.$($Prefix)cfgpath" -Encoding ascii -Force
+            $initCfgJSON | Out-File $ConfigFile -Encoding ascii -Force
+            $ConfigFile | Out-File $initCfg.UserConfigFile -Encoding ascii -Force
             Write-Host $script:tick -ForegroundColor Green
-            $script:Config = Get-Config
         }
     }
     catch {
-        $Error[0]
+        Write-Warning $_
     }
 }

@@ -1,23 +1,40 @@
 Function IterateXMLTree{
     [cmdletbinding()]
     Param ( 
-        $node
+        $node,
+        [System.Collections.ArrayList]$Output
     )
-    $obj = $node | Where-Object {$_.Name -ne '#text' -and !([string]::IsNullOrEmpty($_.'#text'))} | Select Name, @{N='Value';E={$_.'#text'}}, ParentNode
-    If($obj) {
-        $OutputObject = [PSCustomObject]@{
-            Name = $obj.Name
-            Value = $obj.Value
-            ParentNode = $obj.ParentNode
+    Try {
+        $obj = $node | Where-Object {$_.Name -ne '#text' -and !([string]::IsNullOrEmpty($_.'#text'))} | Select Name, @{N='Value';E={$_.'#text'}}, ParentNode
+        If($obj) {
+            $Object = [PSCustomObject]@{
+                Name = $obj.Name
+                Value = $obj.Value
+                ParentNode = $obj.ParentNode.SchemaInfo.Name
+            }
+            If($Output) {
+                $Output += $Object
+            }
+            Else {
+                $Output = @($Object)
+            }
         }
-    }
-
-    If($Node.HasChildNodes) {
-        ForEach($ChildNode in $Node.ChildNodes) {
-            IterateXMLTree -node $ChildNode
+        If($Node.HasChildNodes) {
+            ForEach($ChildNode in $Node.ChildNodes) {
+                $Return = IterateXMLTree -node $ChildNode -Output $Output
+                If($Return) {
+                    If($Return -is [PSCustomObject]) {
+                        $Output = @($Return)
+                    }
+                    Else {
+                        $Output = $Return
+                    }
+                }
+            }
         }
+        Return $Output
     }
-    Else {
-        Return $OutputObject
+    Catch {
+        Write-Warning $_
     }
 }
