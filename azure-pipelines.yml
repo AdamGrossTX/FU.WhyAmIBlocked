@@ -1,0 +1,65 @@
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - /FU.WhyAmIBlocked/ReleaseNotes.txt
+    exclude:
+      - /.gitignore
+      - /readme.md
+      - /.tests
+
+stages:
+  - stage: Build
+    jobs:
+      - job: Build
+        pool:
+          vmImage: 'vs2017-win2016'
+        steps:
+          - task: PowerShell@2
+            displayName: Build
+            inputs:
+              filePath: './Setup-FUModule.ps1'
+              arguments: '-modulePath $(modulePath)'
+              pwsh: true
+
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: './bin/release/$(Build.BuildId)'
+              Contents: '**'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
+              CleanTargetFolder: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish Artifact
+            inputs:
+              targetPath: '$(Build.ArtifactStagingDirectory)'
+              artifact: 'release'
+              publishLocation: 'pipeline'
+
+  - stage: Deploy
+    jobs:
+      - deployment: 'Deploy'
+        displayName: 'Publish to PSGallery'
+        pool:
+          vmImage: 'vs2017-win2016'
+        environment: 'production'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: PowerShell@2
+                  inputs:
+                    targetType: 'inline'
+                    script: |
+                      try {
+                        write-host "Publishing module from: $env:Pipeline_Workspace\release\$env:MODULENAME"
+                        Publish-Module -Path "$env:Pipeline_Workspace\release\$env:MODULENAME" -NuGetApiKey $env:APIKEY
+                      }
+                      catch {
+                        write-warning $_
+                      }
+                    pwsh: true
+                  env:
+                    APIKEY: $(apiKey)
