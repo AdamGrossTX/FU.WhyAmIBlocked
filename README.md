@@ -25,6 +25,8 @@ Initialize-FUModule
 Get-FUBlocks
 ```
 
+Python is required to process the sdb compatibility database, but the module will still function partially without it.
+
 ## Build from source
 
 ``` PowerShell
@@ -34,5 +36,6 @@ Import-Module ".\bin\release\*\FU.WhyAmIBlocked" -Force #replace the * with rele
 
 ## Resources used
 
-- SDBUnpacker.py sourced from https://github.com/TheEragon/SdbUnpacker
-- sdb2XML sourced from https://devblogs.microsoft.com/setup/shim-database-to-xml/
+- https://github.com/TheEragon/SdbUnpacker
+- https://devblogs.microsoft.com/setup/shim-database-to-xml/
+- https://gallery.technet.microsoft.com/scriptcenter/APPRAISE-APPRAISERbin-to-8399c0ee
