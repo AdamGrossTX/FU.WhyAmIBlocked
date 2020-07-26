@@ -14,6 +14,7 @@ try {
     $CompanyName = "A Square Dozen"
     $Prefix = "fu"
     $Path = "C:\FeatureUpdateBlocks"
+    $ProjectUri = "https://github.com/AdamGrossTX/FU.WhyAmIBlocked"
 
     
      #region Generate a new version number
@@ -63,6 +64,7 @@ try {
         AliasesToExport = @()
         DscResourcesToExport = @()
         ReleaseNotes = $releaseNotes
+        ProjectUri = $ProjectUri
     }
 
     #https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/new-modulemanifest?view=powershell-7

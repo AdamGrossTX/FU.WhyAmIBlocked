@@ -20,7 +20,7 @@ stages:
           - task: PowerShell@2
             displayName: Build
             inputs:
-              filePath: './Setup-FUModule.ps1'
+              filePath: './build.ps1'
               arguments: '-modulePath $(modulePath)'
               pwsh: true
 
