@@ -1,109 +1,72 @@
-﻿<#
-.SYNOPSIS
+﻿[cmdletbinding()]
+param (
+    [parameter(Mandatory = $true)]
+    [System.IO.FileInfo]$modulePath,
 
-Converts Windows Compatibility Appraiser BIN files to Human Readable XML files
+    [parameter(Mandatory = $false)]
+    [switch]$buildLocal
+)
 
-.DESCRIPTION
+try {
 
-Converts Windows Compatibility Appraiser BIN files to Human Readable XML files
+    $ModuleName = "FU.WhyAmIBlocked"
+    $Author = "Adam Gross (@AdamGrossTX)"
+    $CompanyName = "A Square Dozen"
+    $Prefix = "fu"
+    $Path = "C:\FeatureUpdateBlocks"
 
-Author
-    Adam Gross
-    @AdamGrossTX
-    http://www.asquaredozen.com
-    https://github.com/AdamGrossTX
-    https://twitter.com/AdamGrossTX
+    
+     #region Generate a new version number
+     $moduleName = Split-Path $modulePath -Leaf
+     [Version]$exVer = Find-Module $moduleName -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Version
+     if ($buildLocal) {
+         $rev = ((Get-ChildItem $PSScriptRoot\bin\release\ -ErrorAction SilentlyContinue).Name | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum) + 1
+         $newVersion = New-Object Version -ArgumentList 1, 0, 0, $rev
+     }
+     else {
+         $newVersion = if ($exVer) {
+             $rev = ($exVer.Revision + 1)
+             New-Object version -ArgumentList $exVer.Major, $exVer.Minor, $exVer.Build, $rev
+         }
+         else {
+             $rev = ((Get-ChildItem $PSScriptRoot\bin\release\ -ErrorAction SilentlyContinue).Name | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum) + 1
+             New-Object Version -ArgumentList 1, 0, 0, $rev 
+         }
+     }
+     $releaseNotes = (Get-Content .\$moduleName\ReleaseNotes.txt -Raw -ErrorAction SilentlyContinue).Replace("{{NewVersion}}",$newVersion)
+     $releaseNotes = $exVer ? $releaseNotes.Replace("{{LastVersion}}","$($exVer.ToString())") : $releaseNotes.Replace("{{LastVersion}}","")
+     #endregion
 
+    #region Build out the release
+    $relPath = "$PSScriptRoot\bin\release\$rev\$moduleName"
+    "Version is $newVersion"
+    "Module Path is $modulePath"
+    "Module Name is $moduleName"
+    "Release Path is $relPath"
+    if (!(Test-Path $relPath)) {
+        New-Item -Path $relPath -ItemType Directory -Force | Out-Null
+    }
 
-.PARAMETER DeviceName
+    Copy-Item "$modulePath\*" -Destination "$relPath" -Recurse -Exclude ".gitKeep","releaseNotes.txt","description.txt","*.psm1","*.psd1"
 
-DeviceName of a remote computer. Defaults to local computer if not specified
+    $Manifest = @{
+        Path = "$($relPath)\$($ModuleName).psd1"
+        RootModule = "$($ModuleName).psm1"
+        Author = $Author
+        CompanyName = $CompanyName
+        ModuleVersion = $newVersion
+        Description = (Get-Content .\$moduleName\description.txt -raw).ToString()
+        FunctionsToExport = (Get-ChildItem -Path ("$ModulePath\Public\*.ps1") -Recurse).BaseName
+        DefaultCommandPrefix = $Prefix.ToUpper()
+        CmdletsToExport = @()
+        VariablesToExport = '*'
+        AliasesToExport = @()
+        DscResourcesToExport = @()
+        ReleaseNotes = $releaseNotes
+    }
 
-.PARAMETER OutputFilePath
-
-Path where all results are stored. Default to c:\Temp.
-
-.PARAMETER BinFilePath
-
-Path to specific BIN files that need to be processed. Defaults to c:\Windows\appcompat\appraiser\ if not specified
-
-.PARAMETER ProcessPantherLogs
-
-Switch parameter to look in any Panther locations for existing XML files to process
-
-
-.EXAMPLE
-
-Process BIN files from c:\Windows\appcompat\appraiser\ on the current computer and output to the default location of c:\Temp
-
-.\Get-FeatureUpdateBlocks.ps1
-
-.EXAMPLE
-
-Process BIN files from c:\Windows\appcompat\appraiser\ on a remote computer and output to custom location of C:\MyDir
-
-.\Get-FeatureUpdateBlocks.ps1 -DeviceName "MyDevice" -OutputFilePath "C:\MyDir"
-
-.EXAMPLE
-
-Process BIN files from c:\Windows\appcompat\appraiser\ on a remote computer and output to custom location of C:\MyDir and process any Panther logs that may exist on the device
-
-.\Get-FeatureUpdateBlocks.ps1 -DeviceName "MyDevice" -OutputFilePath "C:\MyDir" -ProcessPantherLogs
- 
-.EXAMPLE
-
-Process BIN files for a remote computer and output to custom location of C:\MyDir and process any Panther logs that may exist on the device and uses bin files from c:\MyBinFiles instead of the default locations
-
-.\Get-FeatureUpdateBlocks.ps1 -DeviceName "MyDevice" -OutputFilePath "C:\MyDir" -ProcessPantherLogs -BinFilePath "C:\MyBinFiles"
-
-
-.LINK
-
-#Original Source
-#https://gallery.technet.microsoft.com/scriptcenter/APPRAISE-APPRAISERbin-to-8399c0ee#content
-
-#Main Blog Post
-http://www.asquaredozen.com/2018/07/29/configuring-802-1x-authentication-for-windows-deployment/
-
-#>
-Set-Location "C:\Users\grossac\OneDrive - A Square Dozen\GitHub\FU.WhyAmIBlocked"
-
-$ModuleName = "FU.WhyAmIBlocked"
-$ModulePath = "$($PSScriptRoot)\$($ModuleName)"
-$Author = "Adam Gross (@AdamGrossTX)"
-$ModuleVersion = '1.0'
-$CompanyName = "A Square Dozen"
-$Description = ""
-$PrivatePS1Files = (Get-ChildItem -Path ("$ModulePath\Private\*.ps1") -Recurse)
-$PublicPS1Files = (Get-ChildItem -Path ("$ModulePath\Public\*.ps1") -Recurse)
-$AllPS1Files = (Get-ChildItem -Path ("$ModulePath\*.ps1") -Recurse)
-$RootFiles = (Get-ChildItem -Path ("$ModulePath\*.*") -File)
-$AllItems = $AllPS1Files + $RootFiles
-$BuildDate = Get-Date
-$Prefix = "fu"
-$Path = "C:\FeatureUpdateBlocks"
-
-ForEach ($item in $AllItems) {
-    $item.LastWriteTime = $BuildDate;
-}
-
-$Manifest = @{
-    Path = "$ModulePath\$($ModuleName).psd1"
-    RootModule = "$($ModuleName).psm1"
-    Author = $Author
-    CompanyName = $CompanyName
-    ModuleVersion = $ModuleVersion
-    Description = $Description
-    FunctionsToExport = $PrivatePS1Files.BaseName + $PublicPS1Files.BaseName
-    DefaultCommandPrefix = $Prefix.ToUpper()
-    CmdletsToExport = @()
-    VariablesToExport = '*'
-    AliasesToExport = @()
-    DscResourcesToExport = @()
-}
-
-#https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/new-modulemanifest?view=powershell-7
-New-ModuleManifest @Manifest
+    #https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/new-modulemanifest?view=powershell-7
+    New-ModuleManifest @Manifest
 
 $ModuleFunctionScript = "
     `$Public = @(Get-ChildItem -Path `"`$(`$PSScriptRoot)\Public\*.ps1`" -ErrorAction SilentlyContinue)
@@ -147,14 +110,34 @@ $ModuleFunctionScript = "
 
     Try {
         `$pythonVersion = & python --version
+        If(`$pythonVersion) {
+            [switch]`$script:PythonInstalled = `$true
+        }
+        Else {
+            Throw `"Python is not installed. Install Pyton before proceeding.`"
+        }
     }
     Catch {
-        Write-Host `"Python is not installed. Install Pyton before proceeding.`" -foregroundColor Red
-    }
-    If(`$pythonVersion) {
-        `[switch]`$script:PythonInstalled = `$true
+        [switch]`$script:PythonInstalled = `$false
+        Write-Warning `$_.Exception.Message
     }
 
 "
-
-$ModuleFunctionScript | Out-File -FilePath "$($ModulePath)\$($ModuleName).psm1" -Encoding utf8 -Force
+   $ModuleFunctionScript | Out-File -FilePath "$($relPath)\$($ModuleName).psm1" -Encoding utf8 -Force
+    
+    #endregion
+    #region Generate a list of public functions and update the module manifest
+    #$functions = @(Get-ChildItem -Path $relPath\Public\*.ps1 -ErrorAction SilentlyContinue).basename
+    #$params = @{
+    #    Path = "$relPath\$ModuleName.psd1"
+    #    ModuleVersion = $newVersion
+    #    Description = (Get-Content .\$moduleName\description.txt -raw).ToString()
+    #    FunctionsToExport = $functions
+    #    ReleaseNotes = $releaseNotes.ToString()
+    #}
+    #Update-ModuleManifest @params
+    #endregion
+}
+catch {
+    $_
+}
