@@ -16,6 +16,7 @@ Install module from gallery
 
 ``` PowerShell
 Install-Module FU.WhyAmIBlocked -Scope CurrentUser
+Import-Module FU.WhyAmIBlocked
 ```
 
 Once module is installed Initialize and run commands..
