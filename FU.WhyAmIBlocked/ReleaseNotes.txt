@@ -1,2 +1,9 @@
 {{NewVersion}}
+  - Fixed bug in Extract-XMLFromSDB where paths were mixed up
+  - Moved Find-BlocksInSDB to Public
+
+1.0.0.1
   - Initial Release
+  - SDBUnpacker.py sourced from https://github.com/TheEragon/SdbUnpacker
+  - sdb2XML sourced from https://devblogs.microsoft.com/setup/shim-database-to-xml/
+  
