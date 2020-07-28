@@ -1,6 +1,8 @@
-sdbUnpacker.py sourced from
+Acknowledgments
 
-https://github.com/TheEragon/SdbUnpacker
+sdb2XML sourced from https://devblogs.microsoft.com/setup/shim-database-to-xml/
+
+sdbUnpacker.py sourced from https://github.com/TheEragon/SdbUnpacker and the license follows.
 
 MIT License
 
@@ -23,7 +25,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
-sdb2XML sourced from
-https://devblogs.microsoft.com/setup/shim-database-to-xml/
