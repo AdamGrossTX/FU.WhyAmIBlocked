@@ -1,4 +1,9 @@
 {{NewVersion}}
+  - Added PythonPath option for fuconfig.json to allow for path to point to portable python (https://github.com/AdamGrossTX/FU.WhyAmIBlocked/issues/1)
+  - Fixed bug where Block GUIDs were being returned as a string instead of ArrayList (https://github.com/AdamGrossTX/FU.WhyAmIBlocked/issues/2)
+  - Fixed Initialize-FUModule to address issue with reset not updating the file.
+
+1.0.0.2
   - Fixed bug in Extract-XMLFromSDB where paths were mixed up
   - Moved Find-BlocksInSDB to Public
 
@@ -6,4 +11,3 @@
   - Initial Release
   - SDBUnpacker.py sourced from https://github.com/TheEragon/SdbUnpacker
   - sdb2XML sourced from https://devblogs.microsoft.com/setup/shim-database-to-xml/
-  
