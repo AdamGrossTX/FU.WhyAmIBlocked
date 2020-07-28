@@ -38,7 +38,7 @@ Function Get-Blocks {
     Try {
 
         Write-Host " + Creating Output Folders $($OutputPath).. " -ForegroundColor Cyan -NoNewline
-        [System.Collections.ArrayList]$Script:BlockList = @()
+        
 
         If($Local.IsPresent -or (!($DeviceName)) -and (!($AlternateSourcePath))) {
             $DeviceName = $env:computername
@@ -98,7 +98,7 @@ Function Get-Blocks {
         }
         
         $HumanReadableXMLFiles = (Get-Item -Path "*Humanreadable.xml" -ErrorAction SilentlyContinue).FullName
-        $Script:BlockList = Get-BlocksFromXML -FileList $HumanReadableXMLFiles -ResultFile $ResultFile
+        $Script:BlockList = Get-BlocksFromBin -FileList $HumanReadableXMLFiles -ResultFile $ResultFile -Output (New-Object -TypeName System.Collections.ArrayList )
         
         #Needs to work with remote devices too...
         If($DeviceName -eq $env:computername) {

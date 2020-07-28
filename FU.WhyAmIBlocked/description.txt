@@ -1,1 +1,3 @@
 Can't get the latest Windows 10 Feature update? Need to find out what's blocking you? This module will help you find the block quickly!
+
+More details in my blog https://www.asquaredozen.com/2020/07/26/demystifying-windows-10-feature-update-blocks/

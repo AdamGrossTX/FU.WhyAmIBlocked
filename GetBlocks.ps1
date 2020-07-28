@@ -1,5 +1,6 @@
-Import-Module ".\FU.WhyAmIBlocked" -Force
-Initialize-FUModule
+Import-Module ".\bin\release\20\FU.WhyAmIBlocked" -Force
+#Update-Module FU.WhyAmIBlocked
+Initialize-FUModule -reset
 Get-FUBlocks
 
 #ToDo Usage Examples

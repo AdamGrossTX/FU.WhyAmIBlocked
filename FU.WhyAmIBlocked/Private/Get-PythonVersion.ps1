@@ -2,7 +2,12 @@ function Get-PythonVersion {
     [cmdletbinding()]
     Param()
     Try {
-        $PythonVersion = & python --version
+        If($Script:Config.PythonPath) {
+            $PythonVersion = & $($Script:Config.PythonPath)\python.exe --version
+        }
+        Else {
+            $PythonVersion = & python --version
+        }
         Return $PythonVersion
     }
     Catch {

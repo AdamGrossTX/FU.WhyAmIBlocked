@@ -1,4 +1,4 @@
-Function Get-BlocksFromXML {
+Function Get-BlocksFromBin {
     [cmdletbinding()]
     Param ( 
         [parameter(Position = 1, Mandatory = $true)]
@@ -6,11 +6,12 @@ Function Get-BlocksFromXML {
         $FileList,
         
         [string]
-        $ResultFile = ".\Result.txt"
+        $ResultFile = ".\Result.txt",
+        [System.Collections.ArrayList]$Output
     ) 
     
     Try {
-        [System.Collections.ArrayList]$BlockList = @()
+
         If(!(Test-Path -Path $ResultFile)) {
             New-Item -Path $ResultFile -ItemType File | Out-Null
         }
@@ -60,13 +61,13 @@ Function Get-BlocksFromXML {
                         $gBlock = ForEach($num in $ordinal) {
                                         $sdb[$x] | Where-Object Ordinal -EQ $num
                                     } 
-                        ($gBlock | Where-Object Name -eq "SdbEntryGuid" | Select -ExpandProperty Value) | ForEach-Object {$BlockList.Add($_) | Out-Null}
+                        ($gBlock | Where-Object Name -eq "SdbEntryGuid" | Select -ExpandProperty Value) | ForEach-Object {$Output.Add($_) | Out-Null}
                         $gBlock | Out-File -FilePath $ResultFile -Append
 
                     }   
                     If($ordinal.Count -eq 1) { 
                         $gBlock = $sdb[$x] | Where-Object Ordinal -EQ $ordinal 
-                        ($gBlock | Where-Object Name -eq "SdbEntryGuid" | Select -ExpandProperty Value) | ForEach-Object {$BlockList.Add($_) | Out-Null}
+                        ($gBlock | Where-Object Name -eq "SdbEntryGuid" | Select -ExpandProperty Value) | ForEach-Object {$Output.Add($_) | Out-Null}
                         $gBlock | Out-File -FilePath $ResultFile -Append
                     } 
             
@@ -91,12 +92,12 @@ Function Get-BlocksFromXML {
                         $sBlock = ForEach($num in $ordinal) {
                             $sdb[$x] | Where-Object Ordinal -EQ $num
                         } 
-                        ($sBlock | Where-Object Name -eq "SdbEntryGuid" | Select -ExpandProperty Value) | ForEach-Object {$BlockList.Add($_) | Out-Null}
+                        ($sBlock | Where-Object Name -eq "SdbEntryGuid" | Select -ExpandProperty Value) | ForEach-Object {$Output.Add($_) | Out-Null}
                         $sBlock | Out-File -FilePath $ResultFile -Append
                     }  
                     Else {
                         $sBlock = $sdb[$x] | Where-Object Ordinal -EQ $ordinal  
-                        ($sBlock | Where-Object Name -eq "SdbEntryGuid" | Select -ExpandProperty Value) | ForEach-Object {$BlockList.Add($_) | Out-Null}
+                        ($sBlock | Where-Object Name -eq "SdbEntryGuid" | Select -ExpandProperty Value) | ForEach-Object {$Output.Add($_) | Out-Null}
                         $sBlock | Out-File -FilePath $ResultFile -Append
                     } 
                 $x++ 
@@ -123,7 +124,7 @@ Function Get-BlocksFromXML {
         }
         Write-Host " + Results output to  $($ResultFile).. " -ForegroundColor Cyan -NoNewline
         Write-Host $Script:tick -ForegroundColor green
-        Return $BlockList
+        Return $Output
     }
     Catch {
         Write-Warning $_
