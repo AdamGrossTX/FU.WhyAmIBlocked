@@ -1,11 +1,11 @@
 Function IterateXMLTree{
     [cmdletbinding()]
-    Param ( 
+    Param (
         $node,
         [System.Collections.ArrayList]$Output
     )
     Try {
-        $obj = $node | Where-Object {$_.Name -ne '#text' -and !([string]::IsNullOrEmpty($_.'#text'))} | Select Name, @{N='Value';E={$_.'#text'}}, ParentNode
+        $obj = $node | Where-Object {$_.Name -ne '#text' -and !([string]::IsNullOrEmpty($_.'#text'))} | Select-Object Name, @{N='Value';E={$_.'#text'}}, ParentNode
         If($obj) {
             $Object = [PSCustomObject]@{
                 Name = $obj.Name

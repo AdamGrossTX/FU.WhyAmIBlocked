@@ -1,3 +1,6 @@
+<#
+.EXTERNALHELP FU.WhyAmIBlocked-help.xml
+#>
 function Initialize-Module {
     [cmdletbinding()]
     param (
@@ -28,7 +31,7 @@ function Initialize-Module {
         }
 
 
-        $ConfigFile = 
+        $ConfigFile =
             If($initCfg.ConfigFile) {
                 $initCfg.ConfigFile
             }
