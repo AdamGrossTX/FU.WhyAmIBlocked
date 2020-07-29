@@ -6,10 +6,6 @@ Function Export-BypassBlock {
     Param (
         [Parameter(Mandatory=$false)]
         [string]
-        $InputFile = "AllMatches.json",
-
-        [Parameter(Mandatory=$false)]
-        [string]
         $Path = $script:Config.Path
     )
 
@@ -17,11 +13,10 @@ Function Export-BypassBlock {
         Write-Host " + Finding and exporting block bypass.. " -ForegroundColor Cyan -NoNewline
 
         $WorkingPath = $Path
-        $JsonFile = Join-Path -Path $WorkingPath -ChildPath "$($InputFile)"
+        $Files = Get-Item -Path "$($Path)\*.json"
 
-        If(Test-Path $JsonFile) {
-            $obj = Get-Content -Path $JsonFile -Raw | ConvertFrom-Json
-
+        ForEach($File in $Files) {
+            $obj = Get-Content -Path $File -Raw | ConvertFrom-Json
             ForEach($Item in $obj.PSObject.Properties) {
                 $BlockName = $item.Value | Where-Object {$_.Name -eq "APP_NAME"} | Select-Object -ExpandProperty Value
                 $BlockGUID = $item.Name
@@ -32,8 +27,8 @@ Function Export-BypassBlock {
                     #$REG_VALUE_TYPE = $RegKeys | Where-Object {$_.Name -eq "REG_VALUE_TYPE"} | Select -ExpandProperty Value
                     $REG_VALUE_DATA_DWORD = $RegKeys | Where-Object {$_.Name -eq "REG_VALUE_DATA_DWORD"} | Select-Object -ExpandProperty Value
 
-                    $OutRegFile = Join-Path -Path $WorkingPath -ChildPath "BypassFUBlock.reg"
-                    $OutPS1File = Join-Path -Path $WorkingPath -ChildPath "BypassFUBlock.ps1"
+                    $OutRegFile = Join-Path -Path $WorkingPath -ChildPath "$($File.BaseName)_BypassFUBlock.reg"
+                    $OutPS1File = Join-Path -Path $WorkingPath -ChildPath "$($File.BaseName)_BypassFUBlock.ps1"
 
                     If(!(Test-Path $OutRegFile)) {
                         "Windows Registry Editor Version 5.00" | Out-File -FilePath $OutRegFile -Append

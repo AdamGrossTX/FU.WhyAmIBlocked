@@ -78,7 +78,6 @@ $ModuleFunctionScript = "
     `$initCfg = @{
         Path = `"`$(`$script:Path)`"
         ConfigFile = `"`$(`$script:Path)\Config.json`"
-        SDBCab = `"Appraiser_AlternateData.cab`"
         SDBUnPackerFile = Join-Path -Path `$PSScriptRoot -ChildPath `"SDBUnpacker.py`"
         sdb2xmlPath = Join-Path -Path `$PSScriptRoot -ChildPath `"sdb2xml.exe`"
         UserConfigFile = `"`$(`$env:USERPROFILE)\.`$(`$script:Prefix)cfgpath`"

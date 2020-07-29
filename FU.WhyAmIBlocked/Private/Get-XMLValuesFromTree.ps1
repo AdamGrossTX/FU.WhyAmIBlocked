@@ -1,4 +1,4 @@
-Function IterateXMLTree{
+Function Get-XMLValuesFromTree{
     [cmdletbinding()]
     Param (
         $node,
@@ -21,7 +21,7 @@ Function IterateXMLTree{
         }
         If($Node.HasChildNodes) {
             ForEach($ChildNode in $Node.ChildNodes) {
-                $Return = IterateXMLTree -node $ChildNode -Output $Output
+                $Return = Get-XMLValuesFromTree -node $ChildNode -Output $Output
                 If($Return) {
                     If($Return -is [PSCustomObject]) {
                         $Output = @($Return)

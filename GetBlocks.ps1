@@ -1,7 +1,13 @@
-Import-Module ".\bin\release\20\FU.WhyAmIBlocked" -Force
+Import-Module ".\bin\release\24\FU.WhyAmIBlocked" -Force
 #Update-Module FU.WhyAmIBlocked
-Initialize-FUModule -reset
-Get-FUBlocks
+#Initialize-FUModule -reset
+#Get-FUBlocks -AlternateSourcePath "C:\FeatureUpdateBlocks\Alt\LOVELACE"
+#Get-FUBlocks -AlternateSourcePath "C:\FeatureUpdateBlocks\Alt\ALOY"
+
+
+#Export-FUXMLFromSDB -AlternateSourcePath "C:\FeatureUpdateBlocks\Alt\ALOY"
+Get-FUBlocks -DeviceName HQ-CA251610
+
 
 #ToDo Usage Examples
 #Get-FUBlocks -DeviceName "MyDevice"

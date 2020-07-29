@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Extract-FUXMLFromSDB
+# Export-FUXMLFromSDB
 
 ## SYNOPSIS
 Converts a decompressed SDB file to XML.
@@ -13,7 +13,7 @@ Converts a decompressed SDB file to XML.
 ## SYNTAX
 
 ```
-Extract-FUXMLFromSDB [[-Path] <String>] [[-SDBFileInput] <String>] [[-SDBCab] <String>]
+Export-FUXMLFromSDB [[-Path] <String>] [[-SDBFileInput] <String>] [[-SDBCab] <String>]
  [[-AlternateSourcePath] <String>] [<CommonParameters>]
 ```
 
@@ -24,10 +24,10 @@ Converts a decompressed SDB file to XML.
 
 ### Example 1
 ```powershell
-PS C:\> Extract-FUXMLFromSDB -AlternateSourcePath c:\AltSourcePath\
+PS C:\> Export-FUXMLFromSDB -AlternateSourcePath c:\AltSourcePath\
 ```
 
-Extracts the SDB from an alternate source path
+Exports the SDB from an alternate source path
 
 ## PARAMETERS
 

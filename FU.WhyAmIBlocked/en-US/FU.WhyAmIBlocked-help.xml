@@ -208,8 +208,8 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Extract-FUXMLFromSDB</command:name>
-      <command:verb>Extract</command:verb>
+      <command:name>Export-FUXMLFromSDB</command:name>
+      <command:verb>Export</command:verb>
       <command:noun>FUXMLFromSDB</command:noun>
       <maml:description>
         <maml:para>Converts a decompressed SDB file to XML.</maml:para>
@@ -220,7 +220,7 @@
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>Extract-FUXMLFromSDB</maml:name>
+        <maml:name>Export-FUXMLFromSDB</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
           <maml:Description>
@@ -349,9 +349,9 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Extract-FUXMLFromSDB -AlternateSourcePath c:\AltSourcePath\</dev:code>
+        <dev:code>PS C:\&gt; Export-FUXMLFromSDB -AlternateSourcePath c:\AltSourcePath\</dev:code>
         <dev:remarks>
-          <maml:para>Extracts the SDB from an alternate source path</maml:para>
+          <maml:para>Exports the SDB from an alternate source path</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

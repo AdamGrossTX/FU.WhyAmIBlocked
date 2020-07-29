@@ -20,7 +20,7 @@ Function Find-BlocksInSDB {
             If($BlockList) {
 
                 $WorkingPath = $Path
-                $Files = Get-Item -Path "$($WorkingPath)\*.sdb.XML"
+                $Files = Get-Item -Path "$($WorkingPath)\*.sdb*.XML"
                 $AllMatches = @{}
                 $Blocks = @{}
                 ForEach ($File in $Files) {
@@ -29,7 +29,7 @@ Function Find-BlocksInSDB {
                     ForEach($Value in $BlockList) {
                         $BlockMatch = $Match | Where-Object {$Value.Contains($_.EXE_ID.'#text')}
                         $Result = $null
-                        $Result = IterateXMLTree -node $BlockMatch -Output ( New-Object -TypeName System.Collections.ArrayList )
+                        $Result = Get-XMLValuesFromTree -node $BlockMatch -Output ( New-Object -TypeName System.Collections.ArrayList )
                         If($Result) {
                             $Blocks[$Value] = $Result
                             $AllMatches[$Value] = $Result
@@ -44,7 +44,7 @@ Function Find-BlocksInSDB {
                         $RelatedMatch = $SDBContent.SDB.Database.MATCHING_INFO_BLOCK | Where-Object {[Regex]::Escape($LookupValues.Value) -like [Regex]::Escape(($_.PICK_ONE.MATCH_PLUGIN.COMMAND_LINE.'#text'))} | Where-Object {$_.EXE_ID.'#text' -ne $key}
                         ForEach($Item in $RelatedMatch) {
                             $Result = $null
-                            $Result = IterateXMLTree -node $Item -Output ( New-Object -TypeName System.Collections.ArrayList )
+                            $Result = Get-XMLValuesFromTree -node $Item -Output ( New-Object -TypeName System.Collections.ArrayList )
                             If($Result) {
                                 $RelatedBlocks[$Key] = $Result
                                 $AllMatches[($Item.EXE_ID).'#text'] = $Result
@@ -64,7 +64,12 @@ Function Find-BlocksInSDB {
 
                 }
 
-                $AllMatches | ConvertTo-Json | Out-File -FilePath $WorkingPath\AllMatches.json -Append
+                If($AllMatches) {
+                    $AllMatches | ConvertTo-Json | Out-File -FilePath $WorkingPath\AllMatches.json -Append
+                }
+                Else {
+                    Write-Warning "No Matches Found."
+                }
 
                 Write-Host $Script:tick -ForegroundColor green
             }

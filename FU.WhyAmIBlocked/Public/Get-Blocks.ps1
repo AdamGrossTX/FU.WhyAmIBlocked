@@ -41,29 +41,30 @@ Function Get-Blocks {
     Try {
 
         Write-Host " + Creating Output Folders $($OutputPath).. " -ForegroundColor Cyan -NoNewline
-
+        $Date = (Get-Date -Format yyyyMMdd_hhmmss)
 
         If($Local.IsPresent -or (!($DeviceName)) -and (!($AlternateSourcePath))) {
             $DeviceName = $env:computername
         }
 
         If($DeviceName) {
-            $OutputPath = Join-Path -Path $Path -ChildPath $DeviceName
+            $tOutputPath = Join-Path -Path $Path -ChildPath "$($DeviceName)_$($Date)"
         }
         Else {
             $DeviceName = "NoDeviceName"
-            $OutputPath = "$($Path)\Output"
+            $tOutputPath = "$($Path)\Output_$($Date)"
         }
 
-        New-Item -Path $OutputPath -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null
-        Remove-Item -Path $OutputPath\* -Recurse -ErrorAction SilentlyContinue | Out-Null
+        $OutputPath = New-Item -Path $tOutputPath -ItemType Directory -Force -ErrorAction SilentlyContinue
 
-        $ResultFile = "$($OutputPath)\Results.txt"
-        New-Item -Path $ResultFile -ItemType "File" -Force | Out-Null
+        $ResultFile = New-Item -Path "$($OutputPath)\Results.txt" -ItemType "File" -Force
         Add-Content -Path $ResultFile -Value "$($DeviceName) - $(Get-Date)"
 
-        $AppraiserPath = Join-Path -Path $OutputPath -ChildPath "Appraiser"
-        New-Item -Path $AppraiserPath -ItemType Directory -Force | Out-Null
+        $BinFilePath = New-Item -Path (Join-Path -Path $OutputPath -ChildPath "Bin") -ItemType Directory -Force
+        $AppraiserDataPath = New-Item -Path (Join-Path -Path $OutputPath -ChildPath "AppraiserData") -ItemType Directory -Force
+        $CABPath = New-Item -Path (Join-Path -Path $OutputPath -ChildPath "CABs") -ItemType Directory -Force
+        $XMLPath = New-Item -Path (Join-Path -Path $OutputPath -ChildPath "XML") -ItemType Directory -Force
+                
         Write-Host $script:tick -ForegroundColor Green
 
         If(!($AlternateSourcePath)) {
@@ -73,61 +74,111 @@ Function Get-Blocks {
             Else {
                 $RootPath = "\\$($DeviceName)\c`$"
             }
-            $BinFilePath = Join-Path -Path $RootPath -ChildPath "Windows\appcompat\appraiser"
-            $WindowsBTPath = Join-Path -Path $RootPath -ChildPath "`$WINDOWS.~BT"
+            $AppraiserSourcePath = Join-Path -Path $RootPath -ChildPath "Windows\appcompat\appraiser"
+            $WindowsBTSourcePath = Join-Path -Path $RootPath -ChildPath "`$WINDOWS.~BT"
+            $WindowsPantherSourcePath = Join-Path -Path $RootPath -ChildPath "Windows\Panther"
         }
         Else {
             $RootPath = $AlternateSourcePath
-            $BinFilePath = $RootPath
-            $WindowsBTPath = $null
+            $AppraiserSourcePath = $RootPath
+            $WindowsBTSourcePath = $null
+            $WindowsPantherSourcePath = $null
         }
-
-        $BinFiles = Get-BinFiles -DeviceName $DeviceName -Path $BinFilePath -DestinationPath $OutputPath
 
         If($RunCompatAppraiser.IsPresent -and $DeviceName -eq $env:computername) {
             Start-CompatAppraiser
         }
+        
+        Write-Host " + Getting .source files.. " -ForegroundColor Cyan
 
+        $SourceFiles = @{}
+        If($AlternateSourcePath) {
+            $SourceFiles["AltSrc"] = @(
+                    (Get-Item -Path (Join-Path -Path $AlternateSourcePath -ChildPath "*.sdb") -ErrorAction SilentlyContinue)
+                    (Get-Item -Path (Join-Path -Path $AlternateSourcePath -ChildPath "*.cab") -ErrorAction SilentlyContinue)
+                    (Get-Item -Path (Join-Path -Path $AlternateSourcePath -ChildPath "*.xml") -ErrorAction SilentlyContinue)
+                    (Get-Item -Path (Join-Path -Path $AlternateSourcePath -ChildPath "*.bin") -ErrorAction SilentlyContinue)
+                )
+        }
+        Else {
+            $SourceFiles["AppCompatAppraiser"] = @(
+                (Get-Item -Path (Join-Path -Path $AppraiserSourcePath -ChildPath "*.cab") -ErrorAction SilentlyContinue)
+                (Get-Item -Path (Join-Path -Path $AppraiserSourcePath -ChildPath "*.bin") -ErrorAction SilentlyContinue)
+            )
+
+            $SourceFiles["System32Appraiser"] = @(
+                (Get-Item -Path (Join-Path -Path $RootPath -ChildPath "Windows\System32\appraiser\*.sdb") -ErrorAction SilentlyContinue)
+                (Get-Item -Path (Join-Path -Path $RootPath -ChildPath "Windows\System32\appraiser\*.ini") -ErrorAction SilentlyContinue)
+            )
+
+            If($ProcessPantherLogs.IsPresent) {
+                $SourceFiles["WindowsBTSourcesPanther"] = @(
+                    (Get-Item -Path (Join-Path -Path $WindowsBTSourcePath -ChildPath "Sources\Panther\*APPRAISER_HumanReadable.xml") -ErrorAction SilentlyContinue)
+                    (Get-Item -Path (Join-Path -Path $WindowsBTSourcePath -ChildPath "Sources\Panther\AltData.cab") -ErrorAction SilentlyContinue)
+                )
+
+                $SourceFiles["WindowsBTSources"] = @(
+                    (Get-Item -Path (Join-Path -Path $WindowsBTSourcePath -ChildPath "Sources\*APPRAISER_HumanReadable.xml") -ErrorAction SilentlyContinue)
+                    (Get-Item -Path (Join-Path -Path $WindowsBTSourcePath -ChildPath "Sources\AltData.cab") -ErrorAction SilentlyContinue)
+                )
+
+                $SourceFiles["WindowsPanther"] = @(
+                    (Get-Item -Path (Join-Path -Path $WindowsPantherSourcePath -ChildPath "*APPRAISER_HumanReadable.xml") -ErrorAction SilentlyContinue)
+                    (Get-Item -Path (Join-Path -Path $WindowsPantherSourcePath -ChildPath "AltData.cab") -ErrorAction SilentlyContinue)
+                )
+            }
+        }
+
+        ForEach($key in $SourceFiles.Keys) {
+            ForEach($File in $SourceFiles[$key]) {
+                $DestPath = Switch ($File.Extension) {
+                    ".xml" {$XMLPath}
+                    ".cab" {$CabPath}
+                    ".sdb" {$AppraiserDataPath}
+                    ".ini" {$AppraiserDataPath}
+                    ".bin" {$BinFilePath}
+                    default {}
+                }
+                If($key -eq "System32Appraiser") {
+                    $DestPath = New-Item -Path "$($AppraiserDataPath)\$Key" -ItemType Directory -Force -ErrorAction SilentlyContinue
+                }
+                Write-Host " ++ copying $($File.FullName) to $($DestPath)" -ForegroundColor Cyan -NoNewline
+                $File | Copy-Item -Destination "$($DestPath)\$($Key)_$($File.Name)" -Force -ErrorAction SilentlyContinue
+                Write-Host $script:tick -ForegroundColor Green
+            }
+        }
+
+        $BinFiles = Get-Item -Path (Join-Path -Path $BinFilePath -ChildPath "*.bin") -ErrorAction SilentlyContinue
         If($BinFiles) {
             Add-Content -Path $ResultFile -Value "Found $($BinFiles.Count) .bin file(s)."
-            ConvertFrom-BinToXML -FileList $BinFiles -OutputPath $OutputPath
+            Add-Content -Path $ResultFile -Value "$($BinFiles | Format-Table | Out-String)"
+            ConvertFrom-BinToXML -FileList $BinFiles -OutputPath $XMLPath
         }
         Else {
             Add-Content -Path $ResultFile -Value "No .bin Files Found."
         }
 
-        If($ProcessPantherLogs.IsPresent) {
-            Copy-Item (Join-Path -Path $WindowsBTPath -ChildPath "Sources\Panther\*APPRAISER_HumanReadable.xml") $OutputPath -ErrorAction SilentlyContinue
-        }
+        $HumanReadableXMLFiles = Get-Item -Path "$($XMLPath)\*Humanreadable.xml" -ErrorAction SilentlyContinue
 
-        $HumanReadableXMLFiles = (Get-Item -Path "*Humanreadable.xml" -ErrorAction SilentlyContinue).FullName
-        $Script:BlockList = Get-BlocksFromBin -FileList $HumanReadableXMLFiles -ResultFile $ResultFile -Output (New-Object -TypeName System.Collections.ArrayList )
+        If($HumanReadableXMLFiles) {
+            $Script:BlockList = Get-BlocksFromBin -FileList $HumanReadableXMLFiles -ResultFile $ResultFile -Output (New-Object -TypeName System.Collections.ArrayList )
+        }
+        Else {
+            Write-Warning "No XML Files found to process. Verify that BIN/XML files were provided. Exiting."
+            Return
+        }
 
         #Needs to work with remote devices too...
         If($DeviceName -eq $env:computername) {
             Add-Content -Path $ResultFile -Value "AppCompat Registry Flags"
             Add-Content -Path $ResultFile -Value "=============="
-            Add-Content -Path $ResultFile -Value (Get-Item 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser')
-            Add-Content -Path $ResultFile -Value (Get-Item 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\SEC')
-            Add-Content -Path $ResultFile -Value (Get-Item 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\GWX')
-        }
-
-        If($ProcessPantherLogs.IsPresent) {
-            Copy-Item -Path (Join-Path -Path $WindowsBTPath -ChildPath "Sources\Panther\appraiser.sdb") -Destination (Join-Path -Path $AppraiserPath -ChildPath "BT-Panther-sdb.sdb") -ErrorAction SilentlyContinue
-            Copy-Item -Path (Join-Path -Path $WindowsBTPath -ChildPath "Sources\appraiser.sdb") -Destination (Join-Path -Path $AppraiserPath -ChildPath "BT-sdb.sdb") -ErrorAction SilentlyContinue
-            Copy-Item -Path (Join-Path -Path $RootPath -ChildPath "Windows\Panther\appraiser.sdb")  -Destination (Join-Path -Path $AppraiserPath -ChildPath "WIN-Panther-sdb.sdb") -ErrorAction SilentlyContinue
+            Add-Content -Path $ResultFile -Value (Get-Item -Path 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser' -ErrorAction SilentlyContinue)
+            Add-Content -Path $ResultFile -Value (Get-Item -Path 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\SEC' -ErrorAction SilentlyContinue)
+            Add-Content -Path $ResultFile -Value (Get-Item -Path 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\GWX' -ErrorAction SilentlyContinue)
         }
 
         If(!($SkipSDBInfo.IsPresent)) {
-            If(!($AlternateSourcePath)) {
-                Copy-Item -Path (Join-Path -Path $RootPath -ChildPath "Windows\System32\appraiser\appraiser.sdb")  -Destination (Join-Path -Path $AppraiserPath -ChildPath "appraiser.sdb") -ErrorAction SilentlyContinue
-                Copy-Item -Path (Join-Path -Path $RootPath -ChildPath "Windows\appcompat\appraiser\$($script:Config.SDBCab)")  -Destination (Join-Path -Path $OutputPath -ChildPath $script:Config.SDBCab) -ErrorAction SilentlyContinue
-            }
-            Else {
-                Copy-Item -Path (Join-Path -Path $RootPath -ChildPath "appraiser.sdb")  -Destination (Join-Path -Path $AppraiserPath -ChildPath "appraiser.sdb") -ErrorAction SilentlyContinue
-                Copy-Item -Path (Join-Path -Path $RootPath -ChildPath $script:Config.SDBCab)  -Destination (Join-Path -Path $OutputPath -ChildPath $script:Config.SDBCab) -ErrorAction SilentlyContinue
-            }
-            Extract-XMLFromSDB -Path $OutputPath
+            Export-XMLFromSDB -Path $OutputPath
             If($Script:BlockList) {
                 Find-BlocksInSDB -Path $OutputPath
                 Export-BypassBlock -Path $OutputPath
@@ -137,14 +188,6 @@ Function Get-Blocks {
                 Write-Host $Script:tick -ForegroundColor green
             }
         }
-
-        #region Cleanup
-        $tmp = New-Item -Path "$($OutputPath)\tmp" -ItemType Directory -Force
-        Get-Item -Path $OutputPath\*.bin | Move-Item -Destination $tmp
-        Get-Item -Path $OutputPath\*.cab | Move-Item -Destination $tmp
-        Get-Item -Path $OutputPath\*.sdb | Move-Item -Destination $tmp
-        Get-Item -Path $OutputPath\*.json | Move-Item -Destination $tmp
-        Get-Item -Path $OutputPath\Appraiser | Move-Item -Destination $tmp
 
         Write-Host "Appraiser Results can be found: $($OutputPath)\Results.txt" -ForegroundColor Green
         Write-Host "Appraiser Database matches can be found: $($OutputPath)\Match.txt" -ForegroundColor Green
