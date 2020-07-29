@@ -123,7 +123,7 @@ $ModuleFunctionScript = "
         [switch]`$script:PythonInstalled = `$true
     }
     Else {
-        Throw `"Python is not installed. Install Pyton before proceeding.`"
+        Throw `"Python is not installed. Install Python before proceeding.`"
     }
     
 "
