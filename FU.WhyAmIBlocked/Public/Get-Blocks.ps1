@@ -1,3 +1,6 @@
+<#
+.EXTERNALHELP FU.WhyAmIBlocked-help.xml
+#>
 Function Get-Blocks {
     [cmdletbinding(DefaultParameterSetName="Local")]
     Param(
@@ -20,7 +23,7 @@ Function Get-Blocks {
         [parameter(Position = 2, Mandatory = $true, ParameterSetName='Alt')]
         [string]
         $AlternateSourcePath,
-        
+
         [parameter(Position = 3, Mandatory = $false)]
         [string]
         $Path = $script:config.Path,
@@ -32,13 +35,13 @@ Function Get-Blocks {
         [parameter(Position = 6, Mandatory = $false)]
         [switch]
         $SkipSDBInfo
-        
+
     )
 
     Try {
 
         Write-Host " + Creating Output Folders $($OutputPath).. " -ForegroundColor Cyan -NoNewline
-        
+
 
         If($Local.IsPresent -or (!($DeviceName)) -and (!($AlternateSourcePath))) {
             $DeviceName = $env:computername
@@ -51,10 +54,10 @@ Function Get-Blocks {
             $DeviceName = "NoDeviceName"
             $OutputPath = "$($Path)\Output"
         }
-        
+
         New-Item -Path $OutputPath -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null
         Remove-Item -Path $OutputPath\* -Recurse -ErrorAction SilentlyContinue | Out-Null
-        
+
         $ResultFile = "$($OutputPath)\Results.txt"
         New-Item -Path $ResultFile -ItemType "File" -Force | Out-Null
         Add-Content -Path $ResultFile -Value "$($DeviceName) - $(Get-Date)"
@@ -62,10 +65,10 @@ Function Get-Blocks {
         $AppraiserPath = Join-Path -Path $OutputPath -ChildPath "Appraiser"
         New-Item -Path $AppraiserPath -ItemType Directory -Force | Out-Null
         Write-Host $script:tick -ForegroundColor Green
-        
+
         If(!($AlternateSourcePath)) {
             If($DeviceName -eq $env:computername) {
-                $RootPath = "c:"                
+                $RootPath = "c:"
             }
             Else {
                 $RootPath = "\\$($DeviceName)\c`$"
@@ -94,12 +97,12 @@ Function Get-Blocks {
         }
 
         If($ProcessPantherLogs.IsPresent) {
-            Copy-Item (Join-Path -Path $WindowsBTPath -ChildPath "Sources\Panther\*APPRAISER_HumanReadable.xml") $OutputPath -ErrorAction SilentlyContinue 
+            Copy-Item (Join-Path -Path $WindowsBTPath -ChildPath "Sources\Panther\*APPRAISER_HumanReadable.xml") $OutputPath -ErrorAction SilentlyContinue
         }
-        
+
         $HumanReadableXMLFiles = (Get-Item -Path "*Humanreadable.xml" -ErrorAction SilentlyContinue).FullName
         $Script:BlockList = Get-BlocksFromBin -FileList $HumanReadableXMLFiles -ResultFile $ResultFile -Output (New-Object -TypeName System.Collections.ArrayList )
-        
+
         #Needs to work with remote devices too...
         If($DeviceName -eq $env:computername) {
             Add-Content -Path $ResultFile -Value "AppCompat Registry Flags"
@@ -108,7 +111,7 @@ Function Get-Blocks {
             Add-Content -Path $ResultFile -Value (Get-Item 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\SEC')
             Add-Content -Path $ResultFile -Value (Get-Item 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\GWX')
         }
-        
+
         If($ProcessPantherLogs.IsPresent) {
             Copy-Item -Path (Join-Path -Path $WindowsBTPath -ChildPath "Sources\Panther\appraiser.sdb") -Destination (Join-Path -Path $AppraiserPath -ChildPath "BT-Panther-sdb.sdb") -ErrorAction SilentlyContinue
             Copy-Item -Path (Join-Path -Path $WindowsBTPath -ChildPath "Sources\appraiser.sdb") -Destination (Join-Path -Path $AppraiserPath -ChildPath "BT-sdb.sdb") -ErrorAction SilentlyContinue

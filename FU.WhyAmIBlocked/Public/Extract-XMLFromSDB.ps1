@@ -1,3 +1,6 @@
+<#
+.EXTERNALHELP FU.WhyAmIBlocked-help.xml
+#>
 Function Extract-XMLFromSDB {
     [cmdletbinding()]
     Param (
@@ -8,7 +11,7 @@ Function Extract-XMLFromSDB {
         [parameter(Position = 2, Mandatory = $false)]
         [string]
         $SDBFileInput,
-        
+
         [parameter(Position = 3, Mandatory = $false)]
         [string]
         $SDBCab = $script:Config.SDBCab,
@@ -57,7 +60,7 @@ Function Extract-XMLFromSDB {
                     }
                     Else {
                         Write-Host $Script:tick -ForegroundColor green
-                    }                    
+                    }
                 }
 
                 Write-Host " + Finding .sdb files.. " -ForegroundColor Cyan -NoNewline
@@ -100,7 +103,7 @@ Function Extract-XMLFromSDB {
         [parameter(Position = 2, Mandatory = $false)]
         [string]
         $SDBFileInput,
-        
+
         [parameter(Position = 3, Mandatory = $false)]
         [string]
         $SDBCab = $script:Config.SDBCab,
@@ -149,7 +152,7 @@ Function Extract-XMLFromSDB {
                     }
                     Else {
                         Write-Host $Script:tick -ForegroundColor green
-                    }                    
+                    }
                 }
 
                 Write-Host " + Finding .sdb files.. " -ForegroundColor Cyan -NoNewline
