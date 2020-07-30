@@ -14,27 +14,29 @@ Function Find-BlocksInSDB {
         $BlockList = $Script:BlockList
     )
 
-        Try {
+    Try {
 
-            Write-Host " + Finding block entries in Appraiser database.. " -ForegroundColor Cyan -NoNewline
-            If($BlockList) {
-
-                $WorkingPath = $Path
-                $Files = Get-Item -Path "$($WorkingPath)\*.sdb*.XML"
+        Write-Host " + Finding block entries in Appraiser database.. " -ForegroundColor Cyan
+        If($BlockList) {
+            $BlockList = $BlockList | Select-Object -Unique
+            $WorkingPath = $Path
+            $Files = Get-Item -Path "$($WorkingPath)\*.sdb*.XML"
+            $Blocks = @{}
+            ForEach ($File in $Files) {
+                Write-Host " ++ Finding block entries in $($File.FullName).. " -ForegroundColor Cyan
+                [XML]$SDBContent = Get-Content -Path $File.FullName
                 $AllMatches = @{}
-                $Blocks = @{}
-                ForEach ($File in $Files) {
-                    [XML]$SDBContent = Get-Content -Path $File.FullName
-                    $Match = $SDBContent.SDB.Database.MATCHING_INFO_BLOCK | Where-Object {$BlockList.Contains($_.EXE_ID.'#text')}
-                    ForEach($Value in $BlockList) {
-                        $BlockMatch = $Match | Where-Object {$Value.Contains($_.EXE_ID.'#text')}
-                        $Result = $null
-                        $Result = Get-XMLValuesFromTree -node $BlockMatch -Output ( New-Object -TypeName System.Collections.ArrayList )
-                        If($Result) {
-                            $Blocks[$Value] = $Result
-                            $AllMatches[$Value] = $Result
-                        }
+                $Match = $SDBContent.SDB.Database.MATCHING_INFO_BLOCK | Where-Object {$BlockList.Contains($_.EXE_ID.'#text')}
+                $MatchFile = "$($WorkingPath)\$($File.BaseName)_Matches.txt"
+                ForEach($Value in $BlockList) {
+                    $BlockMatch = $Match | Where-Object {$Value.Contains($_.EXE_ID.'#text')}
+                    $Result = $null
+                    $Result = Get-XMLValuesFromTree -node $BlockMatch -Output ( New-Object -TypeName System.Collections.ArrayList )
+                    If($Result) {
+                        $Blocks[$Value] = $Result
+                        $AllMatches[$Value] = $Result
                     }
+                
                 }
 
                 ForEach ($Key in $Blocks.Keys) {
@@ -52,34 +54,33 @@ Function Find-BlocksInSDB {
                         }
                     }
 
-                    "Matches for $($Key)" | Out-File $WorkingPath\Matches.txt -Append
-                    "========================" | Out-File $WorkingPath\Matches.txt -Append
-                    $Blocks[$Key] | Format-Table | Out-File $WorkingPath\Matches.txt -Append
-                    "========================" | Out-File $WorkingPath\Matches.txt -Append
-                    "Related Matches for $($Key)" | Out-File $WorkingPath\Matches.txt -Append
-                    "========================" | Out-File $WorkingPath\Matches.txt -Append
-                    $RelatedBlocks[$Key] | Out-File $WorkingPath\Matches.txt -Append
-                    "========================" | Out-File $WorkingPath\Matches.txt -Append
-                    "" | Out-File $WorkingPath\Matches.txt -Append
-
+                    "Matches for $($Key)" | Out-File $MatchFile -Append -Encoding utf8
+                    "========================" | Out-File $MatchFile -Append -Encoding utf8
+                    $Blocks[$Key] | Format-Table | Out-File $MatchFile -Append -Encoding utf8
+                    "========================" | Out-File $MatchFile -Append -Encoding utf8
+                    "Related Matches for $($Key)" | Out-File $MatchFile -Append -Encoding utf8
+                    "========================" | Out-File $MatchFile -Append -Encoding utf8
+                    $RelatedBlocks[$Key] | Out-File $MatchFile -Append -Encoding utf8
+                    "========================" | Out-File $MatchFile -Append -Encoding utf8
+                    "" | Out-File $MatchFile -Append -Encoding utf8
+                    
                 }
 
-                If($AllMatches) {
-                    $AllMatches | ConvertTo-Json | Out-File -FilePath $WorkingPath\AllMatches.json -Append
+                If($AllMatches.Keys.Count -gt 0) {
+                    $AllMatches | ConvertTo-Json | Out-File -FilePath "$($WorkingPath)\$($File.BaseName)_Matches.json" -Append -Encoding utf8
+                    Write-Host $Script:tick -ForegroundColor green
+                    Write-Host " ++ Matches output to $($MatchFile).. " -ForegroundColor green
                 }
                 Else {
-                    Write-Warning "No Matches Found."
+                    Write-Host " ++No Matches Found in $($File.FullName)." -ForegroundColor Yellow
                 }
-
-                Write-Host $Script:tick -ForegroundColor green
-            }
-            Else {
-                Write-Warning "No Blocklist found."
             }
         }
-
-        Catch {
-            Write-Warning $_
+        Else {
+            Write-Host " ++No Blocklist found." -ForegroundColor Yellow
         }
-
     }
+    Catch {
+        Write-Warning $_
+    }
+}

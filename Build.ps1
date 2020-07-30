@@ -23,7 +23,8 @@ try {
     #region Generate a new version number
     $moduleName = Split-Path -Path $modulePath -Leaf
     $PreviousVersion = Find-Module -Name $moduleName -ErrorAction SilentlyContinue | Select-Object *
-    [Version]$exVer = $PreviousVersion ? $PreviousVersion.Version : $null
+    [Version]$exVer = If($PreviousVersion) {$PreviousVersion.Version} Else {$null}
+
     if ($buildLocal) {
         $rev = ((Get-ChildItem -Path "$PSScriptRoot\bin\release\" -ErrorAction SilentlyContinue).Name | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum) + 1
         $newVersion = New-Object -TypeName Version -ArgumentList 1, 0, 0, $rev
@@ -48,8 +49,6 @@ $($previousVersion.releaseNotes)
     }
     #endregion
 
-
-
     #region Build out the release
     $relPath = "$($PSScriptRoot)\bin\release\$($rev)\$($moduleName)"   
     if ($buildLocal) {
@@ -66,7 +65,10 @@ $($previousVersion.releaseNotes)
         New-Item -Path $relPath -ItemType Directory -Force | Out-Null
     }
 
-    Copy-Item -Path "$($modulePath)\*" -Destination "$($relPath)" -Recurse -Exclude ".gitKeep","releaseNotes.txt","description.txt","*.psm1","*.psd1"
+    If(Test-Path $relPath) {
+        #Remove-Item -Path "$($relPath)\*" -Recurse -Force -ErrorAction SilentlyContinue
+    }
+    Copy-Item -Path "$($modulePath)\*" -Destination "$($relPath)" -Recurse -Exclude ".gitKeep","releaseNotes.txt","description.txt","*.psm1","*.psd1" -Force
 
     $Manifest = @{
         Path = "$($relPath)\$($ModuleName).psd1"

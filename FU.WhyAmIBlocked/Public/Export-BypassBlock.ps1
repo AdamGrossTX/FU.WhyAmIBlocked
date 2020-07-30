@@ -31,17 +31,17 @@ Function Export-BypassBlock {
                     $OutPS1File = Join-Path -Path $WorkingPath -ChildPath "$($File.BaseName)_BypassFUBlock.ps1"
 
                     If(!(Test-Path $OutRegFile)) {
-                        "Windows Registry Editor Version 5.00" | Out-File -FilePath $OutRegFile -Append
+                        "Windows Registry Editor Version 5.00" | Out-File -FilePath $OutRegFile -Append -Encoding utf8
                     }
-                    "`n; Bypass Block for $($BlockName) - $($BlockGUID)" | Out-File -FilePath $OutRegFile -Append
-                    "[HKEY_LOCAL_MACHINE\$($NAME)]" | Out-File -FilePath $OutRegFile -Append
-                    "`"$($REG_VALUE_NAME)`"=dword:00000001" | Out-File -FilePath $OutRegFile -Append
+                    "`n; Bypass Block for $($BlockName) - $($BlockGUID)" | Out-File -FilePath $OutRegFile -Append -Encoding utf8
+                    "[HKEY_LOCAL_MACHINE\$($NAME)]" | Out-File -FilePath $OutRegFile -Append -Encoding utf8
+                    "`"$($REG_VALUE_NAME)`"=dword:00000001" | Out-File -FilePath $OutRegFile -Append -Encoding utf8
 
                     If(!(Test-Path $OutPS1File)) {
-                        "New-Item -Path `"HKLM:\$($NAME)`" -Force | Out-Null" | Out-File -FilePath $OutPS1File -Append
+                        "New-Item -Path `"HKLM:\$($NAME)`" -Force | Out-Null" | Out-File -FilePath $OutPS1File -Append -Encoding utf8
                     }
-                    "`n#Bypass Block for $($BlockName) - $($BlockGUID)" | Out-File -FilePath $OutPS1File -Append
-                    "New-ItemProperty -Path `"HKLM:\$($NAME)`" -Name `"$($REG_VALUE_NAME)`" -Value `"$($REG_VALUE_DATA_DWORD)`" -PropertyType DWord -Force | Out-Null" | Out-File -FilePath $OutPS1File -Append
+                    "`n#Bypass Block for $($BlockName) - $($BlockGUID)" | Out-File -FilePath $OutPS1File -Append -Encoding utf8
+                    "New-ItemProperty -Path `"HKLM:\$($NAME)`" -Name `"$($REG_VALUE_NAME)`" -Value `"$($REG_VALUE_DATA_DWORD)`" -PropertyType DWord -Force | Out-Null" | Out-File -FilePath $OutPS1File -Append -Encoding utf8
 
                 }
             }

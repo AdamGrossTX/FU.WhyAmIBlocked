@@ -67,13 +67,13 @@ Function Get-BlocksFromBin {
                                         $sdb[$x] | Where-Object Ordinal -EQ $num
                                     }
                         ($gBlock | Where-Object Name -eq "SdbEntryGuid" | Select -ExpandProperty Value) | ForEach-Object {$Output.Add($_) | Out-Null}
-                        $gBlock | Out-File -FilePath $ResultFile -Append
+                        $gBlock | Out-File -FilePath $ResultFile -Append -Encoding utf8
 
                     }
                     If($ordinal.Count -eq 1) {
                         $gBlock = $sdb[$x] | Where-Object Ordinal -EQ $ordinal
                         ($gBlock | Where-Object Name -eq "SdbEntryGuid" | Select -ExpandProperty Value) | ForEach-Object {$Output.Add($_) | Out-Null}
-                        $gBlock | Out-File -FilePath $ResultFile -Append
+                        $gBlock | Out-File -FilePath $ResultFile -Append -Encoding utf8
                     }
 
                     $x++
@@ -98,12 +98,12 @@ Function Get-BlocksFromBin {
                             $sdb[$x] | Where-Object Ordinal -EQ $num
                         }
                         ($sBlock | Where-Object Name -eq "SdbEntryGuid" | Select -ExpandProperty Value) | ForEach-Object {$Output.Add($_) | Out-Null}
-                        $sBlock | Out-File -FilePath $ResultFile -Append
+                        $sBlock | Out-File -FilePath $ResultFile -Append -Encoding utf8
                     }
                     Else {
                         $sBlock = $sdb[$x] | Where-Object Ordinal -EQ $ordinal
                         ($sBlock | Where-Object Name -eq "SdbEntryGuid" | Select -ExpandProperty Value) | ForEach-Object {$Output.Add($_) | Out-Null}
-                        $sBlock | Out-File -FilePath $ResultFile -Append
+                        $sBlock | Out-File -FilePath $ResultFile -Append -Encoding utf8
                     }
                 $x++
                 } Until ($x -gt $sdb.Count)
@@ -118,7 +118,7 @@ Function Get-BlocksFromBin {
                 for($a=0; $a -lt $sdb.Count; $a++)
                     {
                         Add-Content -Path $ResultFile -Value "Entry $($a) : " | Out-Null
-                        $sdb[$a] | Format-Table | Out-String | Out-File -FilePath $ResultFile -Append
+                        $sdb[$a] | Format-Table | Out-String | Out-File -FilePath $ResultFile -Append -Encoding utf8
                     }
 
                 Write-Host $Script:tick -ForegroundColor green

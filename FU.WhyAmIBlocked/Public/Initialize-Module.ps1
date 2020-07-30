@@ -45,8 +45,8 @@ function Initialize-Module {
         }
         else {
             $initCfgJSON = $initCfg | ConvertTo-Json -Depth 20
-            $initCfgJSON | Out-File $ConfigFile -Encoding ascii -Force
-            $ConfigFile | Out-File $initCfg.UserConfigFile -Encoding ascii -Force
+            $initCfgJSON | Out-File $ConfigFile -Encoding utf8 -Force
+            $ConfigFile | Out-File $initCfg.UserConfigFile -Encoding utf8 -Force
             Write-Host $script:tick -ForegroundColor Green
         }
     }
