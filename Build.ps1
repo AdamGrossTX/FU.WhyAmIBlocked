@@ -25,7 +25,7 @@ try {
     $PreviousVersion = Find-Module -Name $moduleName -ErrorAction SilentlyContinue | Select-Object *
     [Version]$exVer = $PreviousVersion ? $PreviousVersion.Version : $null
     if ($buildLocal) {
-        $rev = ((Get-ChildItem -Path "$($PSScriptRoot)\bin\release\" -ErrorAction SilentlyContinue).Name | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum) + 1
+        $rev = ((Get-ChildItem -Path "$PSScriptRoot\bin\release\" -ErrorAction SilentlyContinue).Name | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum) + 1
         $newVersion = New-Object -TypeName Version -ArgumentList 1, 0, 0, $rev
     }
     else {
@@ -34,8 +34,8 @@ try {
             New-Object version -ArgumentList $exVer.Major, $exVer.Minor, $exVer.Build, $rev
         }
         else {
-            $rev = ((Get-ChildItem "$($PSScriptRoot)\bin\release\" -ErrorAction SilentlyContinue).Name | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum) + 1
-            New-Object Version -ArgumentList 1, 0, 0, $rev 
+            $rev = ((Get-ChildItem "$PSScriptRoot\bin\release\" -ErrorAction SilentlyContinue).Name | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum) + 1
+            New-Object Version -ArgumentList 1, 0, 0, $rev
         }
     }
     $releaseNotes = (Get-Content ".\$($moduleName)\ReleaseNotes.txt" -Raw -ErrorAction SilentlyContinue).Replace("{{NewVersion}}",$newVersion)
@@ -51,7 +51,13 @@ $($previousVersion.releaseNotes)
 
 
     #region Build out the release
-    $relPath = "$($PSScriptRoot)\bin\release\$($rev)\$($moduleName)"
+    $relPath = "$($PSScriptRoot)\bin\release\$($rev)\$($moduleName)"   
+    if ($buildLocal) {
+        $relPath = "$PSScriptRoot\bin\release\$rev\$moduleName"
+    }
+    else {
+        $relPath = "$PSScriptRoot\bin\release\$moduleName"
+    }
     "Version is $($newVersion)"
     "Module Path is $($modulePath)"
     "Module Name is $($moduleName)"
