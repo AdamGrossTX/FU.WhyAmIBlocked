@@ -5,4 +5,3 @@
   - Updated docs/help
   - Renamed functions to remove non-standard verbs
   - Updated build script
-  

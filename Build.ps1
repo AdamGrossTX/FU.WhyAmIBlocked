@@ -17,7 +17,7 @@ try {
     $ProjectUri = "https://github.com/AdamGrossTX/FU.WhyAmIBlocked"
     $LicenseUri = "https://github.com/AdamGrossTX/FU.WhyAmIBlocked/blob/master/LICENSE"
     $GUID = "48c4fc69-d15f-4dd6-a3af-da65364e03fe"
-    $tags = @("Compatilibty","Appraiser","Feature Update","Hard Block")
+    $tags = @("Compatilibty","Appraiser","FeatureUpdate","HardBlock")
 
     
     #region Generate a new version number
