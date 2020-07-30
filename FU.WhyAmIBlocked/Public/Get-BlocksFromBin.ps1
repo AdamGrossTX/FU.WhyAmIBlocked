@@ -10,7 +10,9 @@ Function Get-BlocksFromBin {
 
         [string]
         $ResultFile = ".\Result.txt",
-        [System.Collections.ArrayList]$Output
+
+        [System.Collections.ArrayList]
+        $Output
     )
 
     Try {

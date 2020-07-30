@@ -13,7 +13,7 @@ Takes .bin files, converts to XML, and outputs Results.txt summary file with a l
 ## SYNTAX
 
 ```
-Get-FUBlocksFromBin [-FileList] <String[]> [-ResultFile <String>] [<CommonParameters>]
+Get-FUBlocksFromBin [-FileList] <String[]> [-ResultFile <String>] [-Output <ArrayList>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,6 +56,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: .\Results.txt
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Output
+{{ Fill Output Description }}
+
+```yaml
+Type: ArrayList
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

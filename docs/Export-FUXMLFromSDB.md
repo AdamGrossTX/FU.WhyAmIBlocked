@@ -5,33 +5,48 @@ online version:
 schema: 2.0.0
 ---
 
-# Export-FUBypassBlock
+# Export-FUXMLFromSDB
 
 ## SYNOPSIS
-If block bypass entries are found in the sdb, registry and ps1 files will be exported for easy use on blocked devices.
+Converts a decompressed SDB file to XML.
 
 ## SYNTAX
 
 ```
-Export-FUBypassBlock [[-Path] <String>] [<CommonParameters>]
+Export-FUXMLFromSDB [[-Path] <String>] [[-AlternateSourcePath] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-If block bypass entries are found in the sdb, registry and ps1 files will be exported for easy use on blocked devices.
+Converts a decompressed SDB file to XML.
 
 ## EXAMPLES
 
 ### Example 1
-```powershell
-PS C:\> Export-FUBypassBlock -Path c:\Path\Matches.json
+```
+PS C:\> Export-FUXMLFromSDB -AlternateSourcePath c:\AltSourcePath\
 ```
 
-Uses the exported json files to generate the files being exported
+Exports the SDB from an alternate source path
 
 ## PARAMETERS
 
+### -AlternateSourcePath
+The path containing a .sdb file and/or Appraiser_AlternateData.cab
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Path
-Path to the json file
+Output/working path
 
 ```yaml
 Type: String
@@ -51,7 +66,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 ### None
-
 ## OUTPUTS
 
 ### System.Object

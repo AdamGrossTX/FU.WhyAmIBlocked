@@ -1,4 +1,4 @@
-Import-Module ".\bin\release\24\FU.WhyAmIBlocked" -Force
+Import-Module ".\bin\release\25\FU.WhyAmIBlocked" -Force
 #Update-Module FU.WhyAmIBlocked
 #Initialize-FUModule -reset
 #Get-FUBlocks -AlternateSourcePath "C:\FeatureUpdateBlocks\Alt\LOVELACE"

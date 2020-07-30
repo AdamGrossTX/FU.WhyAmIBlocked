@@ -13,8 +13,7 @@ Converts a decompressed SDB file to XML.
 ## SYNTAX
 
 ```
-Export-FUXMLFromSDB [[-Path] <String>] [[-SDBFileInput] <String>] [[-SDBCab] <String>]
- [[-AlternateSourcePath] <String>] [<CommonParameters>]
+Export-FUXMLFromSDB [[-Path] <String>] [[-AlternateSourcePath] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,36 +55,6 @@ Aliases:
 
 Required: False
 Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SDBCab
-Name of the SDBcab file to be used for extraction
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SDBFileInput
-Name of the sdb file to be used for extraction
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
