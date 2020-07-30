@@ -4,3 +4,4 @@
   - Reworked the file/folder structure to manage files from multiple source
   - Updated docs/help
   - Renamed functions to remove non-standard verbs
+  - Updated build script
