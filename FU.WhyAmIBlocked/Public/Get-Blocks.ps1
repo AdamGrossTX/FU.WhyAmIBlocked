@@ -190,8 +190,6 @@ Function Get-Blocks {
         }
 
         Write-Host "Appraiser Results can be found: $($OutputPath)\Results.txt" -ForegroundColor Green
-        Write-Host "Appraiser Database matches can be found: $($OutputPath)\Match.txt" -ForegroundColor Green
-
     }
     Catch {
         Write-Warning $_

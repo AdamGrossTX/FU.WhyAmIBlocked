@@ -98,13 +98,51 @@ $ModuleFunctionScript = "
     `$Private = @(Get-ChildItem -Path `"`$(`$PSScriptRoot)\Private\*.ps1`" -ErrorAction SilentlyContinue)
     `$script:Prefix = `"$($Prefix)`"
     `$script:Path = `"$($Path)`"
+    `$pythonPath = `$env:Path.split(';') | Where-Object {`$_ -Like `"*Python*`" -and `$_ -notlike `"*scripts*`"}
+
+    try {
+        `$PythonVersion = & python --version
+    }
+    catch {
+
+    }
+
+    If(!(`$PythonVersion)) {
+        If(!(Test-Path -Path `"`$(`$pythonPath)\python.exe`")) {
+            `$pythonPath = Read-Host -Enter `"Enter the folder path to python.exe`"
+            If(!(Test-Path -Path `$pythonPath -ErrorAction SilentlyContinue)) {
+                `$pythonPath = `$null
+            }
+        }
+        Else {
+            `$pythonPath = `$null
+        }
+
+        If(`$PythonPath -and (Test-Path -Path `"`$(`$pythonPath)\python.exe`" -ErrorAction SilentlyContinue)) {
+            `$PythonVersion = & `"`$(`$pythonPath)\python.exe`" --version
+        }
+        Else {
+            `$PythonVersion = & python --version
+        }
+    }
+
+    If(`$pythonVersion) {
+        [switch]`$script:PythonInstalled = `$true
+    }
+    Else {
+        Write-Warning `"Python is not installed. Install Python then re-import the module then run 'Initialize-FUModule -Reset'. 
+        You may need to close PowerShell and re-launch after install. `"
+        Write-Host  `" + You can install the Windows Store version from here https://www.microsoft.com/store/productId/9MSSZTT1N39L`" -foregroundcolor blue
+    }
+    
+   
     `$initCfg = @{
         Path = `"`$(`$script:Path)`"
         ConfigFile = `"`$(`$script:Path)\Config.json`"
         SDBUnPackerFile = Join-Path -Path `$PSScriptRoot -ChildPath `"SDBUnpacker.py`"
         sdb2xmlPath = Join-Path -Path `$PSScriptRoot -ChildPath `"sdb2xml.exe`"
         UserConfigFile = `"`$(`$env:USERPROFILE)\.`$(`$script:Prefix)cfgpath`"
-        PythonPath = `$env:Path.split(';') | Where-Object {`$_ -Like `"*Python*`" -and `$_ -notlike `"*scripts*`"}
+        PythonPath = If(`$pythonPath) {`$pythonPath} Else {`"`"}
     }
     `$cfg = Get-Content `$initCfg[`"UserConfigFile`"] -ErrorAction SilentlyContinue
     `$script:tick = [char]0x221a
@@ -132,37 +170,10 @@ $ModuleFunctionScript = "
         }
     }
     #endregion
-
-
-    If(`$Script:Config.PythonPath -and (Test-Path -Path `"`$(`$Script:Config.PythonPath)`")) {
-        `$PythonVersion = & `"`$(`$Script:Config.PythonPath)\python.exe`" --version
-    }
-    Else {
-        `$PythonVersion = & python --version
-    }
-
-    If(`$pythonVersion) {
-        [switch]`$script:PythonInstalled = `$true
-    }
-    Else {
-        Throw `"Python is not installed. Install Python before proceeding.`"
-    }
-    
+ 
 "
    $ModuleFunctionScript | Out-File -FilePath "$($relPath)\$($ModuleName).psm1" -Encoding utf8 -Force
-    
-    #endregion
-    #region Generate a list of public functions and update the module manifest
-    #$functions = @(Get-ChildItem -Path $relPath\Public\*.ps1 -ErrorAction SilentlyContinue).basename
-    #$params = @{
-    #    Path = "$relPath\$ModuleName.psd1"
-    #    ModuleVersion = $newVersion
-    #    Description = (Get-Content .\$moduleName\description.txt -raw).ToString()
-    #    FunctionsToExport = $functions
-    #    ReleaseNotes = $releaseNotes.ToString()
-    #}
-    #Update-ModuleManifest @params
-    #endregion
+
 }
 catch {
     $_
