@@ -6,7 +6,7 @@ Import-Module ".\bin\release\25\FU.WhyAmIBlocked" -Force
 
 
 #Export-FUXMLFromSDB -AlternateSourcePath "C:\FeatureUpdateBlocks\Alt\ALOY"
-Get-FUBlocks -DeviceName HQ-CA251610
+Get-FUBlocks -DeviceName MyDevice
 
 
 #ToDo Usage Examples
