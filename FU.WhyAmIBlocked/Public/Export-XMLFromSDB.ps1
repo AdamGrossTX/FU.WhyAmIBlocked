@@ -97,7 +97,7 @@ Function Export-XMLFromSDB {
                         Write-Host $Script:tick -ForegroundColor green
 
                         Write-Host " + Unpacking $($File.FullName).. " -ForegroundColor Cyan -NoNewline
-                        & python.exe "$($script:Config.SDBUnPackerFile)" -i $File.FullName -o $ExpandedFileName | Out-Null
+                        & "$($script:PythonExe)" """$($script:Config.SDBUnPackerFile)""" -i """$($File.FullName)""" -o """$($ExpandedFileName)""" | Out-Null
                         Write-Host $Script:tick -ForegroundColor green
 
                         Write-Host " + Converting sdb to xml.. " -ForegroundColor Cyan -NoNewline

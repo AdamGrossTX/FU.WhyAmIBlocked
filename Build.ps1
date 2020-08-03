@@ -100,42 +100,8 @@ $ModuleFunctionScript = "
     `$script:Path = `"$($Path)`"
     `$pythonPath = `$env:Path.split(';') | Where-Object {`$_ -Like `"*Python*`" -and `$_ -notlike `"*scripts*`"}
 
-    try {
-        `$PythonVersion = & python --version
-    }
-    catch {
 
-    }
-
-    If(!(`$PythonVersion)) {
-        If(!(Test-Path -Path `"`$(`$pythonPath)\python.exe`")) {
-            `$pythonPath = Read-Host -Enter `"Enter the folder path to python.exe`"
-            If(!(Test-Path -Path `$pythonPath -ErrorAction SilentlyContinue)) {
-                `$pythonPath = `$null
-            }
-        }
-        Else {
-            `$pythonPath = `$null
-        }
-
-        If(`$PythonPath -and (Test-Path -Path `"`$(`$pythonPath)\python.exe`" -ErrorAction SilentlyContinue)) {
-            `$PythonVersion = & `"`$(`$pythonPath)\python.exe`" --version
-        }
-        Else {
-            `$PythonVersion = & python --version
-        }
-    }
-
-    If(`$pythonVersion) {
-        [switch]`$script:PythonInstalled = `$true
-    }
-    Else {
-        Write-Warning `"Python is not installed. Install Python then re-import the module then run 'Initialize-FUModule -Reset'. 
-        You may need to close PowerShell and re-launch after install. `"
-        Write-Host  `" + You can install the Windows Store version from here https://www.microsoft.com/store/productId/9MSSZTT1N39L`" -foregroundcolor blue
-    }
-    
-   
+       
     `$initCfg = @{
         Path = `"`$(`$script:Path)`"
         ConfigFile = `"`$(`$script:Path)\Config.json`"
@@ -158,6 +124,59 @@ $ModuleFunctionScript = "
     else {
         `$script:Config = `$initCfg
     }
+
+
+    `$PythonExe = If(`$script:Config.PythonPath) {
+                    If(Test-Path (Join-Path `$script:Config.PythonPath -ChildPath `"python.exe`") -ErrorAction SilentlyContinue) {
+                            Join-Path `$script:Config.PythonPath -ChildPath `"python.exe`"
+                        }
+                        Else {
+                            `"python.exe`"
+                        }
+                    }
+                    Else {
+                        `"python.exe`"
+     }
+ 
+     try {
+         `$PythonVersion = & `"`$(`$PythonExe)`" --version 2>&1 | ForEach-Object { `"`$_`" }
+     }
+     catch {
+ 
+     }
+ 
+     If(!(`$PythonVersion)) {
+         `$script:Config.PythonPath = `"`$(Read-Host -Prompt `"Enter the folder path to python.exe`")`"
+         If(`$script:Config.PythonPath) {
+             `$PythonExe = Join-Path `$script:Config.PythonPath -ChildPath `"python.exe`"
+             If(!(Test-Path -Path `$PythonExe -ErrorAction SilentlyContinue)) {
+                 `$script:Config.PythonPath = `$null
+             }
+             Else {
+                 `$PythonExe = Join-Path `$script:Config.PythonPath -ChildPath `"python.exe`"
+                 `$PythonVersion = & `"`$(`$PythonExe)`" --version 2>&1 | ForEach-Object { `"`$_`" }
+                 If(`$PythonVersion) {
+                     Write-Host `" *** Run 'Initialize-FUModule -reset' to save the Python path to your config file.`" -foregroundcolor green
+                 }
+             }
+         }
+         Else {
+             Write-Warning `"No Python Path was entered. Skipping.`"
+         }
+     }
+ 
+     If(`$pythonVersion) {
+         [switch]`$script:PythonInstalled = `$true
+         `$initCfg.PythonPath = `$script:Config.PythonPath
+         `$script:PythonExe = `$PythonExe
+     }
+     Else {
+         Write-Warning `"Python is not installed. Install Python then re-import the module then run 'Initialize-FUModule -Reset'. 
+         You may need to close PowerShell and re-launch after install. `"
+         Write-Host  `" + You can install the Windows Store version from here https://www.microsoft.com/store/productId/9MSSZTT1N39L`" -foregroundcolor blue
+     }
+    
+
 
     #endregion
     #region Dot source the files
