@@ -94,7 +94,7 @@ Function Export-XMLFromSDB {
                     $ExpandedFileName = "$(Split-Path $File -Parent)\$($File.Name)_Expanded_ver_$($Version).sdb"
                     $XMLFileName = "$($OutputPath)\$($ParentName)_$($File.Name)_ver_$($Version).XML"
                     Write-Host $Script:tick -ForegroundColor green
-                    Expand-SDB -inFile $File.FullName -outfile $ExpandedFileName
+                    Expand-SDB -Path $File.DirectoryName $File -InputFile $File.FullName -OutputFile $ExpandedFileName
                     Write-Host " + Converting sdb to xml.. " -ForegroundColor Cyan -NoNewline
                     & "$($script:Config.sdb2xmlPath)" $ExpandedFileName -out $XMLFileName | Out-Null
                     Write-Host $Script:tick -ForegroundColor green
