@@ -94,13 +94,12 @@ $($previousVersion.releaseNotes)
     New-ModuleManifest @Manifest
 
 $ModuleFunctionScript = "
+
+#region mainscript
     `$Public = @(Get-ChildItem -Path `"`$(`$PSScriptRoot)\Public\*.ps1`" -ErrorAction SilentlyContinue)
     `$Private = @(Get-ChildItem -Path `"`$(`$PSScriptRoot)\Private\*.ps1`" -ErrorAction SilentlyContinue)
     `$script:Prefix = `"$($Prefix)`"
     `$script:Path = `"$($Path)`"
-    `$pythonPath = `$env:Path.split(';') | Where-Object {`$_ -Like `"*Python*`" -and `$_ -notlike `"*scripts*`"}
-
-
        
     `$initCfg = @{
         Path = `"`$(`$script:Path)`"
@@ -108,7 +107,6 @@ $ModuleFunctionScript = "
         SDBUnPackerFile = Join-Path -Path `$PSScriptRoot -ChildPath `"SDBUnpacker.py`"
         sdb2xmlPath = Join-Path -Path `$PSScriptRoot -ChildPath `"sdb2xml.exe`"
         UserConfigFile = `"`$(`$env:USERPROFILE)\.`$(`$script:Prefix)cfgpath`"
-        PythonPath = If(`$pythonPath) {`$pythonPath} Else {`"`"}
     }
     `$cfg = Get-Content `$initCfg[`"UserConfigFile`"] -ErrorAction SilentlyContinue
     `$script:tick = [char]0x221a
@@ -124,61 +122,8 @@ $ModuleFunctionScript = "
     else {
         `$script:Config = `$initCfg
     }
-
-
-    `$PythonExe = If(`$script:Config.PythonPath) {
-                    If(Test-Path (Join-Path `$script:Config.PythonPath -ChildPath `"python.exe`") -ErrorAction SilentlyContinue) {
-                            Join-Path `$script:Config.PythonPath -ChildPath `"python.exe`"
-                        }
-                        Else {
-                            `"python.exe`"
-                        }
-                    }
-                    Else {
-                        `"python.exe`"
-     }
- 
-     try {
-         `$PythonVersion = & `"`$(`$PythonExe)`" --version 2>&1 | ForEach-Object { `"`$_`" }
-     }
-     catch {
- 
-     }
- 
-     If(!(`$PythonVersion)) {
-         `$script:Config.PythonPath = `"`$(Read-Host -Prompt `"Enter the folder path to python.exe`")`"
-         If(`$script:Config.PythonPath) {
-             `$PythonExe = Join-Path `$script:Config.PythonPath -ChildPath `"python.exe`"
-             If(!(Test-Path -Path `$PythonExe -ErrorAction SilentlyContinue)) {
-                 `$script:Config.PythonPath = `$null
-             }
-             Else {
-                 `$PythonExe = Join-Path `$script:Config.PythonPath -ChildPath `"python.exe`"
-                 `$PythonVersion = & `"`$(`$PythonExe)`" --version 2>&1 | ForEach-Object { `"`$_`" }
-                 If(`$PythonVersion) {
-                     Write-Host `" *** Run 'Initialize-FUModule -reset' to save the Python path to your config file.`" -foregroundcolor green
-                 }
-             }
-         }
-         Else {
-             Write-Warning `"No Python Path was entered. Skipping.`"
-         }
-     }
- 
-     If(`$pythonVersion) {
-         [switch]`$script:PythonInstalled = `$true
-         `$initCfg.PythonPath = `$script:Config.PythonPath
-         `$script:PythonExe = `$PythonExe
-     }
-     Else {
-         Write-Warning `"Python is not installed. Install Python then re-import the module then run 'Initialize-FUModule -Reset'. 
-         You may need to close PowerShell and re-launch after install. `"
-         Write-Host  `" + You can install the Windows Store version from here https://www.microsoft.com/store/productId/9MSSZTT1N39L`" -foregroundcolor blue
-     }
-    
-
-
     #endregion
+
     #region Dot source the files
     foreach (`$import in @(`$Public + `$Private)) {
         try {
