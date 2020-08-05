@@ -42,7 +42,7 @@ Function ConvertFrom-BinToXML {
                 $XML | Out-File -FilePath $RunList -Encoding utf8
                 $RunListXML = Get-Item -Path $RunList -ErrorAction SilentlyContinue
                 Set-Location -Path $OutputPath
-                & cmd /C "rundll32.exe appraiser.dll,RunTest $($RunListXML.Name)"
+                & cmd /C "%windir\system32\rundll32.exe %windir\system32\appraiser.dll,RunTest $($RunListXML.Name)"
                 $RunListXML | Remove-Item -Force -ErrorAction SilentlyContinue
                 Write-Host $script:tick -ForegroundColor Green
             }
