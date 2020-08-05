@@ -77,7 +77,7 @@ Function Export-XMLFromSDB {
             }
 
             Write-Host " + Finding .sdb files.. " -ForegroundColor Cyan -NoNewline
-            $SDBFiles = Get-ChildItem -Path $AppraiserDataPath\*.sdb -Recurse -ErrorAction SilentlyContinue
+            $SDBFiles = Get-ChildItem -Path "$($AppraiserDataPath)\*.sdb" -Recurse -ErrorAction SilentlyContinue
             If($SDBFiles) {
                 ForEach ($File in $SDBFiles) {
                     $Parent = Split-Path $File -Parent
@@ -91,12 +91,12 @@ Function Export-XMLFromSDB {
                         $Version = "unknown"
                     }
 
-                    $ExpandedFileName = "$(Split-Path $File -Parent)\$($File.Name)_Expanded_ver_$($Version).sdb"
+                    $ExpandedFileName = "$($File.Name)_Expanded_ver_$($Version).sdb"
                     $XMLFileName = "$($OutputPath)\$($ParentName)_$($File.Name)_ver_$($Version).XML"
                     Write-Host $Script:tick -ForegroundColor green
-                    Expand-SDB -Path $File.DirectoryName $File -InputFile $File.FullName -OutputFile $ExpandedFileName
+                    Expand-SDB -Path $File.DirectoryName -InputFile $File.Name -OutputFile $ExpandedFileName
                     Write-Host " + Converting sdb to xml.. " -ForegroundColor Cyan -NoNewline
-                    & "$($script:Config.sdb2xmlPath)" $ExpandedFileName -out $XMLFileName | Out-Null
+                    & "$($script:Config.sdb2xmlPath)" "$(Split-Path $File -Parent)\$($ExpandedFileName)" -out $XMLFileName | Out-Null
                     Write-Host $Script:tick -ForegroundColor green
                 }
             }

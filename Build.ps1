@@ -17,7 +17,7 @@ try {
     $ProjectUri = "https://github.com/AdamGrossTX/FU.WhyAmIBlocked"
     $LicenseUri = "https://github.com/AdamGrossTX/FU.WhyAmIBlocked/blob/master/LICENSE"
     $GUID = "48c4fc69-d15f-4dd6-a3af-da65364e03fe"
-    $tags = @("Compatilibty","Appraiser","FeatureUpdate","HardBlock")
+    $tags = @("Compatibility","Appraiser","FeatureUpdate","HardBlock")
 
     
     #region Generate a new version number
@@ -103,6 +103,7 @@ $ModuleFunctionScript = "
        
     `$initCfg = @{
         Path = `"`$(`$script:Path)`"
+        AutoUpdate = `$false
         ConfigFile = `"`$(`$script:Path)\Config.json`"
         SDBUnPackerFile = Join-Path -Path `$PSScriptRoot -ChildPath `"SDBUnpacker.py`"
         sdb2xmlPath = Join-Path -Path `$PSScriptRoot -ChildPath `"sdb2xml.exe`"

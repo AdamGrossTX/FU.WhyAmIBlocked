@@ -40,6 +40,8 @@ Function Get-Blocks {
 
     Try {
 
+        #Get-LatestModuleVersion
+
         Write-Host " + Creating Output Folders $($OutputPath).. " -ForegroundColor Cyan -NoNewline
         $Date = (Get-Date -Format yyyyMMdd_hhmmss)
 
