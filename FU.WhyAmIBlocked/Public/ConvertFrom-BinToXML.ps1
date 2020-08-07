@@ -19,7 +19,7 @@ Function ConvertFrom-BinToXML {
                 $InputFile = Get-Item -Path $File
                 Write-Host " + Converting $($File) to .xml .. " -ForegroundColor Cyan -NoNewline
                 $XMLOutputFile = "$($OutputPath)\$($InputFile.Name)_HUMANREADABLE.XML"
-                $RunList = "$($OutputPath)\Appraiser_TelemetryRunList_$($InputFile.BaseName).xml"
+                $RunList = "$($OutputPath)\RunList_$($InputFile.BaseName).xml"
                     $XML = @(
                     '<?xml version="1.0" encoding="UTF-8"?>',
                     '<WicaRun>',
@@ -41,8 +41,8 @@ Function ConvertFrom-BinToXML {
 
                 $XML | Out-File -FilePath $RunList -Encoding utf8
                 $RunListXML = Get-Item -Path $RunList -ErrorAction SilentlyContinue
-                Set-Location -Path $OutputPath
-                & cmd /C "%windir\system32\rundll32.exe %windir\system32\appraiser.dll,RunTest $($RunListXML.Name)"
+                $system32path = "{0}\{1}" -f $env:WinDir,$(if ($env:PROCESSOR_ARCHITEW6432 -eq "ARM64"){"sysnative"}else{"system32"})
+                & "$($system32path)\cmd.exe" /c "rundll32.exe appraiser.dll,RunTest $($RunListXML.FullName)"
                 $RunListXML | Remove-Item -Force -ErrorAction SilentlyContinue
                 Write-Host $script:tick -ForegroundColor Green
             }
