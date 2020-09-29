@@ -80,13 +80,18 @@ Export-BypassBlock -Path "c:\temp"
 ## Folder and files paths
 ### Default folders/files
 ```
-$env:USERPROFILE\.fucfgpath` - Created when module is imported the first time.
+$env:USERPROFILE\.fucfgpath - Created when module is imported the first time.
 C:\FeatureUpdateBlocks
 C:\FeatureUpdateBlocks\AppraiserData
 C:\FeatureUpdateBlocks\Bin
 C:\FeatureUpdateBlocks\CABs
 C:\FeatureUpdateBlocks\XML
 C:\FeatureUpdateBlocks\Results.txt
+C:\FeatureUpdateBlocks\*_matches.json
+C:\FeatureUpdateBlocks\*_matches.txt
+C:\FeatureUpdateBlocks\*_BypassFUBlock.reg
+C:\FeatureUpdateBlocks\*_BypassFUBlock.ps1
+C:\FeatureUpdateBlocks\*_<ver>.XML
 ```
 All other files/folders are named based on their original folder structure and file names.
 ```
