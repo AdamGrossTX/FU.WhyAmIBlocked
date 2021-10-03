@@ -72,7 +72,7 @@ Find-FUBlocksInSDB -BlockList $SdbAppGUIDs -Path "c:\temp\"
 Requires `.json` file from `Find-FUBlocksInSDB` to be in the `Path` location.
 
 ```
-Export-BypassBlock -Path "c:\temp"
+Export-FUBypassBlock -Path "c:\temp"
 ```
 
 
