@@ -52,22 +52,24 @@ function Get-SafeGuardHoldDetails {
     )
 
     $AppriaserRoot = $Path
+    try {[void][System.IO.Directory]::CreateDirectory($AppriaserRoot)}
+    catch {throw}
 
-    $ExistingXML = Get-ChildItem -Path $AppriaserRoot\*.xml -Recurse -File | Where-Object { $_.Name -like "*$ALTERNATEDATAVERSION*" } -ErrorAction SilentlyContinue
+    $ExistingXML = Get-ChildItem -Path $AppriaserRoot\*.xml -Recurse -File | Where-Object { $_.Name -like "*$AppraiserVersion*" } -ErrorAction SilentlyContinue
 
     if (-Not $ExistingXML) {
-        $LinkParts = $ALTERNATEDATALINK.Split("/")
-        $OutFileName = "$($ALTERNATEDATAVERSION)_$($LinkParts[$LinkParts.Count-1])"
+        $LinkParts = $AppraiserURL.Split("/")
+        $OutFileName = "$($AppraiserVersion)_$($LinkParts[$LinkParts.Count-1])"
         $OutFilePath = "$AppriaserRoot\AppraiserData"
 
         if (-not (Test-Path $OutFilePath)) {
             New-Item -Path $OutFilePath -ItemType Directory -Force -ErrorAction SilentlyContinue
         }
         
-        Invoke-WebRequest -URI $ALTERNATEDATALINK -OutFile "$OutFilePath\$OutFileName"
+        Invoke-WebRequest -URI $AppraiserURL -OutFile "$OutFilePath\$OutFileName"
     
         Export-FUXMLFromSDB -AlternateSourcePath $OutFilePath -Path $AppriaserRoot
-        $ExistingXML = Get-ChildItem -Path $AppriaserRoot\*.xml -Recurse -File | Where-Object { $_.Name -like "*$ALTERNATEDATAVERSION*" } -ErrorAction SilentlyContinue
+        $ExistingXML = Get-ChildItem -Path $AppriaserRoot\*.xml -Recurse -File | Where-Object { $_.Name -like "*$AppraiserVersion*" } -ErrorAction SilentlyContinue
     }
 
     $DBBlocks = if ($ExistingXML) {
@@ -132,3 +134,6 @@ Get-SafeGuardHoldDetails -AppraiserURL $Settings.ALTERNATEDATALINK -AppraiserVer
 
 #Run this with no ids to list all safeguard holds from the appraiser db
 Get-SafeGuardHoldDetails -AppraiserURL $Settings.ALTERNATEDATALINK -AppraiserVersion $Settings.ALTERNATEDATAVERSION
+
+$AppraiserVersion = $Settings.ALTERNATEDATAVERSION
+$AppraiserURL = $Settings.ALTERNATEDATALINK
