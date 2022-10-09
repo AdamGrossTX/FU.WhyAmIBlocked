@@ -13,7 +13,7 @@ Searches the SDB for the GUIDs of any blocked items and outputs Matches.txt and 
 ## SYNTAX
 
 ```
-Find-FUBlocksInSDB [[-Path] <String>] [[-BlockList] <String[]>] [<CommonParameters>]
+Find-FUBlocksInSDB [[-Path] <String>] [[-BlockList] <String[]>] [<Commonparameters>]
 ```
 
 ## DESCRIPTION
@@ -35,7 +35,7 @@ List of blocked GUIDs
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -50,7 +50,7 @@ Path where the extracted SDB XML exists
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -60,8 +60,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+### Commonparameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_Commonparameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

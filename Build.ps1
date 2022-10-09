@@ -12,7 +12,6 @@ try {
     $ModuleName = "FU.WhyAmIBlocked"
     $Author = "Adam Gross (@AdamGrossTX)"
     $CompanyName = "A Square Dozen"
-    $Prefix = "fu"
     $Path = "C:\FeatureUpdateBlocks"
     $ProjectUri = "https://github.com/AdamGrossTX/FU.WhyAmIBlocked"
     $LicenseUri = "https://github.com/AdamGrossTX/FU.WhyAmIBlocked/blob/master/LICENSE"
@@ -79,7 +78,6 @@ $($previousVersion.releaseNotes)
         ModuleVersion        = $newVersion
         Description          = (Get-Content ".\$($moduleName)\description.txt" -raw).ToString()
         FunctionsToExport    = (Get-ChildItem -Path ("$($ModulePath)\Public\*.ps1") -Recurse).BaseName
-        DefaultCommandPrefix = $Prefix.ToUpper()
         CmdletsToExport      = @()
         VariablesToExport    = '*'
         AliasesToExport      = @()
@@ -98,7 +96,6 @@ $($previousVersion.releaseNotes)
 #region mainscript
     `$Public = @(Get-ChildItem -Path `"`$(`$PSScriptRoot)\Public\*.ps1`" -ErrorAction SilentlyContinue)
     `$Private = @(Get-ChildItem -Path `"`$(`$PSScriptRoot)\Private\*.ps1`" -ErrorAction SilentlyContinue)
-    `$script:Prefix = `"$($Prefix)`"
     `$script:Path = `"$($Path)`"
        
     `$initCfg = @{

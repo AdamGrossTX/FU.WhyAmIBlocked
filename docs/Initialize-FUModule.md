@@ -13,7 +13,7 @@ Creates the root folder in C:\FeatureUpdates and creates the fuconfig.json file.
 ## SYNTAX
 
 ```
-Initialize-FUModule [[-initCfg] <Object>] [-Reset] [<CommonParameters>]
+Initialize-FUModule [[-initCfg] <Object>] [-Reset] [<Commonparameters>]
 ```
 
 ## DESCRIPTION
@@ -59,8 +59,8 @@ Initializes the module with custom options
 Overwrites the existing json file.
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
+Type: switchparameter
+parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -75,7 +75,7 @@ Custom configuration option hashtable
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -85,8 +85,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+### Commonparameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_Commonparameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

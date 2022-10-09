@@ -1,3 +1,5 @@
+.\Build.ps1
+
 Import-Module ".\bin\release\FU.WhyAmIBlocked" -Force
 Initialize-FUModule -reset
 Get-FUBlocks

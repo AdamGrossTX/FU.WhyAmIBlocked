@@ -8,16 +8,16 @@ schema: 2.0.0
 # Export-FUBypassBlock
 
 ## SYNOPSIS
-If block bypass entries are found in the sdb, registry and ps1 files will be exported for easy use on blocked devices.
+if block bypass entries are found in the sdb, registry and ps1 files will be exported for easy use on blocked devices.
 
 ## SYNTAX
 
 ```
-Export-FUBypassBlock [[-Path] <String>] [<CommonParameters>]
+Export-FUBypassBlock [[-Path] <String>] [<Commonparameters>]
 ```
 
 ## DESCRIPTION
-If block bypass entries are found in the sdb, registry and ps1 files will be exported for easy use on blocked devices.
+if block bypass entries are found in the sdb, registry and ps1 files will be exported for easy use on blocked devices.
 
 ## EXAMPLES
 
@@ -35,7 +35,7 @@ Path to the json file
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -45,8 +45,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+### Commonparameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_Commonparameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
