@@ -1,7 +1,7 @@
 ﻿[cmdletbinding()]
 param (
-    [parameter(Mandatory = $true)]
-    [System.IO.FileInfo]$modulePath,
+    [parameter(Mandatory = $false)]
+    [System.IO.FileInfo]$modulePath = "$PSScriptRoot\FU.WhyAmIBlocked",
 
     [parameter(Mandatory = $false)]
     [switch]$buildLocal
@@ -17,13 +17,13 @@ try {
     $ProjectUri = "https://github.com/AdamGrossTX/FU.WhyAmIBlocked"
     $LicenseUri = "https://github.com/AdamGrossTX/FU.WhyAmIBlocked/blob/master/LICENSE"
     $GUID = "48c4fc69-d15f-4dd6-a3af-da65364e03fe"
-    $tags = @("Compatibility","Appraiser","FeatureUpdate","HardBlock")
+    $tags = @("Compatibility", "Appraiser", "FeatureUpdate", "HardBlock")
 
     
     #region Generate a new version number
     $moduleName = Split-Path -Path $modulePath -Leaf
     $PreviousVersion = Find-Module -Name $moduleName -ErrorAction SilentlyContinue | Select-Object *
-    [Version]$exVer = If($PreviousVersion) {$PreviousVersion.Version} Else {$null}
+    [Version]$exVer = If ($PreviousVersion) { $PreviousVersion.Version } Else { $null }
 
     if ($buildLocal) {
         $rev = ((Get-ChildItem -Path "$PSScriptRoot\bin\release\" -ErrorAction SilentlyContinue).Name | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum) + 1
@@ -39,7 +39,7 @@ try {
             New-Object Version -ArgumentList 1, 0, 0, $rev
         }
     }
-    $releaseNotes = (Get-Content ".\$($moduleName)\ReleaseNotes.txt" -Raw -ErrorAction SilentlyContinue).Replace("{{NewVersion}}",$newVersion)
+    $releaseNotes = (Get-Content ".\$($moduleName)\ReleaseNotes.txt" -Raw -ErrorAction SilentlyContinue).Replace("{{NewVersion}}", $newVersion)
     if ($PreviousVersion) {
         $releaseNotes = @"
 $releaseNotes
@@ -65,35 +65,35 @@ $($previousVersion.releaseNotes)
         New-Item -Path $relPath -ItemType Directory -Force | Out-Null
     }
 
-    If(Test-Path $relPath) {
+    If (Test-Path $relPath) {
         #Remove-Item -Path "$($relPath)\*" -Recurse -Force -ErrorAction SilentlyContinue
     }
-    Copy-Item -Path "$($modulePath)\*" -Destination "$($relPath)" -Recurse -Exclude ".gitKeep","releaseNotes.txt","description.txt","*.psm1","*.psd1" -Force
+    Copy-Item -Path "$($modulePath)\*" -Destination "$($relPath)" -Recurse -Exclude ".gitKeep", "releaseNotes.txt", "description.txt", "*.psm1", "*.psd1" -Force
 
     $Manifest = @{
-        Path = "$($relPath)\$($ModuleName).psd1"
-        RootModule = "$($ModuleName).psm1"
-        GUID = $GUID
-        Author = $Author
-        CompanyName = $CompanyName
-        ModuleVersion = $newVersion
-        Description = (Get-Content ".\$($moduleName)\description.txt" -raw).ToString()
-        FunctionsToExport = (Get-ChildItem -Path ("$($ModulePath)\Public\*.ps1") -Recurse).BaseName
+        Path                 = "$($relPath)\$($ModuleName).psd1"
+        RootModule           = "$($ModuleName).psm1"
+        GUID                 = $GUID
+        Author               = $Author
+        CompanyName          = $CompanyName
+        ModuleVersion        = $newVersion
+        Description          = (Get-Content ".\$($moduleName)\description.txt" -raw).ToString()
+        FunctionsToExport    = (Get-ChildItem -Path ("$($ModulePath)\Public\*.ps1") -Recurse).BaseName
         DefaultCommandPrefix = $Prefix.ToUpper()
-        CmdletsToExport = @()
-        VariablesToExport = '*'
-        AliasesToExport = @()
+        CmdletsToExport      = @()
+        VariablesToExport    = '*'
+        AliasesToExport      = @()
         DscResourcesToExport = @()
-        ReleaseNotes = $releaseNotes
-        ProjectUri = $ProjectUri
-        LicenseUri = $LicenseUri
-        Tags = $Tags
+        ReleaseNotes         = $releaseNotes
+        ProjectUri           = $ProjectUri
+        LicenseUri           = $LicenseUri
+        Tags                 = $Tags
     }
 
     #https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/new-modulemanifest?view=powershell-7
     New-ModuleManifest @Manifest
 
-$ModuleFunctionScript = "
+    $ModuleFunctionScript = "
 
 #region mainscript
     `$Public = @(Get-ChildItem -Path `"`$(`$PSScriptRoot)\Public\*.ps1`" -ErrorAction SilentlyContinue)
@@ -137,7 +137,7 @@ $ModuleFunctionScript = "
     #endregion
  
 "
-   $ModuleFunctionScript | Out-File -FilePath "$($relPath)\$($ModuleName).psm1" -Encoding utf8 -Force
+    $ModuleFunctionScript | Out-File -FilePath "$($relPath)\$($ModuleName).psm1" -Encoding utf8 -Force
 
 }
 catch {
