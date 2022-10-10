@@ -21,7 +21,7 @@ stages:
             displayName: Build
             inputs:
               filePath: './build.ps1'
-              arguments: '-modulePath $(modulePath)'
+              #arguments: '-modulePath $(modulePath)'
               pwsh: true
 
           - task: CopyFiles@2
@@ -43,7 +43,7 @@ stages:
       - deployment: 'Deploy'
         displayName: 'Publish to PSGallery'
         pool:
-          vmImage: 'vs2017-win2016'
+          vmImage: 'windows-latest'
         environment: 'production'
         strategy:
           runOnce:
