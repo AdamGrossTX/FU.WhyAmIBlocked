@@ -10,6 +10,9 @@ trigger:
       - /readme.md
       - /.tests
 
+variables:
+- group: GithubVariables
+
 stages:
   - stage: Build
     jobs:
