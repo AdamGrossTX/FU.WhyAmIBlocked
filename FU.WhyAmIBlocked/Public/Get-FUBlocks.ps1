@@ -174,13 +174,15 @@ function Get-FUBlocks {
         if ($DeviceName -eq $env:computername) {
             Add-Content -Path $ResultFile -Value "AppCompat Registry Flags"
             Add-Content -Path $ResultFile -Value "=============="
-            Add-Content -Path $ResultFile -Value (Get-Item -Path 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser' -ErrorAction SilentlyContinue)
-            Add-Content -Path $ResultFile -Value (Get-Item -Path 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\SEC' -ErrorAction SilentlyContinue)
-            Add-Content -Path $ResultFile -Value (Get-Item -Path 'HKLM:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\GWX' -ErrorAction SilentlyContinue)
+            Add-Content -Path $ResultFile -Value (Get-Item -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser" -ErrorAction SilentlyContinue)
+            Add-Content -Path $ResultFile -Value (Get-Item -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\SEC" -ErrorAction SilentlyContinue)
+            Add-Content -Path $ResultFile -Value (Get-Item -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\GWX" -ErrorAction SilentlyContinue)
+            Add-Content -Path $ResultFile -Value (Get-ChildItem -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TargetVersionUpgradeExperienceIndicators" -ErrorAction SilentlyContinue)
+            Add-Content -Path $ResultFile -Value (Get-Item -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\OneSettings\compat\appraiser\Settings" -ErrorAction SilentlyContinue)
         }
 
         if (!($SkipSDBInfo.IsPresent)) {
-            Export-XMLFromSDB -Path $OutputPath
+            Export-FUXMLFromSDB -Path $OutputPath
             if ($Script:BlockList) {
                 Find-FUBlocksInSDB -Path $OutputPath
                 Export-FUBypassBlock -Path $OutputPath

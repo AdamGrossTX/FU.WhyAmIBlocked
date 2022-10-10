@@ -31,13 +31,24 @@ function Get-FUBlocksFromBin {
                     $datasourceValues = @()
                     $datasourceValues = $root.Assets.Asset[$i].SelectNodes("PropertyList[@Type='DataSource']")
                     if ($datasourceValues.Count -gt 0) {
-                        $sdbSearch = @()
-                        $sdbSearch += $datasourceValues.SelectNodes("Property[@Name='SdbAppraiserData']")
-                        $sdbSearch += $datasourceValues.SelectNodes("Property[@Name='SdbAppName']")
-                        $sdbSearch += $datasourceValues.SelectNodes("Property[@Name='SdbEntryGuid']")
-                        $sdbSearch += $datasourceValues.SelectNodes("Property[@Name='SdbBlockType']")
-                        $sdbSearch += $datasourceValues.SelectNodes("Property[@Name='SdbAppGuid']")
-                        if ($sdbSearch.Count -gt 0) {
+                        $sdbSearch = [PSCustomObject]@{
+                            SdbAppraiserData = $datasourceValues.SelectNodes("Property[@Name='SdbAppraiserData']").Value
+                            SdbAppName = $datasourceValues.SelectNodes("Property[@Name='SdbAppName']").Value
+                            SdbEntryGuid = $datasourceValues.SelectNodes("Property[@Name='SdbEntryGuid']").Value
+                            SdbBlockType = $datasourceValues.SelectNodes("Property[@Name='SdbBlockType']").Value
+                            SdbAppGuid = $datasourceValues.SelectNodes("Property[@Name='SdbAppGuid']").Value
+                            SdbBlockOverrideType = $datasourceValues.SelectNodes("Property[@Name='SdbBlockOverrideType']").Value
+                            SdbAppraiserData_GatedBlockId = $datasourceValues.SelectNodes("Property[@Name='SdbAppraiserData_GatedBlockId']").Value
+                            Ordinal = $datasourceValues.SelectNodes("Property[@Name='SdbEntryGuid']").Ordinal
+                        }
+                        #$sdbSearch += $datasourceValues.SelectNodes("Property[@Name='SdbAppraiserData']")
+                        #$sdbSearch += $datasourceValues.SelectNodes("Property[@Name='SdbAppName']")
+                        #$sdbSearch += $datasourceValues.SelectNodes("Property[@Name='SdbEntryGuid']")
+                        #$sdbSearch += $datasourceValues.SelectNodes("Property[@Name='SdbBlockType']")
+                        #$sdbSearch += $datasourceValues.SelectNodes("Property[@Name='SdbAppGuid']")
+                        #$sdbSearch += $datasourceValues.SelectNodes("Property[@Name='SdbBlockOverrideType']")
+                        #$sdbSearch += $datasourceValues.SelectNodes("Property[@Name='SdbAppraiserData_GatedBlockId']")                        
+                        if ($sdbSearch.SdbEntryGuid) {
                             $sdb[$s] = $sdbSearch
                             $s++
                         }
@@ -53,7 +64,7 @@ function Get-FUBlocksFromBin {
                 Add-Content -Path $ResultFile -Value ""
 
                 Do {
-                    $ordinal = ($sdb[$x] | Where-Object Value -EQ 'GatedBlock').Ordinal
+                    $ordinal = ($sdb[$x] | Where-Object {$_.SdbAppraiserData -EQ 'GatedBlock'}).Ordinal
                     if ($ordinal.Count -gt 0) {
                         Add-Content -Path $ResultFile -Value "Matching GatedBlock....FOUND!"
                         Add-Content -Path $ResultFile -Value "GatedBlock:"
@@ -62,15 +73,15 @@ function Get-FUBlocksFromBin {
                     }
                     if ($ordinal.Count -gt 1) {
                         $gBlock = foreach ($num in $ordinal) {
-                            $sdb[$x] | Where-Object Ordinal -EQ $num
+                            $sdb[$x] | Where-Object {$_.Ordinal -eq $num}
                         }
-                        ($gBlock | Where-Object Name -eq "SdbEntryGuid" | Select-Object -ExpandProperty Value) | foreach-Object { $Output.Add($_) | Out-Null }
+                        $gBlock.SdbEntryGuid | foreach-Object { $Output.Add($_) | Out-Null }
                         $gBlock | Out-File -FilePath $ResultFile -Append -Encoding utf8
 
                     }
                     if ($ordinal.Count -eq 1) {
-                        $gBlock = $sdb[$x] | Where-Object Ordinal -EQ $ordinal
-                        ($gBlock | Where-Object Name -eq "SdbEntryGuid" | Select-Object -ExpandProperty Value) | foreach-Object { $Output.Add($_) | Out-Null }
+                        $gBlock = $sdb[$x] | Where-Object {$_.Ordinal -eq $ordinal}
+                        $gBlock.SdbEntryGuid | foreach-Object { $Output.Add($_) | Out-Null }
                         $gBlock | Out-File -FilePath $ResultFile -Append -Encoding utf8
                     }
 
@@ -84,7 +95,7 @@ function Get-FUBlocksFromBin {
                 $x = 0
 
                 Do {
-                    $ordinal = ($sdb[$x] | Where-Object Value -EQ 'BlockUpgrade').Ordinal
+                    $ordinal = ($sdb[$x] | Where-Object {$_.SdbBlockType -eq 'BlockUpgrade'}).Ordinal
                     if ($ordinal.Count -gt 0) {
                         Add-Content -Path $ResultFile -Value "Matching BlockUpgrade....FOUND!"
                         Add-Content -Path $ResultFile -Value "BlockUpgrade:"
@@ -93,14 +104,14 @@ function Get-FUBlocksFromBin {
                     }
                     if ($ordinal.Count -gt 1) {
                         $sBlock = foreach ($num in $ordinal) {
-                            $sdb[$x] | Where-Object Ordinal -EQ $num
+                            $sdb[$x] | Where-Object {$_.Ordinal -eq $num}
                         }
-                        ($sBlock | Where-Object Name -eq "SdbEntryGuid" | Select-Object -ExpandProperty Value) | foreach-Object { $Output.Add($_) | Out-Null }
+                        $sBlock.SdbEntryGuid | foreach-Object { $Output.Add($_) | Out-Null }
                         $sBlock | Out-File -FilePath $ResultFile -Append -Encoding utf8
                     }
                     else {
-                        $sBlock = $sdb[$x] | Where-Object Ordinal -EQ $ordinal
-                        ($sBlock | Where-Object Name -eq "SdbEntryGuid" | Select-Object -ExpandProperty Value) | foreach-Object { $Output.Add($_) | Out-Null }
+                        $sBlock = $sdb[$x] | Where-Object {$_.Ordinal -eq $ordinal}
+                        $sBlock.SdbEntryGuid | foreach-Object { $Output.Add($_) | Out-Null }
                         $sBlock | Out-File -FilePath $ResultFile -Append -Encoding utf8
                     }
                     $x++
@@ -115,7 +126,7 @@ function Get-FUBlocksFromBin {
                 Add-Content -Path $ResultFile -Value "For: $($path)"
                 for ($a = 0; $a -lt $sdb.Count; $a++) {
                     Add-Content -Path $ResultFile -Value "Entry $($a) : " | Out-Null
-                    $sdb[$a] | Format-Table | Out-String | Out-File -FilePath $ResultFile -Append -Encoding utf8
+                    $sdb[$a] | Format-List | Out-String | Out-File -FilePath $ResultFile -Append -Encoding utf8
                 }
 
                 Write-Host $Script:tick -ForegroundColor green
@@ -126,7 +137,7 @@ function Get-FUBlocksFromBin {
         }
         Write-Host " + Results output to  $($ResultFile).. " -ForegroundColor Cyan -NoNewline
         Write-Host $Script:tick -ForegroundColor green
-        return $Output
+        return $Output | Select-Object -Unique
     }
     catch {
         Write-Warning $_

@@ -18,14 +18,13 @@ function Export-FUBypassBlock {
         foreach ($File in $Files) {
             $obj = Get-Content -Path $File -Raw | ConvertFrom-Json
             foreach ($Item in $obj.PSObject.Properties) {
-                $BlockName = $item.Value | Where-Object { $_.Name -eq "APP_NAME" } | Select-Object -ExpandProperty Value
+                $BlockName = $item.Value.APP_NAME
                 $BlockGUID = $item.Name
-                $RegKeys = $item.Value | Where-Object { $_.ParentNode -eq "MATCHING_REG" }
+                $RegKeys = $item.Value | Where-Object { $_.NAME -eq "SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\BypassBlockUpgrade" }
                 if ($RegKeys) {
-                    $NAME = $RegKeys | Where-Object { $_.Name -eq "NAME" } | Select-Object -ExpandProperty Value
-                    $REG_VALUE_NAME = $RegKeys | Where-Object { $_.Name -eq "REG_VALUE_NAME" } | Select-Object -ExpandProperty Value
-                    #$REG_VALUE_TYPE = $RegKeys | Where-Object {$_.Name -eq "REG_VALUE_TYPE"} | Select -ExpandProperty Value
-                    $REG_VALUE_DATA_DWORD = $RegKeys | Where-Object { $_.Name -eq "REG_VALUE_DATA_DWORD" } | Select-Object -ExpandProperty Value
+                    $NAME = $RegKeys.NAME
+                    $REG_VALUE_NAME = $RegKeys.REG_VALUE_NAME
+                    $REG_VALUE_DATA_DWORD = $RegKeys.REG_VALUE_DATA_DWORD
 
                     $OutRegFile = Join-Path -Path $WorkingPath -ChildPath "$($File.BaseName)_BypassFUBlock.reg"
                     $OutPS1File = Join-Path -Path $WorkingPath -ChildPath "$($File.BaseName)_BypassFUBlock.ps1"

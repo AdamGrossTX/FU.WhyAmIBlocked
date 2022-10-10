@@ -9,9 +9,25 @@ function Export-FUXMLFromSDB {
         [string]
         $Path = $Script:Config.Path,
 
-        [parameter(Position = 5, Mandatory = $false)]
+        [parameter(Position = 2, Mandatory = $false)]
         [string]
-        $AlternateSourcePath
+        $AlternateSourcePath,
+
+        [parameter(Position = 3, Mandatory = $false)]
+        [string[]]
+        $NodesToExclude = @(
+            "INDEXES",
+            "STRINGTABLE",
+            "MIGRATION_DATA",
+            "MIGRATION_SHIM",
+            "INEXCLUDE",
+            "SHIM",
+            "CONTEXT",
+            "LAYER",
+            "C_STRUCT",
+            "DEVICE_BLOCK",
+            "FLAG"
+        )
     )
 
     $Date = (Get-Date -Format yyyyMMdd_hhmmss)
@@ -97,6 +113,24 @@ function Export-FUXMLFromSDB {
                     Expand-FUSDB -Path $File.DirectoryName -InputFile $File.Name -OutputFile $ExpandedFileName
                     Write-Host " + Converting sdb to xml.. " -ForegroundColor Cyan -NoNewline
                     & "$($script:Config.sdb2xmlPath)" "$(Split-Path $File -Parent)\$($ExpandedFileName)" -out $XMLFileName | Out-Null
+
+                    if ($NodesToExclude) {
+                        #Make a backup before removing nodes
+                        $XMLFileName | Copy-Item -Destination $XMLFileName.Replace(".XML","_ORIG.XML")
+                        [xml]$Content = Get-Content -Path $XMLFileName -Raw
+                        $nodes = foreach ($nodeName in $NodesToExclude) {
+                            if ($nodeName -eq "DEVICE_BLOCK") {
+                                $Content.SelectNodes("//DEVICE_BLOCK") | where-object { $_.UPGRADE_DATA.'#text' -eq 0 }
+                            }
+                            else {
+                                $Content.SelectNodes("//$nodeName")
+                            }
+                        }
+                        foreach ($node in $nodes) {
+                            $node.ParentNode.RemoveChild($node) | Out-Null
+                        }
+                        $Content.Save($XMLFileName)
+                    }
                     Write-Host $Script:tick -ForegroundColor green
                 }
             }

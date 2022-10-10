@@ -1,11 +1,11 @@
 Acknowledgments
 
-A big "Thank You" to [Ben Reader](http://www.twitter.com/Powers_Hell) - https://github.com/tabs-not-spaces/ for heping move this module forward and for mentoring me.
+A big "Thank You" to [Ben Reader](http://www.twitter.com/Powers_Hell) - https://github.com/tabs-not-spaces/ for helping move this module forward and for mentoring me.
 
 ___
 
 sdb2XML sourced from https://devblogs.microsoft.com/setup/shim-database-to-xml/
-
+https://github.com/heaths/sdb2xml
 ___
 
 sdbUnpacker.py sourced from https://github.com/TheEragon/SdbUnpacker and the license follows.
