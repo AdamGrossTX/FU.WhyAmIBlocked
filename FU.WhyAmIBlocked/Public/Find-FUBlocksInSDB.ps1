@@ -17,6 +17,9 @@ function Find-FUBlocksInSDB {
     try {
 
         Write-Host " + Finding block entries in Appraiser database.. " -ForegroundColor Cyan
+        $OutputPath = $Path
+        $ResultsFile = "$($OutputPath)\Results.txt"
+
         if ($BlockList) {
             $BlockList = $BlockList | Select-Object -Unique
             $WorkingPath = $Path
@@ -54,14 +57,26 @@ function Find-FUBlocksInSDB {
                         }
                     }
 
+                    Add-Content -Path $ResultFile -Value "__Matches for $($Key)__"
+                    Add-Content -Path $ResultFile -Value "========================"
+                    Add-Content -Path $ResultFile -Value ($Blocks[$Key] | Sort-Object ParentId | Out-String)
+                    Add-Content -Path $ResultFile -Value "========================"
+                    Add-Content -Path $ResultFile -Value ""
+
+                    Add-Content -Path $ResultFile -Value "__Related Matches for $($Key)__"
+                    Add-Content -Path $ResultFile -Value "========================"
+                    Add-Content -Path $ResultFile -Value ($RelatedBlocks[$Key] | Sort-Object ParentId | Out-String)
+                    Add-Content -Path $ResultFile -Value "========================"
+                    Add-Content -Path $ResultFile -Value ""
+
                     "Matches for $($Key)" | Out-File $MatchFile -Append -Encoding utf8
-                    "========================" | Out-File $MatchFile -Append -Encoding utf8
+                    "========================================================" | Out-File $MatchFile -Append -Encoding utf8
                     $Blocks[$Key] | Sort-Object ParentId | Format-List | Out-File $MatchFile -Append -Encoding utf8
-                    "========================" | Out-File $MatchFile -Append -Encoding utf8
+                    "========================================================" | Out-File $MatchFile -Append -Encoding utf8
                     "Related Matches for $($Key)" | Out-File $MatchFile -Append -Encoding utf8
-                    "========================" | Out-File $MatchFile -Append -Encoding utf8
+                    "========================================================" | Out-File $MatchFile -Append -Encoding utf8
                     $RelatedBlocks[$Key] | Sort-Object ParentId | Format-List | Out-File $MatchFile -Append -Encoding utf8
-                    "========================" | Out-File $MatchFile -Append -Encoding utf8
+                    "========================================================" | Out-File $MatchFile -Append -Encoding utf8
                     "" | Out-File $MatchFile -Append -Encoding utf8
                 }
 
@@ -71,11 +86,13 @@ function Find-FUBlocksInSDB {
                     Write-Host " ++ Matches output to $($MatchFile).. " -ForegroundColor green
                 }
                 else {
+                    Add-Content -Path $ResultFile -Value "No Matches Found in $($File.FullName)."
                     Write-Host " ++No Matches Found in $($File.FullName)." -ForegroundColor Yellow
                 }
             }
         }
         else {
+            Add-Content -Path $ResultFile -Value "No Blocklist found."
             Write-Host " ++No Blocklist found." -ForegroundColor Yellow
         }
     }

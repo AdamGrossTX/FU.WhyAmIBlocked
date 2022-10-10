@@ -66,6 +66,7 @@ function Get-FUBlocksFromBin {
                 Do {
                     $ordinal = ($sdb[$x] | Where-Object {$_.SdbAppraiserData -EQ 'GatedBlock'}).Ordinal
                     if ($ordinal.Count -gt 0) {
+                        Add-Content -Path $ResultFile -Value "=========="
                         Add-Content -Path $ResultFile -Value "Matching GatedBlock....FOUND!"
                         Add-Content -Path $ResultFile -Value "GatedBlock:"
                         Add-Content -Path $ResultFile -Value "=========="
@@ -92,14 +93,19 @@ function Get-FUBlocksFromBin {
                     Add-Content -Path $ResultFile -Value "Matching GatedBlock....NONE FOUND."
                 }
 
+                Add-Content -Path $ResultFile -Value "============"
+                Add-Content -Path $ResultFile -Value ""
+
                 $x = 0
 
                 Do {
                     $ordinal = ($sdb[$x] | Where-Object {$_.SdbBlockType -eq 'BlockUpgrade'}).Ordinal
                     if ($ordinal.Count -gt 0) {
+                        Add-Content -Path $ResultFile -Value "=========="
                         Add-Content -Path $ResultFile -Value "Matching BlockUpgrade....FOUND!"
                         Add-Content -Path $ResultFile -Value "BlockUpgrade:"
                         Add-Content -Path $ResultFile -Value "============"
+                        Add-Content -Path $ResultFile -Value ""
                         $match = 2
                     }
                     if ($ordinal.Count -gt 1) {
@@ -120,14 +126,19 @@ function Get-FUBlocksFromBin {
                 if ($match -ne 2) {
                     Add-Content -Path $ResultFile -Value "Matching Block Upgrade....NONE FOUND."
                 }
+                Add-Content -Path $ResultFile -Value "============"
+                Add-Content -Path $ResultFile -Value ""
 
-
+                Add-Content -Path $ResultFile -Value "=========="
                 Add-Content -Path $ResultFile -Value "All SDB Entries For: $($path)"
-                Add-Content -Path $ResultFile -Value "For: $($path)"
+                Add-Content -Path $ResultFile -Value "=========="
                 for ($a = 0; $a -lt $sdb.Count; $a++) {
                     Add-Content -Path $ResultFile -Value "Entry $($a) : " | Out-Null
                     $sdb[$a] | Format-List | Out-String | Out-File -FilePath $ResultFile -Append -Encoding utf8
                 }
+
+                Add-Content -Path $ResultFile -Value "============"
+                Add-Content -Path $ResultFile -Value ""
 
                 Write-Host $Script:tick -ForegroundColor green
             }

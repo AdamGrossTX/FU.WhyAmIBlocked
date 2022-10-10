@@ -42,7 +42,6 @@ function Get-FUBlocks {
 
         #GetFULatestModuleVersion
 
-        Write-Host " + Creating Output Folders $($OutputPath).. " -ForegroundColor Cyan -NoNewline
         $Date = (Get-Date -Format yyyyMMdd_hhmmss)
 
         if ($Local.IsPresent -or (!($DeviceName)) -and (!($AlternateSourcePath))) {
@@ -57,10 +56,17 @@ function Get-FUBlocks {
             $tOutputPath = "$($Path)\Output_$($Date)"
         }
 
+        Write-Host " + Creating Output Folders $($OutputPath).. " -ForegroundColor Cyan -NoNewline
         $OutputPath = New-Item -Path $tOutputPath -ItemType Directory -Force -ErrorAction SilentlyContinue
 
         $ResultFile = New-Item -Path "$($OutputPath)\Results.txt" -ItemType "File" -Force
-        Add-Content -Path $ResultFile -Value "$($DeviceName) - $(Get-Date)"
+        
+        Add-Content -Path $ResultFile -Value "__Get-FUBlock Scan Information__"
+        Add-Content -Path $ResultFile -Value "========================================================"
+        Add-Content -Path $ResultFile -Value "DeviceName: $($DeviceName)"
+        Add-Content -Path $ResultFile -Value "DateTime: $(Get-Date)"
+        Add-Content -Path $ResultFile -Value "========================================================"
+        Add-Content -Path $ResultFile -Value ""
 
         $BinFilePath = New-Item -Path (Join-Path -Path $OutputPath -ChildPath "Bin") -ItemType Directory -Force
         $AppraiserDataPath = New-Item -Path (Join-Path -Path $OutputPath -ChildPath "AppraiserData") -ItemType Directory -Force
@@ -151,6 +157,9 @@ function Get-FUBlocks {
         }
 
         $BinFiles = Get-Item -Path (Join-Path -Path $BinFilePath -ChildPath "*.bin") -ErrorAction SilentlyContinue
+
+        Add-Content -Path $ResultFile -Value "__BIN File Information__"
+        Add-Content -Path $ResultFile -Value "========================================================"
         if ($BinFiles) {
             Add-Content -Path $ResultFile -Value "Found $($BinFiles.Count) .bin file(s)."
             Add-Content -Path $ResultFile -Value "$($BinFiles | Format-Table | Out-String)"
@@ -159,38 +168,55 @@ function Get-FUBlocks {
         else {
             Add-Content -Path $ResultFile -Value "No .bin Files Found."
         }
+        Add-Content -Path $ResultFile -Value "========================================================"
+        Add-Content -Path $ResultFile -Value ""
+
 
         $HumanReadableXMLFiles = Get-Item -Path "$($XMLPath)\*Humanreadable.xml" -ErrorAction SilentlyContinue
+
+        Add-Content -Path $ResultFile -Value "__BIN File Block Information__"
+        Add-Content -Path $ResultFile -Value "========================================================"
 
         if ($HumanReadableXMLFiles) {
             $Script:BlockList = Get-FUBlocksFromBin -FileList $HumanReadableXMLFiles -ResultFile $ResultFile -Output (New-Object -TypeName System.Collections.ArrayList )
         }
         else {
+            Add-Content -Path $ResultFile -Value "No XML Files found to process. Verify that BIN/XML files were provided. Exiting."
             Write-Warning "No XML Files found to process. Verify that BIN/XML files were provided. Exiting."
             return
         }
+        Add-Content -Path $ResultFile -Value "========================================================"
+        Add-Content -Path $ResultFile -Value ""
 
         #Needs to work with remote devices too...
         if ($DeviceName -eq $env:computername) {
-            Add-Content -Path $ResultFile -Value "AppCompat Registry Flags"
-            Add-Content -Path $ResultFile -Value "=============="
-            Add-Content -Path $ResultFile -Value (Get-Item -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser" -ErrorAction SilentlyContinue)
-            Add-Content -Path $ResultFile -Value (Get-Item -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\SEC" -ErrorAction SilentlyContinue)
-            Add-Content -Path $ResultFile -Value (Get-Item -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\GWX" -ErrorAction SilentlyContinue)
-            Add-Content -Path $ResultFile -Value (Get-ChildItem -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TargetVersionUpgradeExperienceIndicators" -ErrorAction SilentlyContinue)
-            Add-Content -Path $ResultFile -Value (Get-Item -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\OneSettings\compat\appraiser\Settings" -ErrorAction SilentlyContinue)
+            Add-Content -Path $ResultFile -Value "__AppCompat Registry Information__"
+            Add-Content -Path $ResultFile -Value "========================================================"
+            Add-Content -Path $ResultFile -Value (Get-Item -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser" -ErrorAction SilentlyContinue | Out-String)
+            Add-Content -Path $ResultFile -Value (Get-Item -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\SEC" -ErrorAction SilentlyContinue | Out-String)
+            Add-Content -Path $ResultFile -Value (Get-Item -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Appraiser\GWX" -ErrorAction SilentlyContinue | Out-String)
+            Add-Content -Path $ResultFile -Value (Get-ChildItem -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TargetVersionUpgradeExperienceIndicators" -ErrorAction SilentlyContinue | Out-String)
+            Add-Content -Path $ResultFile -Value (Get-Item -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\OneSettings\compat\appraiser\Settings" -ErrorAction SilentlyContinue | Out-String)
+            Add-Content -Path $ResultFile -Value "========================================================"
+            Add-Content -Path $ResultFile -Value ""        
         }
+
 
         if (!($SkipSDBInfo.IsPresent)) {
             Export-FUXMLFromSDB -Path $OutputPath
+            Add-Content -Path $ResultFile -Value "__FU Block Information__"
+            Add-Content -Path $ResultFile -Value "========================================================"
             if ($Script:BlockList) {
                 Find-FUBlocksInSDB -Path $OutputPath
                 Export-FUBypassBlock -Path $OutputPath
             }
             else {
+                Add-Content -Path $ResultFile -Value "No blocks Found."
                 Write-Host " + No blocks Found. Congratulations!!.. " -ForegroundColor Cyan -NoNewline
                 Write-Host $Script:tick -ForegroundColor green
             }
+            Add-Content -Path $ResultFile -Value "========================================================"
+            Add-Content -Path $ResultFile -Value ""
         }
 
         Write-Host "Appraiser Results can be found: $($OutputPath)\Results.txt" -ForegroundColor Green
