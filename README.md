@@ -2,6 +2,8 @@
 
 [![Build Status](https://dev.azure.com/ASquareDozen/FU.WhyAmIBlocked/_apis/build/status/AdamGrossTX.FU.WhyAmIBlocked?branchName=master)](https://dev.azure.com/ASquareDozen/FU.WhyAmIBlocked/_build/latest?definitionId=1&branchName=master)
 
+[![Build Status](https://dev.azure.com/ASquareDozenLab/FU.WhyAmIBlocked/_apis/build/status/AdamGrossTX.FU.WhyAmIBlocked?branchName=main)](https://dev.azure.com/ASquareDozenLab/FU.WhyAmIBlocked/_build/latest?definitionId=1&branchName=main)
+
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/v/FU.WhyAmIBlocked.svg?style=flat&logo=powershell&label=PSGallery%20Version)
 
 ![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/FU.WhyAmIBlocked.svg?style=flat&logo=powershell&label=PSGallery%20Downloads)
