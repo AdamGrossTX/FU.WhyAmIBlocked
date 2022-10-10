@@ -13,7 +13,7 @@ Takes .bin files, converts to XML, and outputs Results.txt summary file with a l
 ## SYNTAX
 
 ```
-Get-FUBlocksFromBin [-FileList] <String[]> [-ResultFile <String>] [-Output <ArrayList>] [<CommonParameters>]
+Get-FUBlocksFromBin [-FileList] <String[]> [-ResultFile <String>] [-Output <ArrayList>] [<Commonparameters>]
 ```
 
 ## DESCRIPTION
@@ -35,7 +35,7 @@ Array of Compatibility Appraiser .Bin files
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -50,7 +50,7 @@ Path to an alternate Results file. Default is .\Results.txt
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -65,7 +65,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: ArrayList
-Parameter Sets: (All)
+parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -75,8 +75,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+### Commonparameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_Commonparameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

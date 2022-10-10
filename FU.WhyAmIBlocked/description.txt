@@ -1,3 +1,5 @@
-Can't get the latest Windows 10 Feature update? Need to find out what's blocking you? This module will help you find the block quickly!
+Can't get the latest Windows 10 or Windows 11 Feature update? You may have a Safeguard Hold. Need to find out what's blocking you? This module will help you find the block quickly!
+
+** FU stands for Feature Update **
 
 More details in my blog https://www.asquaredozen.com/2020/07/26/demystifying-windows-10-feature-update-blocks/

@@ -1,6 +1,12 @@
+.\Build.ps1
+
 Import-Module ".\bin\release\FU.WhyAmIBlocked" -Force
 Initialize-FUModule -reset
-Get-FUBlocks
+#Get-FUBlocks
+
+#Get-FUBlocksFromBin -FileList "C:\Users\Adam\OneDrive - A Square Dozen\FeatureUpdateBlocks\PW00FEBC_20220921_062327\XML\AppCompatAppraiser_APPRAISER_TelemetryBaseline_NI22H2.bin_HUMANREADABLE.XML" -Output (New-Object -TypeName System.Collections.ArrayList )
+
+Get-FUBlocks -Local -AlternateSourcePath "C:\Temp\AltSource"
 
 
 #ToDo Usage Examples

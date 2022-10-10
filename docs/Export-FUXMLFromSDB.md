@@ -13,7 +13,7 @@ Converts a decompressed SDB file to XML.
 ## SYNTAX
 
 ```
-Export-FUXMLFromSDB [[-Path] <String>] [[-AlternateSourcePath] <String>] [<CommonParameters>]
+Export-FUXMLFromSDB [[-Path] <String>] [[-AlternateSourcePath] <String>] [<Commonparameters>]
 ```
 
 ## DESCRIPTION
@@ -35,7 +35,7 @@ The path containing a .sdb file and/or Appraiser_AlternateData.cab
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -50,7 +50,7 @@ Output/working path
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -60,8 +60,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+### Commonparameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_Commonparameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

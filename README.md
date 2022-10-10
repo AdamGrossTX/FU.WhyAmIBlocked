@@ -28,7 +28,7 @@ Get-FUBlocks
 Python is required to process the sdb compatibility database, but the module will still function partially without it.
 
 ## Build from source
-If you want to use the module from the repo, you will need to build it first. It will be output to `.\bin\release\FU.WhyAmIBlocked`
+if you want to use the module from the repo, you will need to build it first. It will be output to `.\bin\release\FU.WhyAmIBlocked`
 
 ``` PowerShell
 .\Build.ps1 -ModulePath .\FU.WhyAmIBlocked
@@ -39,16 +39,16 @@ Import-Module ".\bin\release\FU.WhyAmIBlocked" -Force
 
 ### Create config file. 
 
-If you need to customize paths, run this command. This creates a configfile in `C:\FeatureUpdateBlocks\fuconfig.json` that you can edit as needed.
+if you need to customize paths, run this command. This creates a configfile in `C:\FeatureUpdateBlocks\fuconfig.json` that you can edit as needed.
 ```
 Initialize-FUModule 
 ```
 
 ### Convert appraiser bin files to XML
-If you have .bin files collected in a folder already, you can process them. OutputPath must exist before running the command.
+if you have .bin files collected in a folder already, you can process them. OutputPath must exist before running the command.
 
 ```
-ConvertFrom-BinToXML -FileList @("c:\temp\myfile1.bin","c:\temp\myfile2.bin") -OutputPath "C:\temp\"
+ConvertFrom-FUBinToXML -FileList @("c:\temp\myfile1.bin","c:\temp\myfile2.bin") -OutputPath "C:\temp\"
 ```
 
 ### Export SDB to XML

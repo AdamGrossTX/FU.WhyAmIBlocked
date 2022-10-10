@@ -13,7 +13,7 @@ Converts appraiser .bin files to human readable XML
 ## SYNTAX
 
 ```
-ConvertFrom-FUBinToXML [-FileList] <String[]> [-OutputPath] <String> [<CommonParameters>]
+ConvertFrom-FUBinToXML [-FileList] <String[]> [-OutputPath] <String> [<Commonparameters>]
 ```
 
 ## DESCRIPTION
@@ -35,7 +35,7 @@ List of .bin files.
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -50,7 +50,7 @@ Output location for the XML files.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -60,8 +60,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+### Commonparameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_Commonparameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

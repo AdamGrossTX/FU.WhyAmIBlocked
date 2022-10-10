@@ -15,19 +15,19 @@ Collects compatibility appraiser files from local or remote machine and exports 
 ### Local (Default)
 ```
 Get-FUBlocks [-Local] [-RunCompatAppraiser] [[-AlternateSourcePath] <String>] [[-Path] <String>]
- [-ProcessPantherLogs] [-SkipSDBInfo] [<CommonParameters>]
+ [-ProcessPantherLogs] [-SkipSDBInfo] [<Commonparameters>]
 ```
 
 ### Alt
 ```
 Get-FUBlocks [[-DeviceName] <String>] [-AlternateSourcePath] <String> [[-Path] <String>] [-ProcessPantherLogs]
- [-SkipSDBInfo] [<CommonParameters>]
+ [-SkipSDBInfo] [<Commonparameters>]
 ```
 
 ### Remote
 ```
 Get-FUBlocks [-DeviceName] <String> [[-AlternateSourcePath] <String>] [[-Path] <String>] [-ProcessPantherLogs]
- [-SkipSDBInfo] [<CommonParameters>]
+ [-SkipSDBInfo] [<Commonparameters>]
 ```
 
 ## DESCRIPTION
@@ -49,7 +49,7 @@ Alternate path with Appraiser_AlternateData.Cab and .bin files for processing
 
 ```yaml
 Type: String
-Parameter Sets: Local, Remote
+parameter Sets: Local, Remote
 Aliases:
 
 Required: False
@@ -61,7 +61,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: Alt
+parameter Sets: Alt
 Aliases:
 
 Required: True
@@ -76,7 +76,7 @@ The name of the device to remotely connect to for data
 
 ```yaml
 Type: String
-Parameter Sets: Alt
+parameter Sets: Alt
 Aliases:
 
 Required: False
@@ -88,7 +88,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: Remote
+parameter Sets: Remote
 Aliases:
 
 Required: True
@@ -102,8 +102,8 @@ Accept wildcard characters: False
 Uses local device as the data source.
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: Local
+Type: switchparameter
+parameter Sets: Local
 Aliases:
 
 Required: False
@@ -118,7 +118,7 @@ Output/Working path
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -132,8 +132,8 @@ Accept wildcard characters: False
 Optional - pick up panther logs from a failed feature update and process them.
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
+Type: switchparameter
+parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -147,8 +147,8 @@ Accept wildcard characters: False
 Launches the compatibilty appraiser scheduled task on the local machine (doesn't work on remote)
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: Local
+Type: switchparameter
+parameter Sets: Local
 Aliases:
 
 Required: False
@@ -162,8 +162,8 @@ Accept wildcard characters: False
 Skip processing the files against the appraiser database. 
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
+Type: switchparameter
+parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -173,8 +173,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+### Commonparameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_Commonparameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

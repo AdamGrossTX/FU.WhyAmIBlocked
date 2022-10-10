@@ -109,11 +109,11 @@
       <command:verb>Export</command:verb>
       <command:noun>FUBypassBlock</command:noun>
       <maml:description>
-        <maml:para>If block bypass entries are found in the sdb, registry and ps1 files will be exported for easy use on blocked devices.</maml:para>
+        <maml:para>if block bypass entries are found in the sdb, registry and ps1 files will be exported for easy use on blocked devices.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>If block bypass entries are found in the sdb, registry and ps1 files will be exported for easy use on blocked devices.</maml:para>
+      <maml:para>if block bypass entries are found in the sdb, registry and ps1 files will be exported for easy use on blocked devices.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -121,7 +121,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>InputFile</maml:name>
           <maml:Description>
-            <maml:para>The json output created by the Find-FUBlocksinSDB function</maml:para>
+            <maml:para>The json output created by the Find-FUBlocksinSDB function </maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -148,7 +148,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>InputFile</maml:name>
         <maml:Description>
-          <maml:para>The json output created by the Find-FUBlocksinSDB function</maml:para>
+          <maml:para>The json output created by the Find-FUBlocksinSDB function </maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -481,7 +481,7 @@
             <maml:para>Uses local device as the data source.</maml:para>
           </maml:Description>
           <dev:type>
-            <maml:name>SwitchParameter</maml:name>
+            <maml:name>switchparameter</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
@@ -504,7 +504,7 @@
             <maml:para>Launches the compatibilty appraiser scheduled task on the local machine (doesn't work on remote)</maml:para>
           </maml:Description>
           <dev:type>
-            <maml:name>SwitchParameter</maml:name>
+            <maml:name>switchparameter</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
@@ -527,7 +527,7 @@
             <maml:para>Optional - pick up panther logs from a failed feature update and process them.</maml:para>
           </maml:Description>
           <dev:type>
-            <maml:name>SwitchParameter</maml:name>
+            <maml:name>switchparameter</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
@@ -538,7 +538,7 @@
             <maml:para>Skip processing the files against the appraiser database.</maml:para>
           </maml:Description>
           <dev:type>
-            <maml:name>SwitchParameter</maml:name>
+            <maml:name>switchparameter</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
@@ -588,7 +588,7 @@
             <maml:para>Optional - pick up panther logs from a failed feature update and process them.</maml:para>
           </maml:Description>
           <dev:type>
-            <maml:name>SwitchParameter</maml:name>
+            <maml:name>switchparameter</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
@@ -599,7 +599,7 @@
             <maml:para>Skip processing the files against the appraiser database.</maml:para>
           </maml:Description>
           <dev:type>
-            <maml:name>SwitchParameter</maml:name>
+            <maml:name>switchparameter</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
@@ -649,7 +649,7 @@
             <maml:para>Optional - pick up panther logs from a failed feature update and process them.</maml:para>
           </maml:Description>
           <dev:type>
-            <maml:name>SwitchParameter</maml:name>
+            <maml:name>switchparameter</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
@@ -660,7 +660,7 @@
             <maml:para>Skip processing the files against the appraiser database.</maml:para>
           </maml:Description>
           <dev:type>
-            <maml:name>SwitchParameter</maml:name>
+            <maml:name>switchparameter</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
@@ -697,9 +697,9 @@
         <maml:Description>
           <maml:para>Uses local device as the data source.</maml:para>
         </maml:Description>
-        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <command:parameterValue required="false" variableLength="false">switchparameter</command:parameterValue>
         <dev:type>
-          <maml:name>SwitchParameter</maml:name>
+          <maml:name>switchparameter</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
@@ -721,9 +721,9 @@
         <maml:Description>
           <maml:para>Optional - pick up panther logs from a failed feature update and process them.</maml:para>
         </maml:Description>
-        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <command:parameterValue required="false" variableLength="false">switchparameter</command:parameterValue>
         <dev:type>
-          <maml:name>SwitchParameter</maml:name>
+          <maml:name>switchparameter</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
@@ -733,9 +733,9 @@
         <maml:Description>
           <maml:para>Launches the compatibilty appraiser scheduled task on the local machine (doesn't work on remote)</maml:para>
         </maml:Description>
-        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <command:parameterValue required="false" variableLength="false">switchparameter</command:parameterValue>
         <dev:type>
-          <maml:name>SwitchParameter</maml:name>
+          <maml:name>switchparameter</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
@@ -745,9 +745,9 @@
         <maml:Description>
           <maml:para>Skip processing the files against the appraiser database.</maml:para>
         </maml:Description>
-        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <command:parameterValue required="false" variableLength="false">switchparameter</command:parameterValue>
         <dev:type>
-          <maml:name>SwitchParameter</maml:name>
+          <maml:name>switchparameter</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
@@ -933,7 +933,7 @@
             <maml:para>Overwrites the existing json file.</maml:para>
           </maml:Description>
           <dev:type>
-            <maml:name>SwitchParameter</maml:name>
+            <maml:name>switchparameter</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
@@ -946,9 +946,9 @@
         <maml:Description>
           <maml:para>Overwrites the existing json file.</maml:para>
         </maml:Description>
-        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <command:parameterValue required="false" variableLength="false">switchparameter</command:parameterValue>
         <dev:type>
-          <maml:name>SwitchParameter</maml:name>
+          <maml:name>switchparameter</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
