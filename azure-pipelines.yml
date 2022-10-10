@@ -54,8 +54,9 @@ stages:
                     targetType: 'inline'
                     script: |
                       try {
+                        echo $env:APIKEY
                         write-host "Publishing module from: $env:Pipeline_Workspace\release\FU.WhyAmIBlocked"
-                        Publish-Module -Path "$env:Pipeline_Workspace\release\FU.WhyAmIBlocked" -NuGetApiKey $env:APIKEY
+                        Publish-Module -Path "$env:Pipeline_Workspace\release\FU.WhyAmIBlocked" -NuGetApiKey $env:APIKEY -Verbose
                       }
                       catch {
                         write-warning $_
