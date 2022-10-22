@@ -72,8 +72,9 @@ function Get-FUSafeGuardHoldDetails {
     }
 
     $DBBlocks = if ($ExistingXML) {
-        [xml]$Content = Get-Content -Path $ExistingXML -Raw
+        $Contents = $ExistingXML | ForEach-Object {[xml](Get-Content -Path $_ -Raw)}
 
+        foreach($Content in $Contents) {
         $OSUpgrade = $Content.SelectNodes("//SDB/DATABASE/OS_UPGRADE")
         $GatedBlockOSU = $OSUpgrade | Where-Object { $_.DATA.Data_String.'#text' -eq 'GatedBlock' } 
     
@@ -115,14 +116,15 @@ function Get-FUSafeGuardHoldDetails {
                 INNERXML        = $_.InnerXML
             }
         }
+    }
     } Select-Object -Unique * | Sort-Object AppName
 
 
     if ($SafeGuardHoldId) {
-        $DBBlocks | Where-Object { $_.SafeguardId -in $SafeGuardHoldId } | ForEach-Object { [PSCustomObject]$_ }
+        $DBBlocks | Select-Object -Unique * | Where-Object { $_.SafeguardId -in $SafeGuardHoldId } | ForEach-Object { [PSCustomObject]$_ }
     }
     else {
-        $DBBlocks | ForEach-Object { [PSCustomObject]$_ }
+        $DBBlocks | Select-Object -Unique * | ForEach-Object { [PSCustomObject]$_ }
     }
 }
 
