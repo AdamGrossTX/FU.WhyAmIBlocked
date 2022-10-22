@@ -15,13 +15,13 @@ stages:
     jobs:
       - job: Build
         pool:
-          vmImage: 'vs2017-win2016'
+          vmImage: 'windows-latest'
         steps:
           - task: PowerShell@2
             displayName: Build
             inputs:
               filePath: './build.ps1'
-              arguments: '-modulePath $(modulePath)'
+              #arguments: '-modulePath $(modulePath)'
               pwsh: true
 
           - task: CopyFiles@2
@@ -43,7 +43,7 @@ stages:
       - deployment: 'Deploy'
         displayName: 'Publish to PSGallery'
         pool:
-          vmImage: 'vs2017-win2016'
+          vmImage: 'windows-latest'
         environment: 'production'
         strategy:
           runOnce:
@@ -54,8 +54,8 @@ stages:
                     targetType: 'inline'
                     script: |
                       try {
-                        write-host "Publishing module from: $env:Pipeline_Workspace\release\$env:MODULENAME"
-                        Publish-Module -Path "$env:Pipeline_Workspace\release\$env:MODULENAME" -NuGetApiKey $env:APIKEY
+                        write-host "Publishing module from: $env:Pipeline_Workspace\release\FU.WhyAmIBlocked"
+                        Publish-Module -Path "$env:Pipeline_Workspace\release\FU.WhyAmIBlocked" -NuGetApiKey $env:APIKEY
                       }
                       catch {
                         write-warning $_
