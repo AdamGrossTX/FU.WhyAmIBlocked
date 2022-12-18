@@ -110,3 +110,24 @@ AppCompatAppraiser_2379_Appraiser_AlternateData.cab
 - https://github.com/TheEragon/SdbUnpacker
 - https://devblogs.microsoft.com/setup/shim-database-to-xml/
 - https://gallery.technet.microsoft.com/scriptcenter/APPRAISE-APPRAISERbin-to-8399c0ee
+
+## Troubleshooting
+
+- After running `Install-Module FU.WhyAmIBlocked -Scope CurrentUser` there is a warning message:
+> Untrusted repository
+> You are installing the modules from an untrusted repository. If you trust this repository, change its
+InstallationPolicy value by running the Set-PSRepository cmdlet. Are you sure you want to install the modules from
+'PSGallery'?
+This is normal and can be excepted.
+
+- - After running `Import-Module FU.WhyAmIBlocked` there is a warning message:
+> Import-Module : File C:\...\FU.WhyAmIBlocked\1.0.0.9\FU.WhyAmIBlocked.psm1
+cannot be loaded because running scripts is disabled on this system. For more information, see
+about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
+
+The MS page suggests 2 commands:
+1) `Get-ExecutionPolicy -Scope CurrentUser` gives the current policy set
+2) `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` sets the policy
+
+It is then possible to run `Import-Module FU.WhyAmIBlocked` without problems
+
